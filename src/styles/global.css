@@ -284,6 +284,104 @@
   }
 }
 
+/* =========================================================
+   FRANCHISE DARK MODE
+   Body class `is-franchise` flipt het hele canvas naar donker:
+   diep aubergine bg, witte tekst, goud i.p.v. magenta als primair accent.
+   De magenta speech bubble (brand mark) blijft bewust onveranderd.
+   ========================================================= */
+
+body.is-franchise {
+  background-color: var(--color-aubergine-deep);
+  color: var(--color-paper);
+}
+
+/* Surface remapping */
+body.is-franchise .bg-paper { background-color: var(--color-aubergine-deep); }
+body.is-franchise .bg-paper-2 { background-color: var(--color-aubergine); }
+body.is-franchise .bg-white {
+  background-color: color-mix(in oklab, var(--color-aubergine) 92%, white);
+  color: var(--color-paper);
+}
+
+/* Text remapping — koppen worden wit (gold reserveren voor accents) */
+body.is-franchise .text-aubergine { color: var(--color-paper); }
+body.is-franchise .text-aubergine-deep { color: var(--color-paper); }
+body.is-franchise .text-ink { color: var(--color-paper); }
+body.is-franchise .text-ink-soft { color: rgba(250, 246, 242, 0.72); }
+
+/* Borders die ink/15 etc. gebruiken — invert */
+body.is-franchise [class*="border-ink/"] { border-color: rgba(250, 246, 242, 0.14); }
+
+/* Magenta accents → goud op franchise (behalve de speech bubble en specifieke gevallen) */
+body.is-franchise .text-magenta { color: var(--color-gold); }
+body.is-franchise .text-magenta-soft { color: var(--color-gold-soft); }
+body.is-franchise .border-magenta { border-color: var(--color-gold); }
+body.is-franchise .border-l-magenta,
+body.is-franchise [class*="border-l-4"][class*="border-magenta"] { border-color: var(--color-gold); }
+
+/* CTA's en buttons */
+body.is-franchise .btn-primary {
+  background-color: var(--color-gold);
+  color: var(--color-aubergine-deep);
+}
+body.is-franchise .btn-primary:hover {
+  background-color: #DDA837;
+  color: var(--color-aubergine-deep);
+  box-shadow: 0 10px 24px rgba(232, 180, 71, 0.35);
+}
+body.is-franchise .btn-purple {
+  background-color: var(--color-gold);
+  color: var(--color-aubergine-deep);
+}
+body.is-franchise .btn-purple:hover {
+  background-color: #DDA837;
+  color: var(--color-aubergine-deep);
+}
+body.is-franchise .btn-ghost {
+  color: var(--color-paper);
+  border-color: rgba(250, 246, 242, 0.32);
+}
+body.is-franchise .btn-ghost:hover {
+  background-color: var(--color-gold);
+  color: var(--color-aubergine-deep);
+  border-color: var(--color-gold);
+}
+
+/* Eyebrow */
+body.is-franchise .eyebrow { color: var(--color-gold); }
+body.is-franchise .eyebrow::before { background: var(--color-gold); }
+
+/* Brush highlight wordt goud op franchise */
+body.is-franchise .brush::after { background: var(--color-gold); opacity: 0.85; }
+body.is-franchise .brush--soft::after { background: var(--color-gold-soft); opacity: 1; }
+
+/* Form inputs op donkere bg */
+body.is-franchise .form-input {
+  background-color: rgba(250, 246, 242, 0.08);
+  border-color: rgba(250, 246, 242, 0.18);
+  color: var(--color-paper);
+}
+body.is-franchise .form-input::placeholder { color: rgba(250, 246, 242, 0.45); }
+body.is-franchise .form-input:focus {
+  border-color: var(--color-gold);
+  background-color: rgba(250, 246, 242, 0.12);
+  box-shadow: 0 0 0 4px rgba(232, 180, 71, 0.18);
+}
+body.is-franchise .form-label { color: rgba(250, 246, 242, 0.7); }
+
+/* FAQ panels */
+body.is-franchise .faq-item summary { color: var(--color-gold); }
+body.is-franchise .faq-item summary::after { color: var(--color-gold); }
+
+/* Tag chip op donkere bg */
+body.is-franchise .tag {
+  background-color: rgba(232, 180, 71, 0.16);
+  color: var(--color-gold);
+}
+
+/* Scroll-reveal: ongewijzigd */
+
 /* ----- Modal -------------------------------------------- */
 @layer components {
   .modal-backdrop {
