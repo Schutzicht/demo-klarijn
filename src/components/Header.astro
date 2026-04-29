@@ -1,0 +1,131 @@
+---
+import BrandLogo from './BrandLogo.astro';
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+interface Props {
+  active?: string;
+  variant?: 'klant' | 'franchise';
+}
+const { active = '', variant = 'klant' } = Astro.props;
+
+const klantNav: NavItem[] = [
+  { label: 'Werkwijze', href: '/werkwijze' },
+  { label: 'Oplossingen', href: '/oplossingen' },
+  { label: 'Abonnement', href: '/abonnement' },
+  { label: 'Over ons', href: '/over-ons' },
+  { label: 'Contact', href: '/contact' },
+];
+const franchiseNav: NavItem[] = [
+  { label: 'De aanpak', href: '/franchise/aanpak' },
+  { label: 'Vergoedingen', href: '/franchise/vergoedingen' },
+  { label: 'Match-test', href: '/franchise/beslisboom' },
+  { label: 'Contact', href: '/franchise/contact' },
+];
+const items = variant === 'franchise' ? franchiseNav : klantNav;
+const otherSideHref = variant === 'franchise' ? '/' : '/franchise';
+const otherSideLabel = variant === 'franchise' ? '← Klant-website' : 'Voor juristen';
+const homeHref = variant === 'franchise' ? '/franchise' : '/';
+---
+
+<header class="sticky top-0 z-50 group/hdr" data-header>
+  <!-- Translucent background — invisible at top, glass-blur on scroll -->
+  <div
+    class="absolute inset-0 -z-10 transition-all duration-300
+           group-data-[scrolled]/hdr:bg-[rgba(250,246,242,0.85)]
+           group-data-[scrolled]/hdr:backdrop-blur-xl
+           group-data-[scrolled]/hdr:backdrop-saturate-150
+           group-data-[scrolled]/hdr:border-b
+           group-data-[scrolled]/hdr:border-ink/10
+           group-data-[scrolled]/hdr:shadow-[0_4px_24px_rgba(94,31,92,0.05)]"
+    aria-hidden="true"
+  ></div>
+
+  <div class="max-w-[1240px] mx-auto px-4 md:px-8 flex items-center justify-between gap-4 lg:gap-6 transition-[height] duration-300 h-[88px] group-data-[scrolled]/hdr:h-[68px]">
+    <BrandLogo
+      href={homeHref}
+      bubbleClass="w-12 md:w-14 lg:w-[58px] h-auto shrink-0 transition-[width] duration-300 group-data-[scrolled]/hdr:w-10 md:group-data-[scrolled]/hdr:w-12"
+    />
+
+    <button
+      type="button"
+      class="lg:hidden bg-aubergine/8 hover:bg-aubergine hover:text-white border border-aubergine/15 rounded-full px-4 py-2 text-xs font-semibold cursor-pointer text-aubergine transition-all"
+      data-menu-toggle
+      aria-expanded="false"
+      aria-controls="primary-nav"
+    >Menu</button>
+
+    <nav
+      id="primary-nav"
+      class="hidden lg:flex items-center gap-1 [&[data-open]]:flex max-lg:[&[data-open]]:absolute max-lg:[&[data-open]]:top-full max-lg:[&[data-open]]:left-0 max-lg:[&[data-open]]:right-0 max-lg:[&[data-open]]:bg-paper max-lg:[&[data-open]]:flex-col max-lg:[&[data-open]]:items-stretch max-lg:[&[data-open]]:p-4 max-lg:[&[data-open]]:gap-1 max-lg:[&[data-open]]:border-t max-lg:[&[data-open]]:border-b max-lg:[&[data-open]]:border-ink/10 max-lg:[&[data-open]]:shadow-lg"
+      aria-label="Hoofdnavigatie"
+    >
+      {items.map((item) => {
+        const isActive = active === item.label;
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              'no-underline text-sm font-medium px-3.5 py-2 rounded-full transition-colors',
+              isActive
+                ? 'bg-aubergine/10 text-aubergine'
+                : 'text-ink hover:text-magenta hover:bg-aubergine/5',
+            ]}
+          >{item.label}</a>
+        );
+      })}
+
+      <span class="hidden lg:inline-block w-px h-5 bg-ink/15 mx-1" aria-hidden="true"></span>
+
+      <a
+        href={otherSideHref}
+        class:list={[
+          'no-underline text-xs font-semibold rounded-full px-4 py-2 border whitespace-nowrap transition-all',
+          variant === 'franchise'
+            ? 'text-ink border-gold/40 hover:bg-gold hover:text-aubergine-deep hover:border-gold'
+            : 'text-ink border-aubergine/20 hover:bg-aubergine hover:text-white hover:border-aubergine',
+        ]}
+      >
+        {variant === 'klant' ? <span aria-hidden="true">→ </span> : ''}{otherSideLabel}
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function init() {
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const nav = document.querySelector<HTMLElement>('#primary-nav');
+    if (header && !(header as any).dataset.bound) {
+      (header as any).dataset.bound = '1';
+      const onScroll = () => {
+        if (window.scrollY > 12) header.setAttribute('data-scrolled', '');
+        else header.removeAttribute('data-scrolled');
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+    if (toggle && nav && !(toggle as any).dataset.bound) {
+      (toggle as any).dataset.bound = '1';
+      toggle.addEventListener('click', () => {
+        const open = nav.hasAttribute('data-open');
+        if (open) {
+          nav.removeAttribute('data-open');
+          toggle.setAttribute('aria-expanded', 'false');
+        } else {
+          nav.setAttribute('data-open', '');
+          toggle.setAttribute('aria-expanded', 'true');
+        }
+      });
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  document.addEventListener('astro:page-load', init);
+</script>

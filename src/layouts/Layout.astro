@@ -1,0 +1,106 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BasketFab from '../components/BasketFab.astro';
+import VraagHetCTA from '../components/VraagHetCTA.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  variant?: 'klant' | 'franchise';
+  active?: string;
+  showBasket?: boolean;
+  showVraagHet?: boolean;
+  hideHeader?: boolean;
+}
+
+const {
+  title,
+  description = 'Helderheid in juridische oplossingen. Voor mkb, familiebedrijven en de maakindustrie.',
+  variant = 'klant',
+  active = '',
+  showBasket = true,
+  showVraagHet = true,
+  hideHeader = false,
+} = Astro.props;
+
+const isFranchise = variant === 'franchise';
+const themeColor = isFranchise ? '#3D0F3B' : '#5E1F5C';
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={themeColor} />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 110'%3E%3Cpath d='M50 5C24 5 5 24 5 47c0 20 14 37 34 43L32 105 56 90c24-2 39-20 39-43C95 24 76 5 50 5z' fill='%23E0277A'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <ClientRouter />
+    <slot name="head" />
+  </head>
+  <body class:list={[isFranchise && 'is-franchise']}>
+    {isFranchise && (
+      <div class="bg-aubergine-deep text-white/90 text-center px-4 py-2.5 text-xs font-medium">
+        Klarijn Franchise · <a href="/" class="text-gold underline underline-offset-4 hover:text-white">→ Terug naar de klant-website</a>
+      </div>
+    )}
+
+    {!hideHeader && <Header active={active} variant={variant} />}
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer variant={variant} />
+
+    {showBasket && !isFranchise && <BasketFab />}
+    {showVraagHet && <VraagHetCTA />}
+
+    <!-- Global scripts: scroll reveal + basket -->
+    <script>
+      import '../scripts/basket.ts';
+    </script>
+
+    <script>
+      function initReveal() {
+        const els = document.querySelectorAll<HTMLElement>('[data-reveal]:not(.is-visible)');
+        if (!els.length) return;
+        if (!('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -50px 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReveal);
+      } else {
+        initReveal();
+      }
+      document.addEventListener('astro:page-load', initReveal);
+    </script>
+  </body>
+</html>

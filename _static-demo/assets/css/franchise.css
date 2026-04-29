@@ -1,0 +1,289 @@
+/* =========================================================
+   Franchise — Klarijn huisstijl, eigen accent
+   Iets serieuzer/ondernemender: dieper paars + okergoud als secundair accent.
+   Magenta blijft als bind met het merk.
+   ========================================================= */
+
+body.is-franchise {
+  --purple: #3D0F3B;            /* dieper paars */
+  --purple-deep: #260825;
+  --purple-soft: #5E1F5C;
+  --magenta: #E0277A;
+  --magenta-deep: #C81E6B;
+  --gold: #E8B447;              /* secundair accent: ondernemend */
+  --gold-soft: #F5D99A;
+}
+
+body.is-franchise .site-header { background: var(--purple); }
+
+/* Switch banner — bovenaan iedere franchise pagina */
+.switch-banner {
+  background: var(--purple-deep);
+  color: rgba(255, 255, 255, .9);
+  text-align: center;
+  padding: .55rem 1rem;
+  font-size: .82rem;
+  font-weight: 500;
+}
+.switch-banner strong { color: var(--gold); font-weight: 600; }
+.switch-banner a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.switch-banner a:hover { color: var(--white); }
+
+/* Franchise nav: gold-tinted franchise pill */
+body.is-franchise .nav__franchise {
+  background: rgba(232, 180, 71, .15);
+  border-color: rgba(232, 180, 71, .4);
+  color: var(--white) !important;
+}
+body.is-franchise .nav__franchise:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--purple-deep) !important;
+}
+
+/* Franchise eyebrow uses gold */
+body.is-franchise .eyebrow { color: var(--gold); }
+body.is-franchise .eyebrow::before { background: var(--gold); }
+
+/* Franchise hero — uses gold accents */
+.fr-hero {
+  background: var(--paper);
+  padding: clamp(3rem, 6vw, 5rem) 0;
+  position: relative;
+  overflow: hidden;
+}
+.fr-hero::before {
+  content: "";
+  position: absolute;
+  top: -300px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(232, 180, 71, .15) 0%, transparent 65%);
+  pointer-events: none;
+}
+.fr-hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 3rem;
+  align-items: center;
+}
+@media (max-width: 980px) { .fr-hero__grid { grid-template-columns: 1fr; } }
+.fr-hero h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  line-height: .95;
+  text-transform: uppercase;
+  margin: 0 0 1.2rem;
+  letter-spacing: 0;
+}
+.fr-hero h1 em { font-style: normal; color: var(--gold); }
+
+.fr-hero__map {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 1.6rem;
+  box-shadow: var(--shadow-lg);
+}
+.fr-hero__map h3 {
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 0 1rem;
+  color: var(--purple);
+}
+.rayon-map { width: 100%; aspect-ratio: 1 / 1; }
+
+/* Numbers band */
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  text-align: center;
+}
+@media (max-width: 700px) { .numbers { grid-template-columns: repeat(2, 1fr); } }
+.numbers .n {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  line-height: 1;
+  color: var(--magenta);
+  letter-spacing: 0;
+}
+.numbers .l {
+  display: block;
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: .6rem;
+}
+
+/* Pillars — driepoot van de franchise */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+@media (max-width: 900px) { .pillars { grid-template-columns: 1fr; } }
+.pillar {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.8rem;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.pillar:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.pillar__num {
+  position: absolute;
+  top: -16px; left: 24px;
+  background: var(--gold);
+  color: var(--purple-deep);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--display-soft);
+  font-weight: 800;
+  font-size: 1.05rem;
+  border: 3px solid var(--paper);
+}
+.pillar h3 { font-size: 1.25rem; margin: .8rem 0 .6rem; color: var(--purple); }
+.pillar p { color: var(--ink-soft); margin: 0; }
+
+/* Decision tree */
+.tree {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.8rem, 4vw, 2.6rem);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+.tree__progress {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 1.8rem;
+}
+.tree__progress span {
+  flex: 1;
+  height: 6px;
+  background: var(--paper-2);
+  border-radius: 3px;
+  transition: background .3s;
+}
+.tree__progress span.is-done { background: var(--magenta); }
+.tree__progress span.is-current { background: var(--gold); }
+
+.tree__qhead {
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  margin-bottom: .8rem;
+}
+.tree__q {
+  font-family: var(--display-soft);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.25;
+  color: var(--purple);
+  margin: 0 0 1.6rem;
+}
+.tree__answers { display: grid; gap: .6rem; margin-bottom: 1.5rem; }
+.tree__answer {
+  text-align: left;
+  padding: 1.1rem 1.3rem;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  font-family: var(--body);
+  font-size: 1.02rem;
+  color: var(--ink);
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  transition: all .2s var(--ease);
+  width: 100%;
+}
+.tree__answer:hover {
+  border-color: var(--magenta);
+  background: var(--white);
+  transform: translateX(4px);
+}
+.tree__answer:hover .tree__answer__arrow {
+  background: var(--magenta);
+  color: var(--white);
+}
+.tree__answer.is-selected {
+  background: var(--purple);
+  color: var(--white);
+  border-color: var(--purple);
+}
+.tree__answer__arrow {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--paper-2);
+  color: var(--purple);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  font-weight: 700;
+  transition: all .2s;
+}
+.tree__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .9rem;
+  color: var(--ink-soft);
+}
+.tree__back {
+  background: transparent;
+  border: 1.5px solid var(--line-strong);
+  color: var(--ink);
+  padding: .6rem 1.1rem;
+  border-radius: 999px;
+  font-family: var(--body);
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+}
+.tree__back:hover { background: var(--purple); color: var(--white); border-color: var(--purple); }
+.tree__back:disabled { opacity: .3; cursor: not-allowed; }
+
+.tree__result { text-align: center; padding: 1rem 0; }
+.tree__result__icon {
+  width: 90px; height: 90px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 2.6rem;
+  background: var(--magenta);
+  color: var(--white);
+  border: 5px solid var(--paper);
+  box-shadow: 0 0 0 2px var(--magenta);
+  font-weight: 700;
+}
+.tree__result h2 { font-size: clamp(2rem, 4vw, 2.8rem); margin: 0 0 1rem; color: var(--purple); }
+.tree__result.is-match .tree__result__icon { background: #2D8A47; box-shadow: 0 0 0 2px #2D8A47; }
+
+/* Franchise dirk-vraagt: gold accents */
+body.is-franchise .dirk-vraagt__avatar--klarijn { background: var(--gold); color: var(--purple-deep); outline-color: var(--gold-soft); }
+body.is-franchise .dirk-vraagt__bubble--klarijn { background: var(--purple); }
+body.is-franchise .dirk-vraagt__bubble--klarijn strong { color: var(--gold); }
+
+/* Franchise ticker */
+body.is-franchise .ticker { background: var(--gold); color: var(--purple-deep); }
+body.is-franchise .ticker__track span::after { color: rgba(61, 15, 59, .55); }

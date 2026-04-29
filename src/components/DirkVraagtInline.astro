@@ -1,0 +1,41 @@
+---
+interface Pair {
+  who: string;
+  role: string;
+  q: string;
+  a: string;
+}
+interface Props {
+  title?: string;
+  eyebrow?: string;
+  pairs: Pair[];
+}
+const { title, eyebrow = 'Vraag het Klarijn', pairs } = Astro.props;
+const initials = (n: string) => n.split(' ').map((p) => p[0]).join('').slice(0, 2).toUpperCase();
+---
+
+<div class="bg-white rounded-card p-7 md:p-10 shadow-sm">
+  <span class="eyebrow">{eyebrow}</span>
+  {title && <h3 class="text-2xl md:text-3xl font-semibold text-aubergine mt-1 mb-6">{title}</h3>}
+
+  {pairs.map((p) => (
+    <Fragment>
+      <div class="grid grid-cols-[56px_1fr] gap-4 my-3">
+        <div class="w-12 h-12 rounded-full bg-magenta text-white grid place-items-center font-bold text-base border-[3px] border-white outline outline-2 outline-magenta-soft">
+          {initials(p.who)}
+        </div>
+        <div class="bg-paper-2 px-5 py-4 rounded-tl-md rounded-tr-2xl rounded-br-2xl rounded-bl-2xl">
+          <strong class="block text-xs font-bold uppercase tracking-wider text-ink-soft mb-1.5">{p.who} · {p.role}</strong>
+          <p class="m-0 text-base leading-relaxed">{p.q}</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-[56px_1fr] gap-4 my-3 mb-6">
+        <div class="w-12 h-12 rounded-full bg-aubergine text-white grid place-items-center font-bold text-base border-[3px] border-white outline outline-2 outline-aubergine-soft">K</div>
+        <div class="bg-aubergine text-white px-5 py-4 rounded-tr-md rounded-tl-2xl rounded-br-2xl rounded-bl-2xl">
+          <strong class="block text-xs font-bold uppercase tracking-wider text-magenta-soft mb-1.5">Klarijn antwoordt</strong>
+          <p class="m-0 text-base leading-relaxed">{p.a}</p>
+        </div>
+      </div>
+    </Fragment>
+  ))}
+</div>

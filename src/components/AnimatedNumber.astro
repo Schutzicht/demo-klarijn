@@ -1,0 +1,70 @@
+---
+interface Props {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  duration?: number;
+  class?: string;
+}
+const { value, prefix = '', suffix = '', duration = 1400, class: cls = '' } = Astro.props;
+---
+
+<span class:list={['inline-block tabular-nums', cls]} data-counter data-target={value} data-duration={duration} data-prefix={prefix} data-suffix={suffix}>
+  {prefix}0{suffix}
+</span>
+
+<script>
+  const formatNumber = (n: number) => {
+    if (n >= 1000) return n.toLocaleString('nl-NL');
+    return String(n);
+  };
+
+  function init() {
+    const counters = document.querySelectorAll<HTMLElement>('[data-counter]');
+    if (!counters.length) return;
+
+    const animate = (el: HTMLElement) => {
+      if (el.dataset.done) return;
+      el.dataset.done = '1';
+      const target = Number(el.dataset.target || '0');
+      const duration = Number(el.dataset.duration || '1400');
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const startTime = performance.now();
+      const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - startTime) / duration);
+        const current = Math.round(ease(t) * target);
+        el.textContent = `${prefix}${formatNumber(current)}${suffix}`;
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      counters.forEach(animate);
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            animate(entry.target as HTMLElement);
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.4 }
+    );
+    counters.forEach((el) => io.observe(el));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+  document.addEventListener('astro:page-load', init);
+</script>

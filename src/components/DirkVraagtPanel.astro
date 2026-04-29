@@ -1,0 +1,108 @@
+---
+import { klantVragen, franchiseVragen, type DirkVraag } from '../data/dirkVraagt';
+
+interface Props {
+  variant?: 'klant' | 'franchise';
+}
+const { variant = 'klant' } = Astro.props;
+const items: DirkVraag[] = variant === 'franchise' ? franchiseVragen : klantVragen;
+const data = JSON.stringify(items);
+---
+
+<article
+  class="relative bg-white rounded-jumbo p-8 md:p-10 shadow-2xl overflow-hidden"
+  data-dv-panel
+  data-dv-data={data}
+>
+  <span class="absolute top-0 right-0 w-1.5 h-full bg-magenta" aria-hidden="true"></span>
+
+  <header class="flex items-center gap-3 mb-5">
+    <div class="w-13 h-13 rounded-full bg-magenta text-white grid place-items-center font-display-soft font-bold text-lg border-[3px] border-white outline outline-2 outline-magenta-soft" data-dv-avatar style="width:52px;height:52px;">D</div>
+    <div class="text-sm text-ink-soft font-medium" data-dv-name>—</div>
+  </header>
+
+  <p class="font-sans font-semibold text-aubergine mb-5 leading-tight min-h-[4em] text-xl md:text-2xl" data-dv-q></p>
+
+  <div class="bg-paper-2 border-l-4 border-magenta px-5 py-4 rounded-r-xl text-ink leading-relaxed mb-6" data-dv-a></div>
+
+  <footer class="flex items-center justify-between gap-4">
+    <div class="flex gap-1.5" data-dv-dots></div>
+    <div class="flex gap-1.5">
+      <button class="w-9 h-9 rounded-full bg-paper text-aubergine border-[1.5px] border-ink/10 cursor-pointer grid place-items-center text-xl hover:bg-magenta hover:text-white hover:border-magenta transition-all" data-dv-prev aria-label="Vorige">‹</button>
+      <button class="w-9 h-9 rounded-full bg-paper text-aubergine border-[1.5px] border-ink/10 cursor-pointer grid place-items-center text-xl hover:bg-magenta hover:text-white hover:border-magenta transition-all" data-dv-next aria-label="Volgende">›</button>
+    </div>
+  </footer>
+</article>
+
+<script>
+  type DV = { who: string; role: string; q: string; a: string };
+
+  function init(panel: HTMLElement) {
+    if (panel.dataset.bound) return;
+    panel.dataset.bound = '1';
+
+    const data: DV[] = JSON.parse(panel.dataset.dvData || '[]');
+    if (data.length === 0) return;
+
+    let idx = 0;
+    const initials = (n: string) => n.split(' ').map((p) => p[0]).join('').slice(0, 2).toUpperCase();
+
+    const avatar = panel.querySelector<HTMLElement>('[data-dv-avatar]')!;
+    const name = panel.querySelector<HTMLElement>('[data-dv-name]')!;
+    const q = panel.querySelector<HTMLElement>('[data-dv-q]')!;
+    const a = panel.querySelector<HTMLElement>('[data-dv-a]')!;
+    const dots = panel.querySelector<HTMLElement>('[data-dv-dots]')!;
+    const prev = panel.querySelector<HTMLButtonElement>('[data-dv-prev]')!;
+    const next = panel.querySelector<HTMLButtonElement>('[data-dv-next]')!;
+
+    let interval: ReturnType<typeof setInterval> | null = null;
+
+    function render() {
+      const d = data[idx];
+      avatar.textContent = initials(d.who);
+      name.innerHTML = `<strong class="block text-ink font-semibold">${d.who}</strong>${d.role}`;
+      q.textContent = `"${d.q}"`;
+      a.innerHTML = `<strong class="block text-magenta font-bold uppercase tracking-wider text-xs mb-1.5">Klarijn antwoordt</strong>${d.a}`;
+      dots.innerHTML = '';
+      data.forEach((_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', `Vraag ${i + 1}`);
+        b.className =
+          'w-2 h-2 rounded-full p-0 border-0 cursor-pointer transition-all ' +
+          (i === idx ? 'bg-magenta w-6 rounded' : 'bg-paper-2');
+        b.addEventListener('click', () => {
+          idx = i;
+          render();
+          reset();
+        });
+        dots.appendChild(b);
+      });
+    }
+    function go(delta: number) {
+      idx = (idx + delta + data.length) % data.length;
+      render();
+    }
+    function reset() {
+      if (interval) clearInterval(interval);
+      interval = setInterval(() => go(1), 7000);
+    }
+    prev.addEventListener('click', () => { go(-1); reset(); });
+    next.addEventListener('click', () => { go(1); reset(); });
+    panel.addEventListener('mouseenter', () => { if (interval) clearInterval(interval); });
+    panel.addEventListener('mouseleave', reset);
+    render();
+    reset();
+  }
+
+  function bootAll() {
+    document.querySelectorAll<HTMLElement>('[data-dv-panel]').forEach(init);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootAll);
+  } else {
+    bootAll();
+  }
+  document.addEventListener('astro:page-load', bootAll);
+</script>

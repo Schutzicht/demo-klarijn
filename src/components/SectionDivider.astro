@@ -1,0 +1,29 @@
+---
+interface Props {
+  /** Color of the section ABOVE this divider */
+  from?: string;
+  /** Color of the section BELOW */
+  to?: string;
+  /** Curve direction. */
+  variant?: 'wave' | 'curve' | 'curve-down';
+}
+const { from = 'transparent', to = 'transparent', variant = 'curve' } = Astro.props;
+---
+
+<div class="block leading-none -mb-px" style={`background: ${from};`}>
+  {variant === 'wave' && (
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" class="block w-full h-12 md:h-20" aria-hidden="true">
+      <path d={`M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z`} fill={to} />
+    </svg>
+  )}
+  {variant === 'curve' && (
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" class="block w-full h-10 md:h-16" aria-hidden="true">
+      <path d="M0,0 Q720,120 1440,0 L1440,100 L0,100 Z" fill={to} />
+    </svg>
+  )}
+  {variant === 'curve-down' && (
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" class="block w-full h-10 md:h-16" aria-hidden="true">
+      <path d="M0,100 Q720,-20 1440,100 L1440,100 L0,100 Z" fill={to} />
+    </svg>
+  )}
+</div>

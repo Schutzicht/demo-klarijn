@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mijn Lijst — Klarijn</title>
+  <meta name="description" content="Bekijk je geselecteerde producten en vraag een offerte aan." />
+  <meta name="theme-color" content="#5E1F5C" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 110'%3E%3Cpath d='M50 5C24 5 5 24 5 47c0 20 14 37 34 43L32 105 56 90c24-2 39-20 39-43C95 24 76 5 50 5z' fill='%23E0277A'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar__ticker">
+        <span>Geen webshop · Wel een goed gesprek</span>
+      </div>
+      <div><a href="tel:0651180138">06 – 51 18 01 38</a></div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand">
+        <svg class="brand__bubble" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 5 C 24 5, 5 24, 5 47 C 5 67, 19 84, 39 90 L 31 106 L 56 90 C 80 88, 95 68, 95 47 C 95 24, 76 5, 50 5 Z" fill="#E0277A"/>
+          <text x="50" y="44" text-anchor="middle" font-family="Anton, sans-serif" font-size="22" fill="white">VRAAG</text>
+          <text x="50" y="68" text-anchor="middle" font-family="Anton, sans-serif" font-size="22" fill="white">HET</text>
+        </svg>
+        <span>
+          <span class="brand__name">Klarijn</span>
+          <span class="brand__tag">Helderheid in juridische oplossingen</span>
+        </span>
+      </a>
+      <button class="menu-toggle">Menu</button>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="oplossingen.html">Oplossingen</a>
+        <a href="werkwijze.html">Werkwijze</a>
+        <a href="abonnement.html">Abonnement</a>
+        <a href="over-ons.html">Over ons</a>
+        <a href="contact.html">Contact</a>
+        <span class="nav__sep"></span>
+        <a href="franchise/index.html" class="nav__franchise">Franchise</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb"><a href="index.html">Home</a> / <span>Mijn lijst</span></nav>
+        <h1>Mijn lijst</h1>
+        <p class="lead">Hier staan jouw geselecteerde producten. Vul je gegevens in en wij maken er een passende offerte van. Geen verplichtingen — wel binnen 1 werkdag een reactie.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="basket-grid">
+          <div>
+            <h2 style="font-size:1.6rem;margin-bottom:1.2rem;">Geselecteerde producten</h2>
+
+            <div class="basket-list" data-basket-list></div>
+
+            <div class="basket-empty" data-basket-empty style="display:none;">
+              <h3>Je lijst is nog leeg</h3>
+              <p class="muted">Bekijk onze oplossingen en voeg toe wat je nodig denkt te hebben. Geen zorgen — we kijken er samen nog naar.</p>
+              <a href="oplossingen.html" class="btn btn--primary">Bekijk oplossingen <span class="arrow">→</span></a>
+            </div>
+
+            <div style="margin-top:2.5rem;background:var(--paper-2);border-radius:var(--radius);padding:1.5rem;border-left: 4px solid var(--magenta);">
+              <strong style="font-family:var(--display);font-size:1.15rem;display:block;margin-bottom:.4rem;">Twijfel je nog?</strong>
+              <p style="margin:0;" class="muted">Niet alles wat in je lijst staat hoeft een verplichting te worden. We kijken samen wat past — en wat misschien beter wacht.</p>
+            </div>
+          </div>
+
+          <div class="basket-form" data-basket-form>
+            <h3 style="margin-top:0;">Jouw gegevens</h3>
+            <p class="muted" style="font-size:.9rem;">We sturen je aanvraag direct naar onze rayonhouders. Je ontvangt binnen 1 werkdag een reactie.</p>
+
+            <form class="form" novalidate>
+              <div class="form__row">
+                <label>Voornaam<input required name="voornaam" autocomplete="given-name" /></label>
+                <label>Achternaam<input required name="achternaam" autocomplete="family-name" /></label>
+              </div>
+              <label>Bedrijfsnaam<input name="bedrijf" autocomplete="organization" /></label>
+              <div class="form__row">
+                <label>E-mail<input required type="email" name="email" autocomplete="email" /></label>
+                <label>Telefoon<input type="tel" name="telefoon" autocomplete="tel" /></label>
+              </div>
+              <label>Vestigingsplaats<input name="plaats" placeholder="Voor doorverwijzing naar het juiste rayon" /></label>
+              <label>Korte toelichting (optioneel)
+                <textarea name="toelichting" placeholder="Vertel kort wat de aanleiding is — handig om vooraf te weten."></textarea>
+              </label>
+
+              <input type="hidden" name="selectie_xml" value="" />
+
+              <label class="form__check">
+                <input required type="checkbox" name="akkoord" />
+                <span>Ik ga akkoord met het verwerken van mijn gegevens conform de <a href="#">privacyverklaring</a>. Mijn aanvraag mag tot 12 maanden bewaard worden.</span>
+              </label>
+
+              <button type="submit" class="btn btn--primary btn--block">
+                Verzend aanvraag <span class="arrow">→</span>
+              </button>
+              <p class="muted" style="text-align:center;font-size:.82rem;margin: .6rem 0 0;">Verzonden naar bestelling@klarijn.nl. Je ontvangt direct een bevestiging.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="grid grid--4">
+        <div class="site-footer__brand">
+          <a href="index.html" class="brand">
+            <svg class="brand__bubble" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50 5 C 24 5, 5 24, 5 47 C 5 67, 19 84, 39 90 L 31 106 L 56 90 C 80 88, 95 68, 95 47 C 95 24, 76 5, 50 5 Z" fill="#E0277A"/>
+          <text x="50" y="44" text-anchor="middle" font-family="Anton, sans-serif" font-size="22" fill="white">VRAAG</text>
+          <text x="50" y="68" text-anchor="middle" font-family="Anton, sans-serif" font-size="22" fill="white">HET</text>
+        </svg>
+            <span>
+              <span class="brand__name">Klarijn</span>
+              <span class="brand__tag">Helderheid in juridische oplossingen</span>
+            </span>
+          </a>
+          <p>De Digitale Werkplaats voor juridisch advies.</p>
+        </div>
+        <div><h4>Oplossingen</h4><ul><li><a href="oplossingen.html">Alle producten</a></li><li><a href="abonnement.html">Het abonnement</a></li></ul></div>
+        <div><h4>Klarijn</h4><ul><li><a href="werkwijze.html">Werkwijze</a></li><li><a href="over-ons.html">Over ons</a></li><li><a href="contact.html">Contact</a></li><li><a href="franchise/index.html">Franchise</a></li></ul></div>
+        <div><h4>Contact</h4><ul><li><a href="tel:0651180138">06 – 51 18 01 38</a></li><li><a href="mailto:vraaghet@klarijn.nl">vraaghet@klarijn.nl</a></li></ul></div>
+      </div>
+      <div class="site-footer__bottom"><span>© 2026 Klarijn</span><span><a href="#">Privacy</a> · <a href="#">Voorwaarden</a></span></div>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

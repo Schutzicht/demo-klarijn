@@ -1,0 +1,21 @@
+---
+interface Props {
+  ticker?: string[];
+}
+const { ticker = ['Helderheid in juridische oplossingen', 'Vaste jurist binnen handbereik'] } = Astro.props;
+---
+
+<div class="bg-aubergine-deep text-white/85 text-sm">
+  <div class="max-w-[1240px] mx-auto px-4 md:px-8 flex justify-between items-center h-9 gap-6">
+    <div class="hidden md:flex gap-6 overflow-hidden">
+      {ticker.map((t) => (
+        <span class="whitespace-nowrap before:content-['●'] before:text-magenta before:mr-2">{t}</span>
+      ))}
+    </div>
+    <div class="ml-auto flex items-center gap-4 text-xs md:text-sm">
+      <a href="tel:0651180138" class="hover:text-magenta-soft no-underline text-white/85">06 – 51 18 01 38</a>
+      <span class="opacity-40 hidden sm:inline">·</span>
+      <a href="mailto:vraaghet@klarijn.nl" class="hover:text-magenta-soft no-underline text-white/85 hidden sm:inline">vraaghet@klarijn.nl</a>
+    </div>
+  </div>
+</div>

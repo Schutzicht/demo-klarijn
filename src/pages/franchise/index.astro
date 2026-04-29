@@ -1,0 +1,162 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DirkVraagtPanel from '../../components/DirkVraagtPanel.astro';
+import Stamp from '../../components/Stamp.astro';
+import SectionDivider from '../../components/SectionDivider.astro';
+import AnimatedNumber from '../../components/AnimatedNumber.astro';
+---
+
+<Layout
+  title="Klarijn Franchise — Eigen praktijk, sterke ploeg"
+  description="Word Klarijn-franchisenemer. Eigen rayon, sterke backoffice, samen sterk. In 2026 starten we landelijk."
+  variant="franchise"
+  active="Franchise"
+  showVraagHet={false}
+>
+  <!-- ========== Franchise hero ========== -->
+  <section class="relative bg-paper pt-10 md:pt-16 lg:pt-20 pb-20 md:pb-28 overflow-hidden">
+    <div class="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full opacity-25 pointer-events-none blur-3xl"
+         style="background: radial-gradient(circle, var(--color-gold-soft) 0%, transparent 65%);"></div>
+    <div class="absolute top-1/2 -left-72 w-[640px] h-[640px] rounded-full opacity-15 pointer-events-none blur-3xl"
+         style="background: radial-gradient(circle, var(--color-aubergine-soft) 0%, transparent 70%);"></div>
+
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8 relative z-10">
+      <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-12 lg:gap-20 items-center">
+        <div>
+          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold before:content-[''] before:w-6 before:h-0.5 before:bg-gold" data-reveal>Klarijn Franchise · landelijk vanaf 2026</span>
+          <h1 class="display-1 mt-4 mb-6 text-aubergine" data-reveal data-reveal-delay="1">
+            Een eigen praktijk.<br/>
+            Met een <span class="brush brush--gold">sterke ploeg</span><br/>achter je.
+          </h1>
+          <p class="text-lg md:text-xl text-ink-soft max-w-[48ch] mb-10 leading-relaxed" data-reveal data-reveal-delay="2">
+            Voor juristen die willen ondernemen — met de voeten in de klei, in een eigen rayon, en met een backoffice die marketing, automatisering en ondersteuning regelt.
+          </p>
+          <div class="flex gap-3 flex-wrap" data-reveal data-reveal-delay="3">
+            <a class="btn btn-primary" href="/franchise/beslisboom">Doe de match-test <span class="arrow">→</span></a>
+            <a class="btn btn-ghost" href="/franchise/aanpak">Lees over de aanpak</a>
+          </div>
+        </div>
+
+        <div class="relative" data-reveal data-reveal-delay="2">
+          <div class="bg-white rounded-jumbo p-6 md:p-7 shadow-2xl max-w-[400px] mx-auto" aria-hidden="true">
+            <h3 class="text-base font-semibold text-aubergine mb-4">Rayonverdeling 2026</h3>
+            <svg viewBox="0 0 280 320" class="w-full h-auto">
+              <defs>
+                <pattern id="dot2" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+                  <circle cx="2" cy="2" r="1.4" fill="rgba(232,180,71,.25)"/>
+                </pattern>
+              </defs>
+              <rect width="280" height="320" fill="url(#dot2)"/>
+              <path d="M40 80 Q 60 40 110 50 Q 160 40 200 65 Q 240 80 235 130 Q 245 175 220 220 Q 200 270 150 285 Q 100 295 70 270 Q 30 250 35 195 Q 25 140 40 80 Z"
+                    fill="rgba(94,31,92,.06)" stroke="#5E1F5C" stroke-width="2.5" stroke-dasharray="4 6"/>
+              <g fill="#E8B447" stroke="#3D0F3B" stroke-width="1.5">
+                <circle cx="105" cy="120" r="8"/>
+                <circle cx="160" cy="100" r="8"/>
+                <circle cx="190" cy="170" r="8"/>
+                <circle cx="120" cy="200" r="8"/>
+                <circle cx="160" cy="230" r="8"/>
+                <circle cx="80" cy="160" r="8"/>
+                <circle cx="200" cy="120" r="8"/>
+                <circle cx="100" cy="240" r="8"/>
+              </g>
+              <g fill="#E0277A" stroke="#3D0F3B" stroke-width="2">
+                <circle cx="135" cy="160" r="11">
+                  <animate attributeName="r" values="11;14;11" dur="2.4s" repeatCount="indefinite"/>
+                </circle>
+              </g>
+              <text x="135" y="195" font-family="Poppins, sans-serif" font-size="10" fill="#3D0F3B" text-anchor="middle" font-weight="600">Pilot Zwolle</text>
+            </svg>
+            <div class="flex gap-4 justify-center text-xs font-semibold tracking-wider text-ink-soft mt-4">
+              <span class="inline-flex items-center gap-2"><span class="inline-block w-2.5 h-2.5 bg-magenta rounded-full"></span>Actief</span>
+              <span class="inline-flex items-center gap-2"><span class="inline-block w-2.5 h-2.5 bg-gold rounded-full"></span>Beschikbaar</span>
+            </div>
+          </div>
+          <div class="absolute -top-5 -left-6 z-20 hidden md:block">
+            <Stamp text="14 rayons in 2026" rotate={-10} variant="magenta" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider variant="curve-down" from="var(--color-paper)" to="var(--color-aubergine)" />
+
+  <!-- ========== Animated stats on dark band ========== -->
+  <section class="bg-aubergine text-white py-16 md:py-20">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
+        {[
+          { v: 14, l: 'Rayons in 2026' },
+          { v: 145, prefix: '€ ', l: 'Abonnement / klant / mnd' },
+          { v: 100, suffix: '+', l: 'Klanten gemiddeld per rayon' },
+          { v: 30, suffix: '%', l: 'Lagere overhead' },
+        ].map((item, i) => (
+          <div data-reveal data-reveal-delay={i + 1}>
+            <span class="block font-display text-5xl md:text-7xl text-gold leading-none">
+              <AnimatedNumber value={item.v} prefix={item.prefix || ''} suffix={item.suffix || ''} />
+            </span>
+            <span class="block text-xs md:text-sm font-semibold uppercase tracking-wider text-white/70 mt-3">{item.l}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider variant="curve" from="var(--color-aubergine)" to="var(--color-paper-2)" />
+
+  <!-- ========== Pillars ========== -->
+  <section class="section-y bg-paper-2">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
+      <div class="text-center mb-12" data-reveal>
+        <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-gold">Drie redenen</span>
+        <h2 class="display-2 mt-3">Eigen praktijk.<br/>Backoffice die regelt.<br/><span class="brush brush--gold">Sterk merk.</span></h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {[
+          { n: 1, t: 'Eigen rayon', d: "Je krijgt een vast geografisch werkgebied. Zo kun je klantrelaties opbouwen zonder concurrentie van collega's binnen Klarijn." },
+          { n: 2, t: 'Backoffice, niet jouw zorg', d: 'Marketing, leadgeneratie, automatisering, IT, boekhouding, branding. Wij regelen het centraal, zodat jij doet waar je goed in bent: juridisch werk.' },
+          { n: 3, t: 'Specialismen elkaar aanvullen', d: 'Een collega in Limburg heeft expertise IE? Mooi, dan kun jij die ook aanbieden in jouw rayon. Extra omzet zonder zelf om te scholen.' },
+        ].map((p, i) => (
+          <div class="relative bg-white rounded-card p-7 md:p-8 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all" data-reveal data-reveal-delay={i + 1}>
+            <span class="absolute -top-4 left-6 bg-gold text-aubergine-deep w-10 h-10 rounded-full grid place-items-center font-bold text-base border-[3px] border-paper-2">{p.n}</span>
+            <h3 class="text-xl font-semibold text-aubergine mt-3 mb-3">{p.t}</h3>
+            <p class="text-ink-soft mb-0 leading-relaxed">{p.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider variant="wave" from="var(--color-paper-2)" to="var(--color-paper)" />
+
+  <!-- ========== Franchisenemer vraagt ========== -->
+  <section class="section-y bg-paper">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
+      <div class="grid lg:grid-cols-[.8fr_1.2fr] gap-10 items-start">
+        <div data-reveal>
+          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-gold">Franchisenemer vraagt Klarijn</span>
+          <h2 class="display-2 mt-3 mb-4">Wat juristen ons vroegen<br/>tijdens de pilot.</h2>
+          <p class="text-lg text-ink-soft leading-relaxed">
+            Tijdens de pilot in 2025 in regio IJsselland vroegen geïnteresseerde juristen ons van alles. Zelfde formaat als bij de klanten — handen uit de mouwen, recht voor z'n raap.
+          </p>
+        </div>
+        <div data-reveal data-reveal-delay="2">
+          <DirkVraagtPanel variant="franchise" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA decision tree ========== -->
+  <section class="section-y bg-paper-2">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8 text-center" data-reveal>
+      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-gold">Past het bij jou?</span>
+      <h2 class="display-2 mt-3 mb-4">Doe de match-test.<br/><span class="brush brush--gold">10 vragen, 3 minuten.</span></h2>
+      <p class="text-lg text-ink-soft max-w-prose mx-auto mb-8 leading-relaxed">
+        Voordat je een gesprek inplant, kun je zelf checken of Klarijn bij jou past. Eerlijk advies: soms zien we al na 10 vragen dat het geen match is. Scheelt jou en ons tijd.
+      </p>
+      <a class="btn btn-primary" href="/franchise/beslisboom">Start de match-test <span class="arrow">→</span></a>
+    </div>
+  </section>
+</Layout>

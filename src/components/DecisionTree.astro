@@ -1,0 +1,142 @@
+---
+import { questions, matchThreshold } from '../data/decisionTree';
+
+const data = JSON.stringify({ questions, matchThreshold });
+---
+
+<div
+  class="bg-white rounded-jumbo p-6 md:p-10 shadow-2xl relative"
+  data-tree
+  data-tree-data={data}
+>
+  <div class="flex gap-1 mb-7" data-tree-progress></div>
+  <div data-tree-body></div>
+</div>
+
+<script>
+  type Q = { q: string; a: { label: string; score: number }[] };
+  type Cfg = { questions: Q[]; matchThreshold: number };
+
+  function init(root: HTMLElement) {
+    if (root.dataset.bound) return;
+    root.dataset.bound = '1';
+    const cfg: Cfg = JSON.parse(root.dataset.treeData || '{"questions":[],"matchThreshold":8}');
+    const progress = root.querySelector<HTMLElement>('[data-tree-progress]')!;
+    const body = root.querySelector<HTMLElement>('[data-tree-body]')!;
+
+    let step = 0;
+    let score = 0;
+    let history: { step: number; score: number }[] = [];
+
+    function renderProgress() {
+      progress.innerHTML = '';
+      cfg.questions.forEach((_, i) => {
+        const sp = document.createElement('span');
+        sp.className =
+          'flex-1 h-1.5 rounded-full transition-colors ' +
+          (i < step ? 'bg-magenta' : i === step ? 'bg-aubergine' : 'bg-paper-2');
+        progress.appendChild(sp);
+      });
+    }
+
+    function renderQuestion() {
+      renderProgress();
+      const q = cfg.questions[step];
+      body.innerHTML = `
+        <div class="text-xs font-semibold uppercase tracking-[.1em] text-magenta mb-2">Vraag ${step + 1} van ${cfg.questions.length}</div>
+        <h2 class="font-sans font-bold text-2xl md:text-3xl leading-tight text-aubergine mb-6">${q.q}</h2>
+        <div class="grid gap-2.5 mb-6" data-answers></div>
+        <div class="flex justify-between items-center text-sm text-ink-soft">
+          <button class="bg-transparent border-[1.5px] border-ink/15 text-ink px-4 py-2 rounded-full text-xs font-semibold cursor-pointer hover:bg-aubergine hover:text-white hover:border-aubergine transition-all disabled:opacity-30 disabled:cursor-not-allowed" data-back ${step === 0 ? 'disabled' : ''}>← Terug</button>
+          <span>${Math.round((step / cfg.questions.length) * 100)}% voltooid</span>
+        </div>
+      `;
+      const answers = body.querySelector<HTMLElement>('[data-answers]')!;
+      q.a.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className =
+          'group text-left p-4 md:p-5 bg-paper border-[1.5px] border-ink/10 rounded-2xl text-base font-medium text-ink cursor-pointer flex justify-between items-center gap-4 transition-all hover:border-magenta hover:bg-white hover:translate-x-1 w-full';
+        btn.innerHTML = `
+          <span>${opt.label}</span>
+          <span class="w-8 h-8 rounded-full bg-paper-2 text-aubergine grid place-items-center shrink-0 font-bold transition-all group-hover:bg-magenta group-hover:text-white">→</span>
+        `;
+        btn.addEventListener('click', () => {
+          history.push({ step, score: opt.score });
+          score += opt.score;
+          step++;
+          if (step >= cfg.questions.length) renderResult();
+          else renderQuestion();
+        });
+        answers.appendChild(btn);
+      });
+      body.querySelector<HTMLButtonElement>('[data-back]')?.addEventListener('click', () => {
+        if (history.length === 0) return;
+        const last = history.pop()!;
+        score -= last.score;
+        step = last.step;
+        renderQuestion();
+      });
+    }
+
+    function renderResult() {
+      const isMatch = score >= cfg.matchThreshold;
+      progress.innerHTML = '';
+      cfg.questions.forEach(() => {
+        const sp = document.createElement('span');
+        sp.className = 'flex-1 h-1.5 rounded-full bg-magenta';
+        progress.appendChild(sp);
+      });
+      body.innerHTML = `
+        <div class="text-center py-4">
+          <div class="w-24 h-24 mx-auto mb-6 rounded-full grid place-items-center text-4xl font-bold border-[5px] border-paper ${isMatch ? 'bg-emerald-600 text-white' : 'bg-magenta text-white'}" style="${isMatch ? 'box-shadow:0 0 0 2px #047857;' : 'box-shadow:0 0 0 2px #E0277A;'}">${isMatch ? '✓' : '!'}</div>
+          <h2 class="text-3xl md:text-4xl font-bold mb-4 text-aubergine">${isMatch ? 'Match. Laten we kennismaken.' : 'Klarijn lijkt nu nog niet de beste pasvorm.'}</h2>
+          <p class="text-lg text-ink-soft max-w-prose mx-auto mb-6">
+            ${isMatch
+              ? 'Op basis van je antwoorden lijkt het Klarijn-model bij jou te passen. We nodigen je uit voor een vrijblijvend gesprek waarin we je vragen beantwoorden en samen kijken naar de mogelijkheden in jouw rayon.'
+              : 'Op basis van je antwoorden zien we niet direct een wederzijdse match. Wil je toch even sparren? We staan altijd open voor een goed gesprek.'}
+          </p>
+          ${isMatch
+            ? `<form class="grid gap-4 max-w-md mx-auto text-left" data-result-form>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <label class="form-label">Voornaam<input class="form-input" required name="first" /></label>
+                  <label class="form-label">Achternaam<input class="form-input" required name="last" /></label>
+                </div>
+                <label class="form-label">E-mail<input class="form-input" required type="email" name="email" /></label>
+                <label class="form-label">Telefoon<input class="form-input" type="tel" name="phone" /></label>
+                <label class="form-label">Voorkeursregio<input class="form-input" name="region" placeholder="Bijv. Twente, Zuid-Limburg, regio Zwolle" /></label>
+                <button type="submit" class="btn btn-primary justify-center">Plan een kennismakingsgesprek <span class="arrow">→</span></button>
+              </form>`
+            : `<a class="btn btn-ghost" href="/franchise/contact">Toch contact opnemen</a>`}
+          <div class="mt-8">
+            <button class="bg-transparent border-[1.5px] border-ink/15 text-ink px-4 py-2 rounded-full text-xs font-semibold cursor-pointer hover:bg-aubergine hover:text-white hover:border-aubergine transition-all" data-restart>↺ Opnieuw beginnen</button>
+          </div>
+        </div>
+      `;
+      const f = body.querySelector<HTMLFormElement>('[data-result-form]');
+      if (f) {
+        f.addEventListener('submit', (e) => {
+          e.preventDefault();
+          f.innerHTML =
+            '<p class="text-center text-xl font-display-soft font-semibold text-aubergine">Bedankt — we nemen binnen 2 werkdagen contact op.</p>';
+        });
+      }
+      body.querySelector<HTMLButtonElement>('[data-restart]')?.addEventListener('click', () => {
+        step = 0; score = 0; history = []; renderQuestion();
+      });
+    }
+
+    renderQuestion();
+  }
+
+  function bootAll() {
+    document.querySelectorAll<HTMLElement>('[data-tree]').forEach(init);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootAll);
+  } else {
+    bootAll();
+  }
+  document.addEventListener('astro:page-load', bootAll);
+</script>

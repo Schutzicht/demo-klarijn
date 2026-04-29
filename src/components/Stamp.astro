@@ -1,0 +1,12 @@
+---
+interface Props {
+  text: string;
+  variant?: 'magenta' | 'gold' | 'purple';
+  rotate?: number;
+  class?: string;
+}
+const { text, variant = 'magenta', rotate = -8, class: cls = '' } = Astro.props;
+const variantClass = variant === 'gold' ? 'stamp--gold' : variant === 'purple' ? 'stamp--purple' : '';
+---
+
+<span class:list={['stamp', variantClass, cls]} style={`transform: rotate(${rotate}deg);`}>{text}</span>

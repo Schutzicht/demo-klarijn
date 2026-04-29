@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  name: 'Klarijn Zwolle',
+  parentOrganization: { '@type': 'Organization', name: 'Klarijn' },
+  address: { '@type': 'PostalAddress', streetAddress: 'Voorbeeldstraat 12', postalCode: '8011 AB', addressLocality: 'Zwolle', addressCountry: 'NL' },
+  telephone: '+31382220000',
+  email: 'zwolle@klarijn.nl',
+  areaServed: ['Zwolle', 'Kampen', 'Apeldoorn', 'Hattem', 'Deventer'],
+};
+
+const team = [
+  { src: '/img/eibert.webp', name: 'Eibert Westerveld', role: 'Rayonhouder · Arbeidsrecht' },
+  { src: '/img/william.jpg', name: 'Sven Krijnen', role: 'Senior · Contracten' },
+  { src: '/img/klarijn-werkomgeving-2.jpg', name: 'Yvonne van Dam', role: 'Office manager' },
+];
+---
+
+<Layout title="Klarijn Zwolle — Voorbeeld kantoorpagina" description="Klarijn Zwolle — jouw vaste juristen in regio IJsselland en Veluwe.">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </Fragment>
+
+  <PageHero
+    title="Klarijn Zwolle."
+    lead="Jouw vaste juristen in regio IJsselland en Veluwe. Vanuit Zwolle bedienen we ondernemers in Zwolle, Kampen, Apeldoorn, Hattem en Deventer."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Over ons', href: '/over-ons' }, { label: 'Kantoor Zwolle' }]}
+    eyebrow="Voorbeeld kantoorpagina"
+  />
+
+  <section class="section-y">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
+      <div class="grid lg:grid-cols-[1.2fr_.8fr] gap-10 items-start mb-12">
+        <div class="bg-white rounded-card p-7 md:p-10 shadow-sm">
+          <span class="eyebrow">Welkom in Zwolle</span>
+          <h2 class="display-2 mt-3 mb-5">Praktisch advies, lokaal verankerd.</h2>
+          <p class="text-lg text-ink-soft leading-relaxed">
+            Het Klarijn-kantoor Zwolle bedient ondernemers in IJsselland, Veluwe en Salland. Op afspraak ontvangen we je op kantoor; veel werk doen we online of telefonisch. We rijden ook graag de provincie in als dat handig is.
+          </p>
+          <div class="flex gap-3 flex-wrap mt-6">
+            <a class="btn btn-primary" href="tel:0382220000">038 222 00 00</a>
+            <a class="btn btn-ghost" href="mailto:zwolle@klarijn.nl">zwolle@klarijn.nl</a>
+          </div>
+        </div>
+
+        <aside class="bg-aubergine text-white rounded-card p-7 shadow-lg">
+          <h3 class="text-base font-semibold uppercase tracking-[.1em] text-magenta-soft mt-0 mb-4">Adres &amp; openingstijden</h3>
+          <p class="text-white/85 mb-4">
+            Voorbeeldstraat 12<br/>
+            8011 AB Zwolle
+          </p>
+          <p class="text-white/85 m-0">
+            Ma–Do · 08.30 – 17.30<br/>
+            Vrijdag · 08.30 – 16.00<br/>
+            Op afspraak ook 's avonds
+          </p>
+        </aside>
+      </div>
+
+      <div class="grid sm:grid-cols-[260px_1fr] gap-8 lg:gap-10 items-center bg-white p-7 md:p-10 rounded-card shadow-sm mb-12">
+        <div class="photo-blob aspect-square shrink-0 max-sm:w-44 max-sm:mx-auto">
+          <img src="/img/eibert.webp" alt="Portret Eibert Westerveld" loading="lazy" class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <blockquote class="m-0 text-xl md:text-2xl font-semibold leading-snug text-ink relative pl-10 max-sm:pl-0 max-sm:text-center">
+            <span class="absolute left-0 -top-2 font-display text-7xl text-magenta leading-none max-sm:hidden">"</span>
+            Ik ben zelf opgegroeid op een melkveebedrijf. Voor de buren zonder bedrijfsjurist was er nooit ruimte om bij een advocaat aan te kloppen. Daar zit voor mij de drive achter Klarijn: praktische juridische hulp die echt landt in de schuur — niet alleen op papier.
+          </blockquote>
+          <cite class="block not-italic text-sm text-ink-soft mt-5 pl-10 max-sm:pl-0 max-sm:text-center">
+            <strong class="block text-ink font-bold">Eibert Westerveld</strong>
+            Rayonhouder Klarijn Zwolle · 14 jaar arbeidsrecht
+          </cite>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        {team.map((m) => (
+          <article class="bg-white rounded-card p-6 text-center shadow-sm">
+            <div class="photo-blob w-28 aspect-square mx-auto mb-4">
+              <img src={m.src} alt={`Portret ${m.name}`} loading="lazy" class="w-full h-full object-cover" />
+            </div>
+            <h3 class="text-base font-semibold text-ink mb-1">{m.name}</h3>
+            <p class="text-xs font-semibold uppercase tracking-wider text-magenta mb-0">{m.role}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-12 bg-paper-2 rounded-card p-7 border-l-4 border-magenta">
+        <span class="eyebrow">Demo-info</span>
+        <h3 class="text-2xl font-semibold text-aubergine mt-1 mb-2">Eén template voor elk rayon.</h3>
+        <p class="text-ink-soft mb-0">Deze pagina is een voorbeeld van het kantoorpagina-template. In de uiteindelijke website maakt Klarijn zelf een pagina voor elke rayonhouder met introductie, lokaal team, vestigingsplaats en eigen contactgegevens. Het CMS maakt dat eenvoudig — vergelijkbaar met het invullen van een formulier.</p>
+      </div>
+    </div>
+  </section>
+</Layout>

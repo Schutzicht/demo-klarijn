@@ -1,0 +1,37 @@
+---
+// Striking content section: "wat doet Klarijn juist niet?"
+// Pakt de "geen ivoren toren" boodschap visueel op met strikethrough type.
+---
+
+<section class="section-y bg-paper relative overflow-hidden">
+  <div class="absolute -top-40 -left-32 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none"
+       style="background: radial-gradient(circle, var(--color-magenta-soft) 0%, transparent 70%);"></div>
+
+  <div class="max-w-[1240px] mx-auto px-4 md:px-8 relative">
+    <div class="grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-center">
+      <div data-reveal>
+        <span class="eyebrow">Onze positionering</span>
+        <h2 class="display-2 mt-3">Wat doen we<br/><em class="not-italic">níet</em>?</h2>
+        <p class="text-lg text-ink-soft leading-relaxed mt-5">
+          De juridische sector hangt vol gewoonten die ondernemers in de weg zitten. Klarijn is opgebouwd door iets van die gewoonten consequent te weigeren.
+        </p>
+      </div>
+
+      <ul class="grid sm:grid-cols-2 gap-3" data-reveal data-reveal-delay="2">
+        {[
+          { strike: 'Uurtje-factuurtje', alt: 'Vaste prijzen vooraf' },
+          { strike: 'Wisselende juristen', alt: 'Eén vast aanspreekpunt' },
+          { strike: 'Juridisch jargon', alt: 'Plain Nederlands' },
+          { strike: 'Open-einde offertes', alt: 'Heldere afspraken' },
+          { strike: 'Glanzende kantoren', alt: 'Voeten in de klei' },
+          { strike: 'Verplichte intake', alt: 'Direct antwoord' },
+        ].map((item) => (
+          <li class="bg-white rounded-card p-5 shadow-sm hover:shadow-lg transition-all">
+            <span class="strike-through font-display text-xl md:text-2xl block leading-tight mb-1">{item.strike}</span>
+            <span class="text-aubergine font-semibold text-base">→ {item.alt}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

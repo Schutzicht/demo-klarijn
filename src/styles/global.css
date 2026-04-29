@@ -1,0 +1,316 @@
+@import "tailwindcss";
+
+/* ----- Klarijn theme ---------------------------------------- */
+@theme {
+  /* Brand colors */
+  --color-aubergine: #5E1F5C;
+  --color-aubergine-deep: #3D0F3B;
+  --color-aubergine-soft: #7A2D78;
+  --color-magenta: #E0277A;
+  --color-magenta-deep: #C81E6B;
+  --color-magenta-soft: #F2A4C9;
+  --color-paper: #FAF6F2;
+  --color-paper-2: #F2EAE3;
+  --color-ink: #2A1530;
+  --color-ink-soft: #5C4555;
+  --color-gold: #E8B447;
+  --color-gold-soft: #F5D99A;
+
+  /* Fonts */
+  --font-display: "Anton", "Bebas Neue", system-ui, sans-serif;
+  --font-sans: "Poppins", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  /* Custom radii */
+  --radius-card: 22px;
+  --radius-jumbo: 32px;
+
+  /* Custom ease */
+  --ease-spring: cubic-bezier(0.5, 1.7, 0.4, 1);
+  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ----- Base styles ------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-magenta);
+    color: white;
+  }
+}
+
+/* ----- Scroll reveal --------------------------------------- */
+@layer utilities {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s var(--ease-out-quart), transform 0.8s var(--ease-out-quart);
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  [data-reveal-delay="1"] { transition-delay: 80ms; }
+  [data-reveal-delay="2"] { transition-delay: 160ms; }
+  [data-reveal-delay="3"] { transition-delay: 240ms; }
+  [data-reveal-delay="4"] { transition-delay: 320ms; }
+  [data-reveal-delay="5"] { transition-delay: 400ms; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1; transform: none; transition: none; }
+  }
+}
+
+/* ----- Component-level utilities ---------------------------- */
+@layer components {
+  /* Eyebrow label that appears above headings */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply inline-block w-6 h-0.5 bg-magenta;
+  }
+
+  /* Display heading utility */
+  .display-1 {
+    font-family: var(--font-display);
+    @apply uppercase leading-[0.95] tracking-tight font-normal text-balance;
+    font-size: clamp(2.25rem, 7vw, 6rem);
+  }
+  .display-2 {
+    font-family: var(--font-display);
+    @apply uppercase leading-[0.95] tracking-tight font-normal text-balance;
+    font-size: clamp(1.85rem, 5vw, 4rem);
+  }
+
+  /* Section padding */
+  .section-y { @apply py-14 md:py-20 lg:py-24; }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold text-sm leading-none whitespace-nowrap transition-all duration-200 cursor-pointer;
+  }
+  .btn-primary {
+    @apply bg-magenta text-white hover:bg-magenta-deep hover:-translate-y-0.5;
+    box-shadow: 0 0 0 0 rgba(224, 39, 122, 0);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 10px 24px rgba(224, 39, 122, 0.32);
+  }
+  .btn-purple {
+    @apply bg-aubergine text-white hover:bg-aubergine-deep hover:-translate-y-0.5;
+  }
+  .btn-purple:hover {
+    box-shadow: 0 10px 24px rgba(94, 31, 92, 0.28);
+  }
+  .btn-ghost {
+    @apply bg-transparent text-ink border border-ink/20 hover:bg-ink hover:text-white hover:border-ink;
+  }
+  .btn-ghost-light {
+    @apply bg-transparent text-white border border-white/40 hover:bg-white hover:text-aubergine hover:border-white;
+  }
+  .btn .arrow { @apply transition-transform duration-200; }
+  .btn:hover .arrow { @apply translate-x-1; }
+
+  /* Tag pill */
+  .tag {
+    @apply inline-block text-[.72rem] font-semibold uppercase tracking-wider bg-paper-2 text-aubergine px-3 py-1 rounded-full;
+  }
+
+  /* Add-to-list button */
+  .add-btn {
+    @apply inline-flex items-center gap-1 bg-magenta text-white border-0 rounded-full px-4 py-2 text-[.82rem] font-semibold cursor-pointer transition-all duration-200 hover:bg-magenta-deep hover:scale-[1.04] whitespace-nowrap;
+  }
+  .add-btn[data-added="true"] {
+    @apply bg-aubergine text-white;
+  }
+  .add-btn[data-added="true"] .add-btn__label::before {
+    content: "✓ ";
+    @apply font-bold;
+  }
+
+  /* Photo blob — organic rounded shape */
+  .photo-blob {
+    border-radius: 50% 50% 8% 50% / 50% 50% 8% 50%;
+    @apply overflow-hidden bg-magenta-soft;
+  }
+  .photo-blob--alt {
+    border-radius: 50% 8% 50% 50% / 50% 8% 50% 50%;
+    @apply bg-aubergine-soft;
+  }
+  .photo-blob--3 {
+    border-radius: 8% 50% 50% 50% / 8% 50% 50% 50%;
+    @apply bg-gold-soft;
+  }
+
+  /* Brush stroke highlight — magenta swoosh BEHIND text. Text color stays inherited (dark). */
+  .brush {
+    position: relative;
+    display: inline-block;
+    z-index: 0;
+    white-space: nowrap;
+  }
+  .brush::after {
+    content: "";
+    position: absolute;
+    left: -3%;
+    right: -3%;
+    bottom: 6%;
+    height: 34%;
+    background: var(--color-magenta);
+    z-index: -1;
+    border-radius: 3px;
+    transform: rotate(-1deg) skewX(-6deg);
+    opacity: 0.92;
+  }
+  .brush--gold::after { background: var(--color-gold); }
+  .brush--soft::after { background: var(--color-magenta-soft); opacity: 1; }
+  /* When brush is on a dark surface and the text is white, use a softer pink so contrast remains. */
+  .brush--on-dark::after { background: var(--color-magenta-soft); opacity: 0.55; }
+
+  /* Strikethrough effect for "wat we niet doen" */
+  .strike-through {
+    position: relative;
+    display: inline-block;
+    color: rgba(42, 21, 48, 0.5);
+  }
+  .strike-through::after {
+    content: "";
+    position: absolute;
+    left: -4%;
+    right: -4%;
+    top: 52%;
+    height: 4px;
+    background: var(--color-magenta);
+    transform: rotate(-2deg);
+  }
+
+  /* Decorative stamp badge — like a rubber stamp on a contract */
+  .stamp {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--color-magenta);
+    border: 3px double currentColor;
+    padding: 0.4em 0.9em;
+    border-radius: 4px;
+    background: transparent;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 1;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    user-select: none;
+    pointer-events: none;
+    text-wrap: nowrap;
+  }
+  .stamp--gold { color: var(--color-gold); }
+  .stamp--purple { color: var(--color-aubergine); }
+
+  /* FAQ item */
+  .faq-item {
+    @apply bg-white rounded-2xl overflow-hidden;
+    box-shadow: 0 2px 8px rgba(94, 31, 92, 0.06);
+  }
+  .faq-item summary {
+    @apply list-none cursor-pointer px-6 py-5 font-semibold text-base text-aubergine flex justify-between items-center gap-4;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: "+";
+    font-family: var(--font-display);
+    @apply text-3xl text-magenta font-normal leading-none transition-transform duration-200;
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+
+  /* Form */
+  .form-input {
+    @apply block w-full bg-white border-[1.5px] border-ink/20 rounded-xl px-4 py-3.5 text-base text-ink transition-shadow font-normal focus:outline-none focus:border-magenta;
+  }
+  .form-input:focus {
+    box-shadow: 0 0 0 4px rgba(224, 39, 122, 0.12);
+  }
+  .form-label {
+    @apply grid gap-1.5 text-xs font-semibold uppercase tracking-wider text-ink-soft;
+  }
+}
+
+/* ----- Custom keyframes (Tailwind exposes via animation-*) -- */
+@layer utilities {
+  @keyframes bubble-float {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-8px) rotate(-1deg); }
+  }
+  .animate-bubble-float {
+    animation: bubble-float 5s ease-in-out infinite;
+  }
+
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .animate-ticker {
+    animation: ticker-scroll 40s linear infinite;
+  }
+
+  @keyframes basket-bump {
+    0%, 100% { transform: scale(1); }
+    30% { transform: scale(1.12); }
+    60% { transform: scale(0.96); }
+  }
+  .basket-fab.bump { animation: basket-bump 0.6s var(--ease-spring); }
+
+  @keyframes stamp-burst {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(2.2); }
+    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    60% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.95) translateY(-50px); }
+  }
+  .stamp-burst {
+    @apply fixed pointer-events-none font-sans font-bold tracking-wide bg-magenta text-white px-5 py-2 rounded-full text-base z-[200];
+    box-shadow: 0 8px 24px rgba(224, 39, 122, 0.4);
+    animation: stamp-burst 1s var(--ease-spring) forwards;
+  }
+}
+
+/* ----- Modal -------------------------------------------- */
+@layer components {
+  .modal-backdrop {
+    @apply fixed inset-0 z-[100] bg-aubergine-deep/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease-out-quart);
+  }
+  .modal-backdrop[data-open] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal-panel {
+    @apply bg-paper rounded-t-jumbo sm:rounded-jumbo p-6 md:p-10 max-w-xl w-full max-h-[92dvh] sm:max-h-[90dvh] overflow-y-auto relative shadow-2xl;
+    transform: translateY(40px);
+    transition: transform 0.3s var(--ease-spring);
+  }
+  .modal-backdrop[data-open] .modal-panel {
+    transform: none;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .animate-bubble-float, .animate-ticker { animation: none; }
+}
