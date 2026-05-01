@@ -30,8 +30,11 @@ const otherSideLabel = variant === 'franchise' ? '← Klant-website' : 'Voor jur
 const homeHref = variant === 'franchise' ? '/franchise' : '/';
 const isFranchise = variant === 'franchise';
 
-// Header background bij scroll: licht-glass op beide zijdes (cream body)
-const bgClass = 'group-data-[scrolled]/hdr:bg-[rgba(250,246,242,0.85)] group-data-[scrolled]/hdr:border-ink/10 group-data-[scrolled]/hdr:shadow-[0_4px_24px_rgba(94,31,92,0.05)]';
+// Header background bij scroll: licht-glass op klant (cream body),
+// donker-glass op franchise (aubergine body).
+const bgClass = isFranchise
+  ? 'group-data-[scrolled]/hdr:bg-[rgba(94,31,92,0.85)] group-data-[scrolled]/hdr:border-white/12 group-data-[scrolled]/hdr:shadow-[0_4px_24px_rgba(0,0,0,0.18)]'
+  : 'group-data-[scrolled]/hdr:bg-[rgba(250,246,242,0.85)] group-data-[scrolled]/hdr:border-ink/10 group-data-[scrolled]/hdr:shadow-[0_4px_24px_rgba(94,31,92,0.05)]';
 ---
 
 <header class="sticky top-0 z-50 group/hdr" data-header data-variant={variant}>
@@ -48,13 +51,18 @@ const bgClass = 'group-data-[scrolled]/hdr:bg-[rgba(250,246,242,0.85)] group-dat
   <div class="max-w-[1240px] mx-auto px-4 md:px-8 flex items-center justify-between gap-4 lg:gap-6 transition-[height] duration-300 h-[88px] group-data-[scrolled]/hdr:h-[68px]">
     <BrandLogo
       href={homeHref}
-      theme="light"
+      theme={isFranchise ? 'dark' : 'light'}
       bubbleClass="w-12 md:w-14 lg:w-[58px] h-auto shrink-0 transition-[width] duration-300 group-data-[scrolled]/hdr:w-10 md:group-data-[scrolled]/hdr:w-12"
     />
 
     <button
       type="button"
-      class="lg:hidden bg-aubergine/8 hover:bg-aubergine hover:text-white border border-aubergine/15 rounded-full px-4 py-2 text-xs font-semibold cursor-pointer text-aubergine transition-all"
+      class:list={[
+        'lg:hidden border rounded-full px-4 py-2 text-xs font-semibold cursor-pointer transition-all',
+        isFranchise
+          ? 'bg-white/8 hover:bg-white hover:text-aubergine border-white/25 text-white'
+          : 'bg-aubergine/8 hover:bg-aubergine hover:text-white border-aubergine/15 text-aubergine',
+      ]}
       data-menu-toggle
       aria-expanded="false"
       aria-controls="primary-nav"
@@ -62,32 +70,48 @@ const bgClass = 'group-data-[scrolled]/hdr:bg-[rgba(250,246,242,0.85)] group-dat
 
     <nav
       id="primary-nav"
-      class="hidden lg:flex items-center gap-1 [&[data-open]]:flex max-lg:[&[data-open]]:absolute max-lg:[&[data-open]]:top-full max-lg:[&[data-open]]:left-0 max-lg:[&[data-open]]:right-0 max-lg:[&[data-open]]:bg-paper max-lg:[&[data-open]]:flex-col max-lg:[&[data-open]]:items-stretch max-lg:[&[data-open]]:p-4 max-lg:[&[data-open]]:gap-1 max-lg:[&[data-open]]:border-t max-lg:[&[data-open]]:border-b max-lg:[&[data-open]]:border-ink/10 max-lg:[&[data-open]]:shadow-lg"
+      class:list={[
+        'hidden lg:flex items-center gap-1 [&[data-open]]:flex',
+        'max-lg:[&[data-open]]:absolute max-lg:[&[data-open]]:top-full max-lg:[&[data-open]]:left-0 max-lg:[&[data-open]]:right-0',
+        'max-lg:[&[data-open]]:flex-col max-lg:[&[data-open]]:items-stretch max-lg:[&[data-open]]:p-4 max-lg:[&[data-open]]:gap-1 max-lg:[&[data-open]]:shadow-lg',
+        isFranchise
+          ? 'max-lg:[&[data-open]]:bg-aubergine max-lg:[&[data-open]]:border-t max-lg:[&[data-open]]:border-b max-lg:[&[data-open]]:border-white/10'
+          : 'max-lg:[&[data-open]]:bg-paper max-lg:[&[data-open]]:border-t max-lg:[&[data-open]]:border-b max-lg:[&[data-open]]:border-ink/10',
+      ]}
       aria-label="Hoofdnavigatie"
     >
       {items.map((item) => {
         const isActive = active === item.label;
-        const activeStyle = isFranchise ? 'bg-gold/15 text-aubergine' : 'bg-aubergine/10 text-aubergine';
-        const hoverStyle = isFranchise ? 'text-ink hover:text-aubergine-deep hover:bg-gold/10' : 'text-ink hover:text-magenta hover:bg-aubergine/5';
+        if (isFranchise) {
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                'no-underline text-sm font-medium px-3.5 py-2 rounded-full transition-colors',
+                isActive ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/8',
+              ]}
+            >{item.label}</a>
+          );
+        }
         return (
           <a
             href={item.href}
             class:list={[
               'no-underline text-sm font-medium px-3.5 py-2 rounded-full transition-colors',
-              isActive ? activeStyle : hoverStyle,
+              isActive ? 'bg-aubergine/10 text-aubergine' : 'text-ink hover:text-magenta hover:bg-aubergine/5',
             ]}
           >{item.label}</a>
         );
       })}
 
-      <span class="hidden lg:inline-block w-px h-5 bg-ink/15 mx-1" aria-hidden="true"></span>
+      <span class:list={['hidden lg:inline-block w-px h-5 mx-1', isFranchise ? 'bg-white/20' : 'bg-ink/15']} aria-hidden="true"></span>
 
       <a
         href={otherSideHref}
         class:list={[
           'no-underline text-xs font-semibold rounded-full px-4 py-2 border whitespace-nowrap transition-all',
           isFranchise
-            ? 'text-ink border-ink/20 hover:bg-aubergine hover:text-white hover:border-aubergine'
+            ? 'text-white border-white/30 hover:bg-magenta hover:text-white hover:border-magenta'
             : 'text-ink border-aubergine/20 hover:bg-aubergine hover:text-white hover:border-aubergine',
         ]}
       >

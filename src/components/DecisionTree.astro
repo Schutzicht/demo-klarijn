@@ -89,7 +89,7 @@ const data = JSON.stringify({ questions, matchThreshold });
       });
       body.innerHTML = `
         <div class="text-center py-4">
-          <div class="w-24 h-24 mx-auto mb-6 rounded-full grid place-items-center text-4xl font-bold border-[5px] border-paper ${isMatch ? 'bg-emerald-600 text-white' : 'bg-magenta text-white'}" style="${isMatch ? 'box-shadow:0 0 0 2px #047857;' : 'box-shadow:0 0 0 2px #E0277A;'}">${isMatch ? '✓' : '!'}</div>
+          <div class="w-24 h-24 mx-auto mb-6 rounded-full grid place-items-center font-display text-4xl border-[5px] border-paper ${isMatch ? 'bg-emerald-600 text-white' : 'bg-magenta text-white'}" style="${isMatch ? 'box-shadow:0 0 0 2px #047857;' : 'box-shadow:0 0 0 2px #E0277A;'}">${isMatch ? '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/><circle cx="12" cy="12" r="10"/></svg>'}</div>
           <h2 class="text-3xl md:text-4xl font-bold mb-4 text-aubergine">${isMatch ? 'Match. Laten we kennismaken.' : 'Klarijn lijkt nu nog niet de beste pasvorm.'}</h2>
           <p class="text-lg text-ink-soft max-w-prose mx-auto mb-6">
             ${isMatch

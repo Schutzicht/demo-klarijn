@@ -6,21 +6,29 @@
 
 <button
   type="button"
-  class="vraaghet-fab fixed left-4 md:left-8 bottom-4 md:bottom-8 z-[60] inline-flex items-center -gap-2 border-0 cursor-pointer transition-transform hover:-translate-y-0.5 group bg-transparent p-0"
+  class="vraaghet-fab fixed left-4 md:left-8 bottom-4 md:bottom-8 z-[60] border-0 cursor-pointer bg-transparent p-0 group"
   data-vraaghet-open
   aria-label="Vraag het Klarijn"
 >
-  <!-- Eibert hoofd -->
-  <span class="relative w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-[3px] border-white shadow-[0_8px_20px_rgba(94,31,92,0.3)] z-10">
-    <img src="/img/eibert.webp" alt="" aria-hidden="true" class="w-full h-full object-cover scale-110 transition-transform group-hover:scale-125 duration-500" />
+  <span class="relative inline-block transition-transform duration-300 group-hover:-translate-y-1">
+    <!-- Eibert avatar - ingezoomd op gezicht -->
+    <span class="block w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-[3px] border-white shadow-[0_8px_24px_rgba(94,31,92,0.35)]">
+      <img
+        src="/img/eibert.webp"
+        alt=""
+        aria-hidden="true"
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        style="object-position: 50% 22%; transform: scale(1.5);"
+      />
+    </span>
+    <!-- Speech bubble - alsof het uit Eibert's hoofd komt, rechtsboven -->
+    <img
+      src="/img/vraag-het-bubble.webp"
+      alt=""
+      aria-hidden="true"
+      class="absolute -top-6 -right-7 md:-top-7 md:-right-8 w-12 md:w-14 h-auto rotate-[12deg] transition-transform duration-300 group-hover:rotate-[20deg] group-hover:scale-110 drop-shadow-[0_8px_20px_rgba(224,39,122,0.5)]"
+    />
   </span>
-  <!-- Speech bubble - lichtjes overlapt links -->
-  <img
-    src="/img/vraag-het-bubble.webp"
-    alt=""
-    aria-hidden="true"
-    class="-ml-3 md:-ml-4 w-12 md:w-16 h-auto transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-105 drop-shadow-[0_8px_18px_rgba(224,39,122,0.45)]"
-  />
 </button>
 
 <div class="modal-backdrop" data-vraaghet-modal role="dialog" aria-modal="true" aria-labelledby="vh-title">
@@ -28,10 +36,23 @@
     <button type="button" class="absolute right-4 top-4 w-9 h-9 rounded-full bg-paper-2 hover:bg-magenta hover:text-white grid place-items-center text-xl cursor-pointer border-0 transition-all" data-vraaghet-close aria-label="Sluiten">×</button>
 
     <div class="flex items-start gap-4 mb-5">
-      <span class="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-[3px] border-white shadow-[0_4px_14px_rgba(94,31,92,0.2)] shrink-0">
-        <img src="/img/eibert.webp" alt="" aria-hidden="true" class="w-full h-full object-cover scale-110" />
+      <span class="relative shrink-0">
+        <span class="block w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-[3px] border-white shadow-[0_4px_14px_rgba(94,31,92,0.2)]">
+          <img
+            src="/img/eibert.webp"
+            alt=""
+            aria-hidden="true"
+            class="w-full h-full object-cover"
+            style="object-position: 50% 22%; transform: scale(1.5);"
+          />
+        </span>
+        <img
+          src="/img/vraag-het-bubble.webp"
+          alt=""
+          aria-hidden="true"
+          class="absolute -top-7 -right-7 md:-top-8 md:-right-8 w-14 md:w-16 h-auto rotate-[12deg]"
+        />
       </span>
-      <img src="/img/vraag-het-bubble.webp" alt="" aria-hidden="true" class="w-14 md:w-16 h-auto -ml-6 mt-1 shrink-0" />
       <div class="ml-1">
         <h2 id="vh-title" class="font-display text-2xl md:text-3xl text-aubergine mt-1 mb-1 leading-tight">Vraag het Eibert.</h2>
         <p class="text-ink-soft text-sm m-0">Antwoord binnen 1 werkdag, vaak sneller.</p>
@@ -101,7 +122,9 @@
       panel.innerHTML = `
         <button type="button" class="absolute right-4 top-4 w-9 h-9 rounded-full bg-paper-2 hover:bg-magenta hover:text-white grid place-items-center text-xl cursor-pointer border-0 transition-all" data-close-confirm aria-label="Sluiten">×</button>
         <div class="text-center py-8">
-          <div class="w-20 h-20 mx-auto mb-5 bg-magenta rounded-full grid place-items-center text-white text-4xl">✓</div>
+          <div class="w-20 h-20 mx-auto mb-5 bg-magenta rounded-full grid place-items-center text-white">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
           <h2 class="font-display text-3xl md:text-4xl text-aubergine mb-3">Verstuurd.</h2>
           <p class="text-ink-soft mb-0">We nemen binnen 1 werkdag contact op zoals je hebt aangegeven.</p>
         </div>

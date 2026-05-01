@@ -29,7 +29,7 @@ const { title, lead, crumbs = [], eyebrow, stamps = [] } = Astro.props;
 
   <div class="max-w-[1240px] mx-auto px-4 md:px-8 py-14 md:py-24 relative z-10">
     {crumbs.length > 0 && (
-      <nav class="text-xs font-medium text-white/70 mb-4" aria-label="Kruimelpad">
+      <nav class="text-xs font-medium text-white/70 mb-8 md:mb-10" aria-label="Kruimelpad">
         {crumbs.map((c, i) => (
           <Fragment>
             {c.href ? <a href={c.href} class="text-white/70 hover:text-white no-underline">{c.label}</a> : <span class="text-white">{c.label}</span>}

@@ -62,15 +62,10 @@ const ldFaq = {
           <p class="text-lg md:text-xl text-ink-soft max-w-[48ch] mb-8 leading-relaxed" data-reveal data-reveal-delay="2">
             Praktisch juridisch advies voor ondernemers met de voeten in de klei. Geen ivoren toren, wel heldere antwoorden van een vaste jurist die jouw zaak kent.
           </p>
-
-          <!-- Interactieve "Vraag het Klarijn" - rode draad uit briefing -->
-          <div data-reveal data-reveal-delay="3">
-            <HeroAsk />
+          <div class="flex gap-3 flex-wrap" data-reveal data-reveal-delay="3">
+            <a class="btn btn-primary" href="/oplossingen">Bekijk oplossingen <span class="arrow">→</span></a>
+            <a class="btn btn-ghost" href="/contact">Direct contact</a>
           </div>
-
-          <p class="mt-6 text-sm text-ink-soft" data-reveal data-reveal-delay="4">
-            Of <a href="/oplossingen" class="text-aubergine font-semibold hover:text-magenta">bekijk al onze oplossingen</a> · <a href="/contact" class="text-aubergine font-semibold hover:text-magenta">direct contact</a>
-          </p>
         </div>
 
         <!-- Editorial visual: hero photo with the Klarijn "VRAAG HET" pop-up -->
@@ -107,6 +102,13 @@ const ldFaq = {
     </div>
   </div>
 
+  <!-- ========== VRAAG HET KLARIJN - interactive Q&A pattern ========== -->
+  <section class="section-y bg-paper-2">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8" data-reveal>
+      <HeroAsk />
+    </div>
+  </section>
+
   <!-- ========== ANIMATED STATS ========== -->
   <section class="py-14 md:py-16 bg-paper">
     <div class="max-w-[1240px] mx-auto px-4 md:px-8">
@@ -134,7 +136,7 @@ const ldFaq = {
       <div class="grid lg:grid-cols-2 gap-8 items-end mb-12" data-reveal>
         <div>
           <span class="eyebrow">Wat mag je verwachten</span>
-          <h2 class="display-2 mt-3">De aanpak van<br/><span class="brush brush--soft">Klarijn</span>.</h2>
+          <h2 class="display-2 mt-3">De aanpak van<br/><span class="brush--soft">Klarijn</span>.</h2>
         </div>
         <p class="text-lg md:text-xl text-ink-soft lg:justify-self-end max-w-[44ch]">
           Wat hebben we gemeen met onze klanten? We werken op resultaat. Geen lege beloftes, geen wollig taalgebruik.
@@ -296,8 +298,8 @@ const ldFaq = {
         <!-- Compact rayon mini-card: clean typography ipv abstracte map -->
         <div class="relative z-10 bg-white/8 backdrop-blur-sm border border-white/15 rounded-card p-5 md:p-6 max-w-[340px] mx-auto">
           <div class="flex items-baseline justify-between mb-3">
-            <span class="font-display text-xl text-white leading-none">14 rayons</span>
-            <span class="text-[.62rem] font-bold uppercase tracking-[.18em] text-gold">in 2026</span>
+            <span class="font-display text-xl text-white leading-none">Rayons</span>
+            <span class="text-[.62rem] font-bold uppercase tracking-[.18em] text-magenta-soft">Landelijke dekking</span>
           </div>
           <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
             <span class="inline-flex items-center gap-2 text-magenta-soft font-semibold">

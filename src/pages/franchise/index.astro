@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import DirkVraagtPanel from '../../components/DirkVraagtPanel.astro';
-import SectionDivider from '../../components/SectionDivider.astro';
 import AnimatedNumber from '../../components/AnimatedNumber.astro';
 ---
 
@@ -15,17 +14,17 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
   <!-- ========== Franchise hero - DARK band met goud accent ========== -->
   <section class="relative bg-aubergine-deep text-white pt-12 md:pt-20 lg:pt-24 pb-20 md:pb-28 overflow-hidden">
     <div class="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full opacity-30 pointer-events-none blur-3xl"
-         style="background: radial-gradient(circle, var(--color-gold) 0%, transparent 65%);"></div>
+         style="background: radial-gradient(circle, var(--color-magenta) 0%, transparent 65%);"></div>
     <div class="absolute top-1/2 -left-72 w-[640px] h-[640px] rounded-full opacity-25 pointer-events-none blur-3xl"
          style="background: radial-gradient(circle, var(--color-aubergine-soft) 0%, transparent 70%);"></div>
 
     <div class="max-w-[1240px] mx-auto px-4 md:px-8 relative z-10">
       <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-12 lg:gap-20 items-center">
         <div>
-          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold before:content-[''] before:w-6 before:h-0.5 before:bg-gold" data-reveal>Klarijn Franchise · landelijk vanaf 2026</span>
+          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft before:content-[''] before:w-6 before:h-0.5 before:bg-magenta" data-reveal>Klarijn Franchise · landelijk vanaf 2026</span>
           <h1 class="font-display uppercase leading-[0.95] tracking-tight font-normal text-balance text-white mt-5 mb-6" style="font-size: clamp(2rem, 5.5vw, 4.6rem);" data-reveal data-reveal-delay="1">
             Eigen praktijk.<br/>
-            <span class="brush brush--gold">Sterke ploeg</span> achter je.
+            <span class="brush">Sterke ploeg</span> achter je.
           </h1>
           <p class="text-lg md:text-xl text-white/80 max-w-[48ch] mb-10 leading-relaxed" data-reveal data-reveal-delay="2">
             Voor juristen die willen ondernemen - met de voeten in de klei, in een eigen rayon, en met een backoffice die marketing, automatisering en ondersteuning regelt.
@@ -40,8 +39,8 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
         <div class="relative" data-reveal data-reveal-delay="2">
           <div class="bg-white rounded-jumbo p-6 md:p-8 shadow-2xl max-w-[420px] mx-auto">
             <div class="flex items-baseline justify-between mb-5">
-              <h3 class="font-display text-2xl text-aubergine m-0 leading-none">Rayons 2026</h3>
-              <span class="text-xs font-semibold uppercase tracking-wider text-ink-soft">14 totaal</span>
+              <h3 class="font-display text-2xl text-aubergine m-0 leading-none">Onze rayons</h3>
+              <span class="text-xs font-semibold uppercase tracking-wider text-ink-soft">Landelijk</span>
             </div>
 
             <ul class="space-y-1">
@@ -63,7 +62,7 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
                 <li class="flex items-center justify-between px-4 py-2 text-sm border-b border-ink/5 last:border-0">
                   <span class="text-ink">{city}</span>
                   <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-ink-soft">
-                    <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-magenta"></span>
                     Beschikbaar
                   </span>
                 </li>
@@ -76,15 +75,12 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
       </div>
     </div>
   </section>
-
-  <SectionDivider variant="curve-down" from="var(--color-aubergine-deep)" to="var(--color-paper)" />
-
   <!-- ========== Animated stats - light band met goud cijfers ========== -->
   <section class="bg-paper py-16 md:py-20">
     <div class="max-w-[1240px] mx-auto px-4 md:px-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
         {[
-          { v: 14, l: 'Rayons in 2026' },
+          { v: 14, l: 'Rayons landelijk' },
           { v: 145, prefix: '€ ', l: 'Abonnement / klant / mnd' },
           { v: 100, suffix: '+', l: 'Klanten gemiddeld per rayon' },
           { v: 30, suffix: '%', l: 'Lagere overhead' },
@@ -99,15 +95,12 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
       </div>
     </div>
   </section>
-
-  <SectionDivider variant="curve" from="var(--color-paper)" to="var(--color-paper-2)" />
-
   <!-- ========== Pillars ========== -->
   <section class="section-y bg-paper-2">
     <div class="max-w-[1240px] mx-auto px-4 md:px-8">
       <div class="text-center mb-12" data-reveal>
-        <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-gold">Drie redenen</span>
-        <h2 class="display-2 mt-3">Eigen praktijk.<br/>Backoffice die regelt.<br/><span class="brush brush--gold">Sterk merk.</span></h2>
+        <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-magenta">Drie redenen</span>
+        <h2 class="display-2 mt-3">Eigen praktijk.<br/>Backoffice die regelt.<br/><span class="brush">Sterk merk.</span></h2>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -117,7 +110,7 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
           { n: 3, t: 'Specialismen elkaar aanvullen', d: 'Een collega in Limburg heeft expertise IE? Mooi, dan kun jij die ook aanbieden in jouw rayon. Extra omzet zonder zelf om te scholen.' },
         ].map((p, i) => (
           <div class="relative bg-white rounded-card p-7 md:p-8 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all" data-reveal data-reveal-delay={i + 1}>
-            <span class="absolute -top-4 left-6 bg-gold text-aubergine-deep w-10 h-10 rounded-full grid place-items-center font-bold text-base border-[3px] border-paper-2">{p.n}</span>
+            <span class="absolute -top-4 left-6 bg-magenta text-aubergine-deep w-10 h-10 rounded-full grid place-items-center font-bold text-base border-[3px] border-paper-2">{p.n}</span>
             <h3 class="text-xl font-semibold text-aubergine mt-3 mb-3">{p.t}</h3>
             <p class="text-ink-soft mb-0 leading-relaxed">{p.d}</p>
           </div>
@@ -125,15 +118,12 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
       </div>
     </div>
   </section>
-
-  <SectionDivider variant="wave" from="var(--color-paper-2)" to="var(--color-paper)" />
-
   <!-- ========== Franchisenemer vraagt ========== -->
   <section class="section-y bg-paper">
     <div class="max-w-[1240px] mx-auto px-4 md:px-8">
       <div class="grid lg:grid-cols-[.8fr_1.2fr] gap-10 items-start">
         <div data-reveal>
-          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-gold">Franchisenemer vraagt Klarijn</span>
+          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-magenta">Franchisenemer vraagt Klarijn</span>
           <h2 class="display-2 mt-3 mb-4">Wat juristen ons vroegen<br/>tijdens de pilot.</h2>
           <p class="text-lg text-ink-soft leading-relaxed">
             Tijdens de pilot in 2025 in regio IJsselland vroegen geïnteresseerde juristen ons van alles. Zelfde formaat als bij de klanten - handen uit de mouwen, recht voor z'n raap.
@@ -149,8 +139,8 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
   <!-- ========== CTA decision tree ========== -->
   <section class="section-y bg-paper-2">
     <div class="max-w-[1240px] mx-auto px-4 md:px-8 text-center" data-reveal>
-      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-gold">Past het bij jou?</span>
-      <h2 class="display-2 mt-3 mb-4">Doe de match-test.<br/><span class="brush brush--gold">10 vragen, 3 minuten.</span></h2>
+      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-magenta">Past het bij jou?</span>
+      <h2 class="display-2 mt-3 mb-4">Doe de match-test.<br/><span class="brush">10 vragen, 3 minuten.</span></h2>
       <p class="text-lg text-ink-soft max-w-prose mx-auto mb-8 leading-relaxed">
         Voordat je een gesprek inplant, kun je zelf checken of Klarijn bij jou past. Eerlijk advies: soms zien we al na 10 vragen dat het geen match is. Scheelt jou en ons tijd.
       </p>

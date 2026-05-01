@@ -136,9 +136,19 @@
   .add-btn[data-added="true"] {
     @apply bg-aubergine text-white;
   }
+  .add-btn[data-added="true"] .add-btn__label {
+    @apply pl-1.5;
+  }
   .add-btn[data-added="true"] .add-btn__label::before {
-    content: "✓ ";
-    @apply font-bold;
+    content: "";
+    display: inline-block;
+    width: 0.85em;
+    height: 0.85em;
+    margin-right: 0.4em;
+    margin-bottom: -0.1em;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") no-repeat center / contain;
   }
 
   /* Photo blob - organic rounded shape */
@@ -278,47 +288,71 @@
 }
 
 /* =========================================================
-   FRANCHISE - ACCENT SHIFT
-   Klant-zijde gebruikt magenta als accent, franchise gebruikt goud.
-   De rest van het canvas (cream achtergrond, donkere tekst) blijft gelijk
-   zodat content rustig leesbaar is. Distinctie komt uit:
-   1. Donkere switch-banner bovenaan (al in Layout)
-   2. Goud accent i.p.v. magenta (deze regels)
-   3. "← Klant-website" pill in nav
+   FRANCHISE - ECHTE INVERSIE VAN HUISSTIJL
+   Klant: cream bg + donker tekst + magenta accent
+   Franchise: aubergine bg + cream tekst + magenta accent (zelfde brand, geinverteerd)
+   Geen gold, geen ander accent - puur de huisstijl gespiegeld.
+   "Soort dark version, niet te dark" = aubergine ipv aubergine-deep als hoofdkleur.
    ========================================================= */
 
-/* Magenta accents → goud op franchise (speech bubble + .bg-magenta blijven magenta voor brand) */
-body.is-franchise .text-magenta { color: var(--color-gold-deep, #C99332); }
-body.is-franchise .text-magenta-soft { color: var(--color-gold-soft); }
-body.is-franchise .border-magenta { border-color: var(--color-gold); }
-body.is-franchise [class*="border-l-4"][class*="border-magenta"] { border-color: var(--color-gold); }
-
-/* CTA-buttons op franchise: gold-on-aubergine voor premium feel, leesbaar op cream én op dark sections */
-body.is-franchise .btn-primary {
-  background-color: var(--color-gold);
-  color: var(--color-aubergine-deep);
-}
-body.is-franchise .btn-primary:hover {
-  background-color: #DDA837;
-  color: var(--color-aubergine-deep);
-  box-shadow: 0 10px 24px rgba(232, 180, 71, 0.32);
-}
-body.is-franchise .btn-purple {
-  background-color: var(--color-gold);
-  color: var(--color-aubergine-deep);
-}
-body.is-franchise .btn-purple:hover {
-  background-color: #DDA837;
-  color: var(--color-aubergine-deep);
+body.is-franchise {
+  background-color: var(--color-aubergine);
+  color: var(--color-paper);
 }
 
-/* Eyebrow */
-body.is-franchise .eyebrow { color: var(--color-gold-deep, #B58620); }
-body.is-franchise .eyebrow::before { background: var(--color-gold); }
+/* Surface remapping - cream tinten worden aubergine tinten */
+body.is-franchise .bg-paper { background-color: var(--color-aubergine); }
+body.is-franchise .bg-paper-2 { background-color: var(--color-aubergine-deep); }
+body.is-franchise .bg-white {
+  background-color: var(--color-aubergine-soft);
+  color: var(--color-paper);
+}
 
-/* Brush */
-body.is-franchise .brush::after { background: var(--color-gold); opacity: 0.85; }
-body.is-franchise .brush--soft::after { background: var(--color-gold-soft); opacity: 1; }
+/* Tekst remapping - donker wordt cream */
+body.is-franchise .text-ink { color: var(--color-paper); }
+body.is-franchise .text-ink-soft { color: rgba(250, 246, 242, 0.72); }
+body.is-franchise .text-aubergine { color: var(--color-paper); }
+body.is-franchise .text-aubergine-deep { color: var(--color-paper); }
+
+/* Borders */
+body.is-franchise [class*="border-ink/"] { border-color: rgba(250, 246, 242, 0.16); }
+
+/* Magenta blijft magenta - dat IS het brand accent. Geen verandering nodig. */
+
+/* btn-ghost moet werken op donkere bg */
+body.is-franchise .btn-ghost {
+  color: var(--color-paper);
+  border-color: rgba(250, 246, 242, 0.32);
+}
+body.is-franchise .btn-ghost:hover {
+  background-color: var(--color-paper);
+  color: var(--color-aubergine);
+  border-color: var(--color-paper);
+}
+
+/* Forms op donkere bg */
+body.is-franchise .form-input {
+  background-color: rgba(250, 246, 242, 0.08);
+  border-color: rgba(250, 246, 242, 0.2);
+  color: var(--color-paper);
+}
+body.is-franchise .form-input::placeholder { color: rgba(250, 246, 242, 0.45); }
+body.is-franchise .form-input:focus {
+  border-color: var(--color-magenta);
+  background-color: rgba(250, 246, 242, 0.12);
+  box-shadow: 0 0 0 4px rgba(224, 39, 122, 0.18);
+}
+body.is-franchise .form-label { color: rgba(250, 246, 242, 0.7); }
+
+/* FAQ */
+body.is-franchise .faq-item summary { color: var(--color-paper); }
+body.is-franchise .faq-item summary::after { color: var(--color-magenta); }
+
+/* Tags */
+body.is-franchise .tag {
+  background-color: rgba(250, 246, 242, 0.08);
+  color: var(--color-magenta-soft);
+}
 
 /* ----- Modal -------------------------------------------- */
 @layer components {

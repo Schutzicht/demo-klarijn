@@ -97,7 +97,9 @@ import PageHero from '../components/PageHero.astro';
         e.preventDefault();
         f.outerHTML = `
           <div class="bg-white rounded-card p-10 text-center shadow-lg">
-            <div class="w-16 h-16 mx-auto mb-4 bg-magenta rounded-full grid place-items-center text-white text-3xl">✓</div>
+            <div class="w-16 h-16 mx-auto mb-4 bg-magenta rounded-full grid place-items-center text-white">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
             <h3 class="text-2xl font-semibold text-aubergine mb-2">We hebben je bericht ontvangen</h3>
             <p class="text-ink-soft m-0">We bellen of mailen je binnen 1 werkdag terug.</p>
           </div>`;

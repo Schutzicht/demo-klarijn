@@ -212,7 +212,9 @@ function init() {
       const wrap = form.closest<HTMLElement>('[data-basket-form]')!;
       wrap.innerHTML = `
         <div class="text-center bg-white rounded-3xl shadow-sm p-12">
-          <div class="w-16 h-16 mx-auto mb-4 bg-magenta rounded-full grid place-items-center text-white text-3xl">✓</div>
+          <div class="w-16 h-16 mx-auto mb-4 bg-magenta rounded-full grid place-items-center text-white">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
           <h3 class="text-2xl font-semibold text-aubergine mb-3">We gaan ermee aan de slag.</h3>
           <p class="text-ink-soft">Je aanvraag is verzonden naar <strong>bestelling@klarijn.nl</strong>.</p>
           <p class="text-ink-soft">Een rayonhouder neemt binnen 1 werkdag contact met je op.</p>
