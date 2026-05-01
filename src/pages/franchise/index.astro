@@ -13,27 +13,27 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
   active="Franchise"
   showVraagHet={false}
 >
-  <!-- ========== Franchise hero ========== -->
-  <section class="relative bg-paper pt-10 md:pt-16 lg:pt-20 pb-20 md:pb-28 overflow-hidden">
-    <div class="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full opacity-25 pointer-events-none blur-3xl"
-         style="background: radial-gradient(circle, var(--color-gold-soft) 0%, transparent 65%);"></div>
-    <div class="absolute top-1/2 -left-72 w-[640px] h-[640px] rounded-full opacity-15 pointer-events-none blur-3xl"
+  <!-- ========== Franchise hero — DARK band met goud accent ========== -->
+  <section class="relative bg-aubergine-deep text-white pt-12 md:pt-20 lg:pt-24 pb-20 md:pb-28 overflow-hidden">
+    <div class="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full opacity-30 pointer-events-none blur-3xl"
+         style="background: radial-gradient(circle, var(--color-gold) 0%, transparent 65%);"></div>
+    <div class="absolute top-1/2 -left-72 w-[640px] h-[640px] rounded-full opacity-25 pointer-events-none blur-3xl"
          style="background: radial-gradient(circle, var(--color-aubergine-soft) 0%, transparent 70%);"></div>
 
     <div class="max-w-[1240px] mx-auto px-4 md:px-8 relative z-10">
       <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-12 lg:gap-20 items-center">
         <div>
           <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold before:content-[''] before:w-6 before:h-0.5 before:bg-gold" data-reveal>Klarijn Franchise · landelijk vanaf 2026</span>
-          <h1 class="display-1 mt-4 mb-6 text-aubergine" data-reveal data-reveal-delay="1">
-            Een eigen praktijk.<br/>
-            Met een <span class="brush brush--gold">sterke ploeg</span><br/>achter je.
+          <h1 class="font-display uppercase leading-[0.95] tracking-tight font-normal text-balance text-white mt-5 mb-6" style="font-size: clamp(2rem, 5.5vw, 4.6rem);" data-reveal data-reveal-delay="1">
+            Eigen praktijk.<br/>
+            <span class="brush brush--gold">Sterke ploeg</span> achter je.
           </h1>
-          <p class="text-lg md:text-xl text-ink-soft max-w-[48ch] mb-10 leading-relaxed" data-reveal data-reveal-delay="2">
+          <p class="text-lg md:text-xl text-white/80 max-w-[48ch] mb-10 leading-relaxed" data-reveal data-reveal-delay="2">
             Voor juristen die willen ondernemen — met de voeten in de klei, in een eigen rayon, en met een backoffice die marketing, automatisering en ondersteuning regelt.
           </p>
           <div class="flex gap-3 flex-wrap" data-reveal data-reveal-delay="3">
             <a class="btn btn-primary" href="/franchise/beslisboom">Doe de match-test <span class="arrow">→</span></a>
-            <a class="btn btn-ghost" href="/franchise/aanpak">Lees over de aanpak</a>
+            <a class="btn btn-ghost-light" href="/franchise/aanpak">Lees over de aanpak</a>
           </div>
         </div>
 
@@ -79,10 +79,10 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
     </div>
   </section>
 
-  <SectionDivider variant="curve-down" from="var(--color-paper)" to="var(--color-aubergine)" />
+  <SectionDivider variant="curve-down" from="var(--color-aubergine-deep)" to="var(--color-paper)" />
 
-  <!-- ========== Animated stats on dark band ========== -->
-  <section class="bg-aubergine text-white py-16 md:py-20">
+  <!-- ========== Animated stats — light band met goud cijfers ========== -->
+  <section class="bg-paper py-16 md:py-20">
     <div class="max-w-[1240px] mx-auto px-4 md:px-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
         {[
@@ -92,17 +92,17 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
           { v: 30, suffix: '%', l: 'Lagere overhead' },
         ].map((item, i) => (
           <div data-reveal data-reveal-delay={i + 1}>
-            <span class="block font-display text-5xl md:text-7xl text-gold leading-none">
+            <span class="block font-display text-5xl md:text-7xl text-aubergine leading-none">
               <AnimatedNumber value={item.v} prefix={item.prefix || ''} suffix={item.suffix || ''} />
             </span>
-            <span class="block text-xs md:text-sm font-semibold uppercase tracking-wider text-white/70 mt-3">{item.l}</span>
+            <span class="block text-xs md:text-sm font-semibold uppercase tracking-wider text-ink-soft mt-3">{item.l}</span>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <SectionDivider variant="curve" from="var(--color-aubergine)" to="var(--color-paper-2)" />
+  <SectionDivider variant="curve" from="var(--color-paper)" to="var(--color-paper-2)" />
 
   <!-- ========== Pillars ========== -->
   <section class="section-y bg-paper-2">
