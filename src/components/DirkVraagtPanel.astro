@@ -18,25 +18,29 @@ const klarijnImg = klarijnAnswerer.img;
 >
   <span class="absolute top-0 right-0 w-1.5 h-full bg-magenta" aria-hidden="true"></span>
 
-  <!-- Vraag van klant -->
-  <header class="flex items-start gap-3.5 mb-4">
+  <!-- Vraag-rij: asker rechts uitgelijnd (chat-stijl) -->
+  <div class="flex items-start justify-end gap-3 md:gap-3.5 mb-5">
+    <div class="flex-1 max-w-[85%] flex flex-col items-end min-w-0">
+      <div class="text-xs font-semibold uppercase tracking-wider text-ink-soft mb-1.5 text-right" data-dv-name>-</div>
+      <div class="bg-paper-2 px-5 py-4 rounded-tr-md rounded-tl-2xl rounded-bl-2xl rounded-br-2xl">
+        <p class="font-sans font-semibold text-aubergine leading-snug text-base md:text-lg m-0 min-h-[2.5em]" data-dv-q></p>
+      </div>
+    </div>
     <span class="relative w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-[3px] border-white shrink-0 shadow-md">
       <img alt="" aria-hidden="true" class="w-full h-full object-cover" data-dv-asker-img />
     </span>
-    <div class="flex-1 min-w-0">
-      <div class="text-xs font-semibold uppercase tracking-wider text-ink-soft mb-0.5" data-dv-name>-</div>
-      <p class="font-sans font-semibold text-aubergine leading-snug min-h-[3em] text-lg md:text-xl m-0" data-dv-q></p>
-    </div>
-  </header>
+  </div>
 
-  <!-- Antwoord van Klarijn -->
-  <div class="flex items-start gap-3.5 mb-5">
+  <!-- Antwoord-rij: Klarijn links uitgelijnd -->
+  <div class="flex items-start gap-3 md:gap-3.5 mb-6">
     <span class="relative w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-[3px] border-white shrink-0 shadow-md ring-2 ring-magenta/30">
-      <img src={klarijnImg} alt="" aria-hidden="true" class="w-full h-full object-cover scale-110" />
+      <img src={klarijnImg} alt="Klarijn antwoordt" aria-hidden="true" class="w-full h-full object-cover object-top scale-[1.6] origin-top" />
     </span>
-    <div class="flex-1 min-w-0 bg-paper-2 px-5 py-4 rounded-tl-md rounded-tr-2xl rounded-br-2xl rounded-bl-2xl">
+    <div class="flex-1 max-w-[85%] min-w-0">
       <div class="text-xs font-bold uppercase tracking-wider text-magenta mb-1.5">Klarijn antwoordt</div>
-      <p class="text-ink leading-relaxed text-sm md:text-base m-0" data-dv-a></p>
+      <div class="bg-aubergine text-white px-5 py-4 rounded-tl-md rounded-tr-2xl rounded-br-2xl rounded-bl-2xl">
+        <p class="leading-relaxed text-sm md:text-base m-0" data-dv-a></p>
+      </div>
     </div>
   </div>
 

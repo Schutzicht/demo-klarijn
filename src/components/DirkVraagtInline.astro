@@ -6,7 +6,7 @@ interface Pair {
   role: string;
   q: string;
   a: string;
-  /** Foto van de vragensteller. Vul in als je een specifieke foto wilt; default is een stock-portret obv naam. */
+  /** Foto van de vragensteller. Vul in als je een specifieke foto wilt. */
   img?: string;
 }
 interface Props {
@@ -35,22 +35,29 @@ const askerImg = (p: Pair) => {
 
   {pairs.map((p) => (
     <Fragment>
-      <div class="flex items-start gap-3.5 my-3">
+      <!-- Vraag-rij: asker rechts uitgelijnd -->
+      <div class="flex items-start justify-end gap-3 my-3">
+        <div class="flex-1 max-w-[85%] flex flex-col items-end min-w-0">
+          <strong class="block text-xs font-bold uppercase tracking-wider text-ink-soft mb-1.5 text-right">{p.who} · {p.role}</strong>
+          <div class="bg-paper-2 px-5 py-4 rounded-tr-md rounded-tl-2xl rounded-bl-2xl rounded-br-2xl">
+            <p class="m-0 text-base leading-relaxed">{p.q}</p>
+          </div>
+        </div>
         <span class="relative w-12 h-12 rounded-full overflow-hidden border-[3px] border-white shrink-0 shadow-md">
           <img src={askerImg(p)} alt={`Foto van ${p.who}`} loading="lazy" class="w-full h-full object-cover" />
         </span>
-        <div class="bg-paper-2 px-5 py-4 rounded-tl-md rounded-tr-2xl rounded-br-2xl rounded-bl-2xl flex-1 min-w-0">
-          <strong class="block text-xs font-bold uppercase tracking-wider text-ink-soft mb-1.5">{p.who} · {p.role}</strong>
-          <p class="m-0 text-base leading-relaxed">{p.q}</p>
-        </div>
       </div>
-      <div class="flex items-start gap-3.5 my-3 mb-6">
+
+      <!-- Antwoord-rij: Klarijn links uitgelijnd -->
+      <div class="flex items-start gap-3 my-3 mb-6">
         <span class="relative w-12 h-12 rounded-full overflow-hidden border-[3px] border-white shrink-0 shadow-md ring-2 ring-magenta/30">
-          <img src={klarijnAnswerer.img} alt="Klarijn antwoordt" loading="lazy" class="w-full h-full object-cover scale-110" />
+          <img src={klarijnAnswerer.img} alt="Klarijn antwoordt" loading="lazy" class="w-full h-full object-cover object-top scale-[1.6] origin-top" />
         </span>
-        <div class="bg-aubergine text-white px-5 py-4 rounded-tr-md rounded-tl-2xl rounded-br-2xl rounded-bl-2xl flex-1 min-w-0">
-          <strong class="block text-xs font-bold uppercase tracking-wider text-magenta-soft mb-1.5">Klarijn antwoordt</strong>
-          <p class="m-0 text-base leading-relaxed">{p.a}</p>
+        <div class="flex-1 max-w-[85%] min-w-0">
+          <strong class="block text-xs font-bold uppercase tracking-wider text-magenta mb-1.5">Klarijn antwoordt</strong>
+          <div class="bg-aubergine text-white px-5 py-4 rounded-tl-md rounded-tr-2xl rounded-br-2xl rounded-bl-2xl">
+            <p class="m-0 text-base leading-relaxed">{p.a}</p>
+          </div>
         </div>
       </div>
     </Fragment>

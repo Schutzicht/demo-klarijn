@@ -61,38 +61,13 @@ const segments = [
 const klarijnImg = klarijnAnswerer.img;
 ---
 
-<div class="hero-ask bg-white rounded-jumbo p-6 md:p-7 shadow-[0_20px_50px_-12px_rgba(94,31,92,0.18)] relative" data-hero-ask>
-  <!-- Header: subtiele Eibert avatar + vraag -->
-  <div class="flex items-start gap-4 mb-5">
-    <span class="relative shrink-0">
-      <span class="block w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-[2.5px] border-white shadow-md">
-        <img
-          src={klarijnImg}
-          alt=""
-          aria-hidden="true"
-          class="w-full h-full object-cover object-top scale-[1.6] origin-top"
-        />
-      </span>
-      <!-- Mini-bubble accent rechtsboven, subtiele referentie naar de FAB -->
-      <img
-        src="/img/vraag-het-bubble.webp"
-        alt=""
-        aria-hidden="true"
-        class="absolute -top-3 -right-3 w-7 md:w-8 h-auto opacity-95"
-      />
-    </span>
-    <div class="pt-1">
-      <span class="block text-[.7rem] font-bold uppercase tracking-[.14em] text-magenta mb-1">Vraag het Klarijn</span>
-      <p class="font-display text-xl md:text-2xl text-aubergine m-0 leading-tight">Waar gaat je vraag over?</p>
-    </div>
-  </div>
-
-  <!-- Topic chips -->
-  <div class="flex flex-wrap gap-2 mb-5">
+<div class="hero-ask bg-white rounded-jumbo p-6 md:p-8 shadow-[0_20px_50px_-12px_rgba(94,31,92,0.18)] relative" data-hero-ask>
+  <!-- Topic chips - direct zichtbaar, geen extra header (sectie heeft eigen titel) -->
+  <div class="flex flex-wrap gap-2 mb-6">
     {segments.map((seg) => (
       <button
         type="button"
-        class="ask-chip group bg-paper border-[1.5px] border-ink/10 rounded-full px-3.5 py-2 text-sm font-medium text-aubergine hover:border-magenta hover:bg-magenta hover:text-white hover:-translate-y-0.5 transition-all cursor-pointer data-[active]:bg-magenta data-[active]:border-magenta data-[active]:text-white"
+        class="ask-chip group bg-paper border-[1.5px] border-ink/10 rounded-full px-4 py-2.5 text-sm font-medium text-aubergine hover:border-magenta hover:bg-magenta hover:text-white hover:-translate-y-0.5 transition-all cursor-pointer data-[active]:bg-magenta data-[active]:border-magenta data-[active]:text-white"
         data-ask-id={seg.id}
       >{seg.label}</button>
     ))}
@@ -101,9 +76,12 @@ const klarijnImg = klarijnAnswerer.img;
   <!-- Antwoord-bubble: verschijnt bij selecteren -->
   <div data-ask-result>
     <!-- Empty state -->
-    <p class="text-ink-soft text-xs text-center pt-2 border-t border-ink/8" data-ask-empty>
-      Klik een onderwerp aan om Klarijn's eerste duiding te zien
-    </p>
+    <div class="flex items-center gap-3 pt-5 border-t border-ink/8" data-ask-empty>
+      <span class="relative w-10 h-10 rounded-full overflow-hidden border-[2px] border-white shrink-0 shadow-sm ring-2 ring-magenta/25">
+        <img src={klarijnImg} alt="" aria-hidden="true" class="w-full h-full object-cover object-top scale-[1.6] origin-top" />
+      </span>
+      <p class="text-ink-soft text-sm m-0">Klik een onderwerp aan voor Klarijn's eerste duiding.</p>
+    </div>
 
     {segments.map((seg) => (
       <div class="ask-content hidden border-t border-ink/8 pt-5" data-ask-content={seg.id}>
