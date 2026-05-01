@@ -15,6 +15,10 @@ import Layout from '../layouts/Layout.astro';
     <div class="max-w-[760px] mx-auto px-4 md:px-8 w-full">
 
       <div class="bg-white rounded-jumbo p-8 md:p-12 shadow-[0_20px_60px_-12px_rgba(94,31,92,0.18)] border border-ink/8 relative overflow-hidden">
+        <!-- Soft accent corner -->
+        <div class="ambient-blob absolute -top-24 -right-24 w-72 h-72 rounded-full opacity-25 pointer-events-none blur-3xl"
+             style="background: radial-gradient(circle, var(--color-magenta-soft) 0%, transparent 70%);"></div>
+
         <!-- Demo badge -->
         <div class="inline-flex items-center gap-2 bg-magenta/10 border border-magenta/25 rounded-full px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-magenta mb-6 relative">
           <span class="w-1.5 h-1.5 rounded-full bg-magenta animate-pulse"></span>

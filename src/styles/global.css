@@ -302,6 +302,9 @@ body.is-franchise {
   color: var(--color-paper);
 }
 
+/* Decoratieve roze/paarse blobs alleen op klant-zijde, niet in dark version */
+body.is-franchise .ambient-blob { display: none; }
+
 /* Body op franchise heeft EEN consistente atmosferische bg.
    Alle sectie-achtergronden worden transparent zodat de body-gradient doorschijnt.
    Alleen cards/callouts (bg-white, bg-aubergine, bg-aubergine-deep) krijgen

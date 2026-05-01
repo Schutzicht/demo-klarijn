@@ -13,6 +13,11 @@ const { title, lead, crumbs = [], eyebrow, stamps = [] } = Astro.props;
 ---
 
 <section class="bg-aubergine text-white relative overflow-hidden">
+  <div class="ambient-blob absolute -bottom-24 -right-24 w-[500px] h-[500px] rounded-full pointer-events-none blur-2xl"
+       style="background: radial-gradient(circle, rgba(224,39,122,.32) 0%, transparent 70%);"></div>
+  <div class="ambient-blob absolute -top-32 -left-20 w-96 h-96 rounded-full pointer-events-none blur-3xl"
+       style="background: radial-gradient(circle, rgba(232,180,71,.15) 0%, transparent 70%);"></div>
+
   <!-- Decorative speech bubble in corner -->
   <img src="/img/vraag-het-bubble.webp" alt="" aria-hidden="true" class="absolute right-8 top-8 w-20 md:w-24 h-auto opacity-25 hidden md:block rotate-12" />
 
