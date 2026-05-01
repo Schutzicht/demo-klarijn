@@ -16,17 +16,21 @@ interface Props {
 }
 const { title, eyebrow = 'Vraag het Klarijn', pairs } = Astro.props;
 
-// Vaste mapping naam → numerieke pravatar ID (curated adult portretten).
-// Voorkomt random kid-photos die seed-strings opleveren.
-const NAME_TO_ID: Record<string, number> = {
-  sander: 11, esther: 13, eline: 14, dirk: 11, joris: 33, sandra: 44,
-  kees: 65, mariska: 49, rik: 8, femke: 16, tim: 53,
+// Vaste mapping naam → lokaal stock-portret. Visueel geverifieerd, geen random.
+const NAME_TO_PHOTO: Record<string, string> = {
+  sander: '/img/stock/p14.jpg',  // man kale kop met baard - praktisch (metaal)
+  esther: '/img/stock/p13.jpg',  // vrouw business 35 - manager familiebedrijf
+  eline: '/img/stock/p11.jpg',   // vrouw casual ~30
+  dirk: '/img/stock/p14.jpg',
+  joris: '/img/stock/p6.jpg',    // man bril pak - mkb directeur
+  sandra: '/img/stock/p16.jpg',  // vrouw vrolijk ~30
+  kees: '/img/stock/p3.jpg',     // oudere man bril
+  mariska: '/img/stock/p9.jpg',  // vrouw vrolijk ~25-30
+  rik: '/img/stock/p15.jpg',
+  femke: '/img/stock/p2.jpg',
+  tim: '/img/stock/p7.jpg',
 };
-const askerImg = (p: Pair) => {
-  if (p.img) return p.img;
-  const id = NAME_TO_ID[p.who.toLowerCase()] ?? 26;
-  return `https://i.pravatar.cc/240?img=${id}`;
-};
+const askerImg = (p: Pair) => p.img || NAME_TO_PHOTO[p.who.toLowerCase()] || '/img/stock/p1.jpg';
 ---
 
 <div class="bg-white rounded-card p-7 md:p-10 shadow-sm">

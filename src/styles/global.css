@@ -306,14 +306,22 @@ body.is-franchise {
   color: var(--color-paper);
 }
 
-/* Surface remapping - cream tinten worden gemute aubergine tinten */
-body.is-franchise .bg-paper { background-color: transparent; }
-body.is-franchise .bg-paper-2 { background-color: rgba(0, 0, 0, 0.18); }
-body.is-franchise .bg-white {
+/* Body op franchise heeft EEN consistente atmosferische bg.
+   Alle sectie-achtergronden worden transparent zodat de body-gradient doorschijnt.
+   Alleen cards/callouts (bg-white, bg-aubergine, bg-aubergine-deep) krijgen
+   een uniforme glass-treatment - dus 1 type elevated card, geen extra paars-tinten. */
+body.is-franchise .bg-paper,
+body.is-franchise .bg-paper-2 {
+  background-color: transparent;
+}
+
+body.is-franchise .bg-white,
+body.is-franchise .bg-aubergine,
+body.is-franchise .bg-aubergine-deep {
   background-color: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   color: var(--color-paper);
 }
 
