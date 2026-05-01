@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Mijn Voortgang - Klarijn"
+  description="Het Klarijn-klantportaal. Demo-pagina."
+  showBasket={false}
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+  </Fragment>
+
+  <section class="min-h-[calc(100vh-88px)] flex items-center py-16 md:py-24">
+    <div class="max-w-[760px] mx-auto px-4 md:px-8 w-full">
+
+      <div class="bg-white rounded-jumbo p-8 md:p-12 shadow-[0_20px_60px_-12px_rgba(94,31,92,0.18)] border border-ink/8 relative overflow-hidden">
+        <!-- Soft accent corner -->
+        <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full opacity-25 pointer-events-none blur-3xl"
+             style="background: radial-gradient(circle, var(--color-magenta-soft) 0%, transparent 70%);"></div>
+
+        <!-- Demo badge -->
+        <div class="inline-flex items-center gap-2 bg-magenta/10 border border-magenta/25 rounded-full px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-magenta mb-6 relative">
+          <span class="w-1.5 h-1.5 rounded-full bg-magenta animate-pulse"></span>
+          Demo · placeholder
+        </div>
+
+        <h1 class="display-2 mb-4 text-aubergine relative">Mijn Voortgang.</h1>
+        <p class="text-lg text-ink-soft leading-relaxed mb-6 relative">
+          Dit is een tijdelijke demo-pagina. In de live website verwijst de "Mijn Voortgang"-knop direct door naar een <strong class="text-aubergine">externe omgeving</strong> die Klarijn zelf inricht en beheert (bijvoorbeeld een dossier-portaal, projectmanagementtool of CRM-dashboard).
+        </p>
+
+        <!-- Wat moet ingevuld worden -->
+        <div class="bg-paper-2 rounded-card p-6 my-7 relative">
+          <span class="eyebrow mb-3">Nader overeen te komen</span>
+          <h3 class="text-lg font-semibold text-aubergine mt-2 mb-3">Welke URL hier komt</h3>
+          <p class="text-ink-soft mb-4">
+            De definitieve bestemming wordt bepaald op basis van het systeem dat Klarijn kiest voor klant-voortgang. Voorbeelden:
+          </p>
+          <ul class="space-y-2 text-sm">
+            <li class="flex items-start gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-magenta shrink-0 grid place-items-center mt-0.5">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong class="text-aubergine">Eigen klantportaal</strong> (bijv. <code class="text-magenta-deep bg-magenta/8 px-1.5 py-0.5 rounded text-xs">portal.klarijn.nl</code>)</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-magenta shrink-0 grid place-items-center mt-0.5">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong class="text-aubergine">Bestaande SaaS</strong> (Asana, ClickUp, Bonsai, Clio, etc.)</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-magenta shrink-0 grid place-items-center mt-0.5">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span><strong class="text-aubergine">Maatwerk dashboard</strong> dat in een latere fase wordt gebouwd</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Hoe het werkt in CMS -->
+        <div class="border-l-4 border-magenta pl-5 py-1 mb-7 relative">
+          <p class="text-sm font-bold uppercase tracking-wider text-magenta mb-1.5">Per briefing</p>
+          <p class="text-ink-soft text-base leading-relaxed m-0">
+            "Een duidelijke, bewerkbare knop op de site die de klant naar een externe omgeving kan sturen. Heldere externe link-structuur die in de backend te beheren is."
+          </p>
+        </div>
+
+        <p class="text-sm text-ink-soft mb-6 relative">
+          De webbeheerder vult de definitieve URL in via het CMS - op één plek aanpasbaar zonder dev-werk. Als Klarijn later van portaal-systeem wisselt, is dat een veld-update, geen code-wijziging.
+        </p>
+
+        <a href="/" class="btn btn-purple relative">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Terug naar home
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
