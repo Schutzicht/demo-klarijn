@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
-import Stamp from '../components/Stamp.astro';
 import SectionDivider from '../components/SectionDivider.astro';
 
 const stappen = [
@@ -17,11 +16,11 @@ const verwachten = [
   { t: 'Zakelijke blik', d: 'We snappen de juridische issues van jou als ondernemer. We houden je een eerlijke spiegel voor.', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
   { t: 'Duidelijke route', d: 'In onze samenwerking zorgen we ervoor dat je altijd begrijpt waar we naartoe gaan en welke stappen we daarbij nemen.', icon: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>' },
   { t: 'Oplossing', d: "Hoe lastig de situatie ook lijkt, er is altijd een oplossing. We nemen je mee in de mogelijkheden, risico's en kansen.", icon: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>' },
-  { t: 'Netwerk van specialisten', d: 'We weten wanneer aanvullende specialisten nodig zijn — IE, fiscaal, AVG. Jij merkt niets van de inzet, je hebt contact met Klarijn.', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+  { t: 'Netwerk van specialisten', d: 'We weten wanneer aanvullende specialisten nodig zijn - IE, fiscaal, AVG. Jij merkt niets van de inzet, je hebt contact met Klarijn.', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
 ];
 ---
 
-<Layout title="Werkwijze — Klarijn" active="Werkwijze">
+<Layout title="Werkwijze - Klarijn" active="Werkwijze">
   <PageHero
     title="Hoe wij werken.<br/>Vakmanschap, geen toneel."
     lead="Geen lege beloftes en geen 14-pagina-tellende intakefase. We werken zoals onze klanten werken: handen uit de mouwen, helder, en op resultaat."
@@ -86,7 +85,7 @@ const verwachten = [
       <div class="text-center mb-12 max-w-2xl mx-auto" data-reveal>
         <span class="eyebrow justify-center">Drie modellen</span>
         <h2 class="display-2 mt-3 mb-4">Drie manieren waarop<br/>je met ons werkt.</h2>
-        <p class="text-lg text-ink-soft">Niet iedereen heeft dezelfde behoefte. Daarom werken wij met drie heldere modellen — kies wat past.</p>
+        <p class="text-lg text-ink-soft">Niet iedereen heeft dezelfde behoefte. Daarom werken wij met drie heldere modellen - kies wat past.</p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -110,11 +109,12 @@ const verwachten = [
             cta: 'Plan een gesprek', href: '/contact', dark: false,
           },
         ].map((m, i) => (
-          <article class={`relative rounded-jumbo p-8 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all ${m.dark ? 'bg-aubergine text-white' : 'bg-white'}`} data-reveal data-reveal-delay={i + 1}>
+          <article class={`relative rounded-jumbo p-8 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all ${m.dark ? 'bg-aubergine text-white ring-2 ring-magenta/30' : 'bg-white'}`} data-reveal data-reveal-delay={i + 1}>
             {m.dark && (
-              <div class="absolute -top-4 right-6">
-                <Stamp text="Populair" rotate={6} variant="gold" />
-              </div>
+              <span class="absolute -top-3 left-6 inline-flex items-center gap-1.5 bg-magenta text-white text-[.65rem] font-bold uppercase tracking-[.16em] px-3 py-1 rounded-full">
+                <span class="inline-block w-1 h-1 rounded-full bg-white"></span>
+                Meest gekozen
+              </span>
             )}
             <span class={`inline-block text-xs font-semibold uppercase tracking-[.14em] mb-2 ${m.dark ? 'text-magenta-soft' : 'text-magenta'}`}>{m.sub}</span>
             <h3 class={`text-3xl font-bold mb-4 ${m.dark ? 'text-white' : 'text-aubergine'}`}>{m.t}</h3>

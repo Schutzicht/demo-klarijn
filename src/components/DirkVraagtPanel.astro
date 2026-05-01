@@ -1,5 +1,5 @@
 ---
-import { klantVragen, franchiseVragen, type DirkVraag } from '../data/dirkVraagt';
+import { klantVragen, franchiseVragen, klarijnAnswerer, type DirkVraag } from '../data/dirkVraagt';
 
 interface Props {
   variant?: 'klant' | 'franchise';
@@ -7,23 +7,38 @@ interface Props {
 const { variant = 'klant' } = Astro.props;
 const items: DirkVraag[] = variant === 'franchise' ? franchiseVragen : klantVragen;
 const data = JSON.stringify(items);
+const klarijnImg = klarijnAnswerer.img;
 ---
 
 <article
-  class="relative bg-white rounded-jumbo p-8 md:p-10 shadow-2xl overflow-hidden"
+  class="relative bg-white rounded-jumbo p-6 md:p-9 shadow-2xl overflow-hidden"
   data-dv-panel
   data-dv-data={data}
+  data-dv-klarijn-img={klarijnImg}
 >
   <span class="absolute top-0 right-0 w-1.5 h-full bg-magenta" aria-hidden="true"></span>
 
-  <header class="flex items-center gap-3 mb-5">
-    <div class="w-13 h-13 rounded-full bg-magenta text-white grid place-items-center font-display-soft font-bold text-lg border-[3px] border-white outline outline-2 outline-magenta-soft" data-dv-avatar style="width:52px;height:52px;">D</div>
-    <div class="text-sm text-ink-soft font-medium" data-dv-name>—</div>
+  <!-- Vraag van klant -->
+  <header class="flex items-start gap-3.5 mb-4">
+    <span class="relative w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-[3px] border-white shrink-0 shadow-md">
+      <img alt="" aria-hidden="true" class="w-full h-full object-cover" data-dv-asker-img />
+    </span>
+    <div class="flex-1 min-w-0">
+      <div class="text-xs font-semibold uppercase tracking-wider text-ink-soft mb-0.5" data-dv-name>-</div>
+      <p class="font-sans font-semibold text-aubergine leading-snug min-h-[3em] text-lg md:text-xl m-0" data-dv-q></p>
+    </div>
   </header>
 
-  <p class="font-sans font-semibold text-aubergine mb-5 leading-tight min-h-[4em] text-xl md:text-2xl" data-dv-q></p>
-
-  <div class="bg-paper-2 border-l-4 border-magenta px-5 py-4 rounded-r-xl text-ink leading-relaxed mb-6" data-dv-a></div>
+  <!-- Antwoord van Klarijn -->
+  <div class="flex items-start gap-3.5 mb-5">
+    <span class="relative w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-[3px] border-white shrink-0 shadow-md ring-2 ring-magenta/30">
+      <img src={klarijnImg} alt="" aria-hidden="true" class="w-full h-full object-cover scale-110" />
+    </span>
+    <div class="flex-1 min-w-0 bg-paper-2 px-5 py-4 rounded-tl-md rounded-tr-2xl rounded-br-2xl rounded-bl-2xl">
+      <div class="text-xs font-bold uppercase tracking-wider text-magenta mb-1.5">Klarijn antwoordt</div>
+      <p class="text-ink leading-relaxed text-sm md:text-base m-0" data-dv-a></p>
+    </div>
+  </div>
 
   <footer class="flex items-center justify-between gap-4">
     <div class="flex gap-1.5" data-dv-dots></div>
@@ -35,7 +50,7 @@ const data = JSON.stringify(items);
 </article>
 
 <script>
-  type DV = { who: string; role: string; q: string; a: string };
+  type DV = { who: string; role: string; q: string; a: string; img: string };
 
   function init(panel: HTMLElement) {
     if (panel.dataset.bound) return;
@@ -45,9 +60,8 @@ const data = JSON.stringify(items);
     if (data.length === 0) return;
 
     let idx = 0;
-    const initials = (n: string) => n.split(' ').map((p) => p[0]).join('').slice(0, 2).toUpperCase();
 
-    const avatar = panel.querySelector<HTMLElement>('[data-dv-avatar]')!;
+    const askerImg = panel.querySelector<HTMLImageElement>('[data-dv-asker-img]')!;
     const name = panel.querySelector<HTMLElement>('[data-dv-name]')!;
     const q = panel.querySelector<HTMLElement>('[data-dv-q]')!;
     const a = panel.querySelector<HTMLElement>('[data-dv-a]')!;
@@ -59,23 +73,20 @@ const data = JSON.stringify(items);
 
     function render() {
       const d = data[idx];
-      avatar.textContent = initials(d.who);
-      name.innerHTML = `<strong class="block text-ink font-semibold">${d.who}</strong>${d.role}`;
+      askerImg.src = d.img;
+      askerImg.alt = `Foto van ${d.who}`;
+      name.innerHTML = `<strong class="block text-ink font-semibold normal-case tracking-normal text-sm md:text-base">${d.who}</strong>${d.role}`;
       q.textContent = `"${d.q}"`;
-      a.innerHTML = `<strong class="block text-magenta font-bold uppercase tracking-wider text-xs mb-1.5">Klarijn antwoordt</strong>${d.a}`;
+      a.textContent = d.a;
       dots.innerHTML = '';
       data.forEach((_, i) => {
         const b = document.createElement('button');
         b.type = 'button';
         b.setAttribute('aria-label', `Vraag ${i + 1}`);
         b.className =
-          'w-2 h-2 rounded-full p-0 border-0 cursor-pointer transition-all ' +
-          (i === idx ? 'bg-magenta w-6 rounded' : 'bg-paper-2');
-        b.addEventListener('click', () => {
-          idx = i;
-          render();
-          reset();
-        });
+          'h-2 rounded-full p-0 border-0 cursor-pointer transition-all ' +
+          (i === idx ? 'bg-magenta w-6' : 'bg-paper-2 w-2');
+        b.addEventListener('click', () => { idx = i; render(); reset(); });
         dots.appendChild(b);
       });
     }
@@ -99,10 +110,7 @@ const data = JSON.stringify(items);
     document.querySelectorAll<HTMLElement>('[data-dv-panel]').forEach(init);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootAll);
-  } else {
-    bootAll();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootAll);
+  else bootAll();
   document.addEventListener('astro:page-load', bootAll);
 </script>

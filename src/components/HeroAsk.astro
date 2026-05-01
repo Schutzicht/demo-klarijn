@@ -1,0 +1,265 @@
+---
+// "Ik heb een vraag over..." segment-selector — patroon overgenomen uit
+// homepagina-zeezicht hero. Klik onderwerp → toont Klarijn's eerste duiding +
+// twee acties (gerelateerd product + direct contact via VraagHetCTA modal).
+// Sluit aan bij briefing-eis: rode draad "Vraag het Klarijn", uitnodigend interactief.
+
+const segments = [
+  {
+    id: 'personeel',
+    label: 'personeel & arbeidsrecht',
+    subtitle:
+      'Van arbeidscontract tot ontslag of een dossier bij UWV. We pakken het op met een vaste prijs vooraf, geen verrassingen.',
+    actions: [
+      { title: 'Arbeidscontract op maat', desc: 'Vaste prijs · 5 dagen · cao-conform.', href: '/product' },
+      { title: 'Stel je vraag direct', desc: 'Antwoord binnen 1 werkdag.', kind: 'ask' as const, prefill: 'Ik heb een vraag over personeel of arbeidsrecht' },
+    ],
+  },
+  {
+    id: 'incasso',
+    label: 'onbetaalde facturen',
+    subtitle:
+      'No-cure-no-pay incasso. Aanmaning, sommatie, en zo nodig kort geding — in 9 van 10 zaken al opgelost na de eerste brief.',
+    actions: [
+      { title: 'Incasso pakket', desc: 'No-cure-no-pay basis.', href: '/oplossingen' },
+      { title: 'Direct advies', desc: 'Schets je situatie, wij reageren.', kind: 'ask' as const, prefill: 'Mijn klant betaalt al langere tijd niet — kunnen jullie helpen?' },
+    ],
+  },
+  {
+    id: 'contracten',
+    label: 'contracten & voorwaarden',
+    subtitle:
+      'Algemene voorwaarden of een contract op maat — branchespecifiek, juridisch waterdicht, in plain Nederlands. Geen template.',
+    actions: [
+      { title: 'Algemene Voorwaarden', desc: 'Vaste prijs · incl. update-recht.', href: '/oplossingen' },
+      { title: 'Laat dit contract checken', desc: 'Reactie binnen 1 werkdag.', kind: 'ask' as const, prefill: 'Ik wil een contract laten beoordelen' },
+    ],
+  },
+  {
+    id: 'overdracht',
+    label: 'bedrijfsovername of opvolging',
+    subtitle:
+      'Drie sporen tegelijk: structuur, fiscaal, en de menselijke kant. Tijdslijn van 18 maanden zodat je niets vergeet.',
+    actions: [
+      { title: 'Bedrijfsoverdracht Familie', desc: 'Volledig traject van 18 maanden.', href: '/oplossingen' },
+      { title: 'Eerst even sparren', desc: 'Geen verkooppraat, gewoon goede vragen.', kind: 'ask' as const, prefill: 'We willen de zaak overdragen, waar moeten we beginnen?' },
+    ],
+  },
+  {
+    id: 'anders',
+    label: 'iets anders juridisch',
+    subtitle:
+      'Veel vragen passen niet binnen vaste hokjes. Stuur jouw situatie en je krijgt binnen 1 werkdag een eerste duiding van een vaste jurist.',
+    actions: [
+      { title: 'Stel je vraag', desc: 'Geen formulier-bureaucratie.', kind: 'ask' as const, prefill: '' },
+      { title: 'Bel ons direct', desc: 'Maandag t/m vrijdag 08.30 - 17.30.', href: 'tel:0651180138' },
+    ],
+  },
+];
+---
+
+<div class="hero-ask relative max-w-[600px]" data-hero-ask>
+  <div class="bg-white/70 backdrop-blur-xl border border-white shadow-[0_20px_50px_-12px_rgba(94,31,92,0.18)] rounded-jumbo p-5 sm:p-7 md:p-8 relative">
+
+    <span class="block font-display text-xl md:text-2xl text-ink-soft mb-3">Ik heb een vraag over</span>
+
+    <!-- Dropdown trigger -->
+    <div class="relative w-full text-left">
+      <button
+        type="button"
+        class="w-full flex items-center justify-between gap-4 font-display font-normal uppercase text-2xl md:text-3xl tracking-tight text-magenta hover:text-magenta-deep leading-tight pb-3 border-b-2 border-magenta/25 hover:border-magenta transition-all outline-none"
+        data-ask-toggle
+        aria-expanded="false"
+        aria-haspopup="listbox"
+        aria-controls="hero-ask-list"
+      >
+        <span class="break-words text-left flex-1 italic font-sans font-medium text-base md:text-lg text-ink-soft" data-ask-label>...kies een onderwerp</span>
+        <svg class="w-5 h-5 shrink-0 transition-transform duration-300" data-ask-icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+
+      <!-- Dropdown panel -->
+      <div
+        id="hero-ask-list"
+        role="listbox"
+        class="absolute top-full left-0 right-0 mt-3 bg-white rounded-2xl shadow-2xl border border-ink/8 overflow-hidden opacity-0 pointer-events-none translate-y-3 transition-all duration-300 z-50"
+        data-ask-list
+      >
+        {segments.map((seg) => (
+          <button
+            type="button"
+            role="option"
+            class="ask-option w-full text-left px-5 md:px-6 py-3.5 md:py-4 hover:bg-paper-2 transition-colors border-b border-ink/8 last:border-b-0 font-sans text-base md:text-lg font-medium text-ink flex items-center justify-between group"
+            data-ask-id={seg.id}
+          >
+            <span>{seg.label}</span>
+            <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-magenta shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Result area -->
+    <div class="relative transition-[height] duration-500 ease-out overflow-hidden mt-5" data-ask-wrap style="height: 0px;">
+      <!-- Empty state (hidden mobile, visible md+) -->
+      <div class="absolute top-0 left-0 right-0 hidden md:flex flex-col items-center justify-center opacity-100 transition-opacity duration-300 py-6" data-ask-empty>
+        <div class="text-center">
+          <div class="w-12 h-12 bg-paper-2 rounded-full flex items-center justify-center mx-auto mb-3 border border-ink/8">
+            <svg class="w-5 h-5 text-magenta/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <p class="text-ink-soft text-xs font-semibold tracking-widest uppercase">Selecteer een onderwerp</p>
+        </div>
+      </div>
+
+      {segments.map((seg) => (
+        <div
+          class="ask-content absolute top-0 left-0 right-0 transition-all duration-500 ease-out opacity-0 translate-y-6 pointer-events-none"
+          data-ask-content={seg.id}
+        >
+          <p class="text-base md:text-lg text-ink leading-snug font-medium mb-4">{seg.subtitle}</p>
+          <div class="grid gap-2.5">
+            {seg.actions.map((act) => (
+              act.href ? (
+                <a
+                  href={act.href}
+                  class="group flex items-center justify-between gap-3 p-3 sm:p-4 rounded-xl bg-paper border border-ink/8 hover:border-magenta hover:shadow-lg transition-all"
+                >
+                  <div>
+                    <h4 class="font-sans font-bold text-aubergine text-sm sm:text-base m-0">{act.title}</h4>
+                    <p class="text-xs sm:text-sm text-ink-soft mt-0.5 m-0">{act.desc}</p>
+                  </div>
+                  <span class="w-8 h-8 rounded-full bg-white shrink-0 flex items-center justify-center border border-ink/10 group-hover:bg-magenta group-hover:border-magenta group-hover:text-white transition-colors text-ink">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </span>
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  data-ask-prefill={act.prefill || ''}
+                  class="group w-full text-left flex items-center justify-between gap-3 p-3 sm:p-4 rounded-xl bg-magenta text-white border border-magenta hover:bg-magenta-deep hover:shadow-lg transition-all"
+                >
+                  <div>
+                    <h4 class="font-sans font-bold text-white text-sm sm:text-base m-0">{act.title}</h4>
+                    <p class="text-xs sm:text-sm text-white/85 mt-0.5 m-0">{act.desc}</p>
+                  </div>
+                  <span class="w-8 h-8 rounded-full bg-white shrink-0 flex items-center justify-center text-magenta">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </span>
+                </button>
+              )
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  function init() {
+    const root = document.querySelector<HTMLElement>('[data-hero-ask]');
+    if (!root || (root as any).dataset.bound) return;
+    (root as any).dataset.bound = '1';
+
+    const btn = root.querySelector<HTMLButtonElement>('[data-ask-toggle]');
+    const list = root.querySelector<HTMLElement>('[data-ask-list]');
+    const icon = root.querySelector<SVGElement>('[data-ask-icon]');
+    const label = root.querySelector<HTMLElement>('[data-ask-label]');
+    const wrap = root.querySelector<HTMLElement>('[data-ask-wrap]');
+    const empty = root.querySelector<HTMLElement>('[data-ask-empty]');
+    const options = root.querySelectorAll<HTMLButtonElement>('.ask-option');
+    const contents = root.querySelectorAll<HTMLElement>('[data-ask-content]');
+
+    let activeId: string | null = null;
+    let isOpen = false;
+
+    const closeList = () => {
+      isOpen = false;
+      list?.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+      icon?.classList.remove('rotate-180');
+      btn?.setAttribute('aria-expanded', 'false');
+    };
+    const openList = () => {
+      isOpen = true;
+      list?.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+      icon?.classList.add('rotate-180');
+      btn?.setAttribute('aria-expanded', 'true');
+    };
+
+    btn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isOpen) closeList(); else openList();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!isOpen) return;
+      if (!btn || !list) return;
+      if (!btn.contains(e.target as Node) && !list.contains(e.target as Node)) closeList();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) closeList();
+    });
+
+    options.forEach((opt) => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const newId = opt.dataset.askId || '';
+        const newLabel = opt.querySelector('span')?.textContent?.trim() ?? '';
+
+        if (!newId || newId === activeId) {
+          closeList();
+          return;
+        }
+
+        // Eerste keuze: empty-state vervangen
+        if (!activeId && empty) {
+          empty.classList.add('opacity-0', 'pointer-events-none');
+          setTimeout(() => { empty.style.display = 'none'; }, 250);
+        }
+
+        if (label && newLabel) {
+          label.style.opacity = '0';
+          setTimeout(() => {
+            label.textContent = newLabel;
+            label.style.opacity = '1';
+            label.classList.remove('italic', 'text-ink-soft', 'font-medium');
+            label.classList.add('text-aubergine', 'font-semibold');
+          }, 200);
+        }
+
+        contents.forEach((content) => {
+          if (content.dataset.askContent === newId) {
+            content.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
+            content.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            if (wrap) wrap.style.height = content.scrollHeight + 'px';
+          } else {
+            content.classList.add('opacity-0', 'translate-y-6', 'pointer-events-none');
+            content.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          }
+        });
+
+        activeId = newId;
+        closeList();
+      });
+    });
+
+    if (label) label.style.transition = 'opacity 0.2s ease-out';
+
+    // Initial wrapper height: empty state op md+
+    if (wrap && !activeId) {
+      wrap.style.height = window.innerWidth >= 768 ? '120px' : '0px';
+    }
+
+    // "Ask"-buttons in actions: open VraagHet modal met prefill
+    root.querySelectorAll<HTMLButtonElement>('[data-ask-prefill]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const q = b.dataset.askPrefill || '';
+        document.dispatchEvent(new CustomEvent('vraaghet:open', { detail: { question: q } }));
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+  document.addEventListener('astro:page-load', init);
+</script>

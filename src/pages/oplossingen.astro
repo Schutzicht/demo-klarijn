@@ -18,14 +18,14 @@ const ldList = {
 const tags = Array.from(new Set(products.map((p) => p.tag)));
 ---
 
-<Layout title="Oplossingen — Klarijn" active="Oplossingen" description="Vaste juridische producten met heldere prijzen.">
+<Layout title="Oplossingen - Klarijn" active="Oplossingen" description="Vaste juridische producten met heldere prijzen.">
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(ldList)} />
   </Fragment>
 
   <PageHero
     title="Standaardproducten<br/>met vaste prijzen."
-    lead="Tien praktische producten die de meest gestelde juridische vragen van ondernemers oplossen. Voeg toe aan je lijst en wij maken er een passende offerte van. Geen webshop — wel een gesprek."
+    lead="Tien praktische producten die de meest gestelde juridische vragen van ondernemers oplossen. Voeg toe aan je lijst en wij maken er een passende offerte van. Geen webshop - wel een gesprek."
     crumbs={[{ label: 'Home', href: '/' }, { label: 'Oplossingen' }]}
   />
 

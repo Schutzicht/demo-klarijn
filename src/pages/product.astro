@@ -18,7 +18,7 @@ const ldService = {
   name: product.title,
   description: 'Volledig en houdbaar arbeidscontract, helder geschreven, cao-conform en geënt op jouw werkwijze.',
   provider: { '@type': 'LegalService', name: 'Klarijn' },
-  serviceType: 'Arbeidsrecht — Contract opstellen',
+  serviceType: 'Arbeidsrecht - Contract opstellen',
   areaServed: 'NL',
   offers: { '@type': 'Offer', price: '595', priceCurrency: 'EUR' },
 };
@@ -33,12 +33,12 @@ const ldFaq = {
 };
 
 const dvPairs = [
-  { who: 'Sander', role: 'eigenaar metaalbedrijf · Tilburg', q: 'Mijn vorige contracten waren van een uitzendbureau. Nu groei ik en wil ik mensen vast in dienst. Werkt dat hetzelfde?', a: 'Nee, een uitzendcontract is een driepartijen-contract — die kun je niet zomaar omzetten. We maken voor jouw vaste mensen een nieuw contract op maat. Belangrijk: cao Metalektro is van toepassing, dus we nemen die mee. Als ze al langer voor je werken, telt die historie mee voor de ketenregeling.' },
-  { who: 'Esther', role: 'manager familiebedrijf · Veenendaal', q: 'Ik wil een concurrentiebeding voor mijn nieuwe verkoper. Mag dat eigenlijk wel?', a: 'Mag, maar de regels zijn per 2025 strenger. In een contract voor onbepaalde tijd kan het, in een tijdelijk contract alleen met zwaarwegende motivatie. We kijken samen wat realistisch standhoudt — een te breed beding houdt later voor de rechter geen stand. Liever iets duidelijks dat wél werkt.' },
+  { who: 'Sander', role: 'eigenaar metaalbedrijf · Tilburg', q: 'Mijn vorige contracten waren van een uitzendbureau. Nu groei ik en wil ik mensen vast in dienst. Werkt dat hetzelfde?', a: 'Nee, een uitzendcontract is een driepartijen-contract - die kun je niet zomaar omzetten. We maken voor jouw vaste mensen een nieuw contract op maat. Belangrijk: cao Metalektro is van toepassing, dus we nemen die mee. Als ze al langer voor je werken, telt die historie mee voor de ketenregeling.' },
+  { who: 'Esther', role: 'manager familiebedrijf · Veenendaal', q: 'Ik wil een concurrentiebeding voor mijn nieuwe verkoper. Mag dat eigenlijk wel?', a: 'Mag, maar de regels zijn per 2025 strenger. In een contract voor onbepaalde tijd kan het, in een tijdelijk contract alleen met zwaarwegende motivatie. We kijken samen wat realistisch standhoudt - een te breed beding houdt later voor de rechter geen stand. Liever iets duidelijks dat wél werkt.' },
 ];
 ---
 
-<Layout title={`${product.title} — Klarijn`} active="Oplossingen">
+<Layout title={`${product.title} - Klarijn`} active="Oplossingen">
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(ldService)} />
     <script type="application/ld+json" set:html={JSON.stringify(ldFaq)} />
@@ -46,7 +46,7 @@ const dvPairs = [
 
   <PageHero
     title={`${product.title}.`}
-    lead="Een volledig arbeidscontract, helder geschreven, cao-conform en geënt op jouw werkwijze. Geen template van internet — eentje die houdbaar is en die je begrijpt."
+    lead="Een volledig arbeidscontract, helder geschreven, cao-conform en geënt op jouw werkwijze. Geen template van internet - eentje die houdbaar is en die je begrijpt."
     crumbs={[{ label: 'Home', href: '/' }, { label: 'Oplossingen', href: '/oplossingen' }, { label: product.title }]}
     eyebrow="Standaardproduct · Arbeid"
     stamps={[{ text: 'Vaste prijs · € 595', variant: 'gold', rotate: 6 }]}
@@ -72,7 +72,7 @@ const dvPairs = [
             </div>
             <div>
               <strong class="block text-base font-semibold">Bekijk: hoe maken we een contract?</strong>
-              <span class="text-sm opacity-70 group-hover:opacity-90">2:14 — Eline legt uit</span>
+              <span class="text-sm opacity-70 group-hover:opacity-90">2:14 - Eline legt uit</span>
             </div>
           </div>
         </div>
@@ -87,11 +87,11 @@ const dvPairs = [
 
           <ul class="list-none p-0 my-6 space-y-3">
             {[
-              'Volledig arbeidscontract — onbepaalde tijd, bepaalde tijd of oproepbasis',
+              'Volledig arbeidscontract - onbepaalde tijd, bepaalde tijd of oproepbasis',
               'Cao-conform: we checken voor jouw branche',
               'Concurrentie- en relatiebeding (waar dat juridisch standhoudt)',
               'Geheimhouding & intellectueel eigendom',
-              'Beoordeeld in plain Nederlands — geen advocatenjargon',
+              'Beoordeeld in plain Nederlands - geen advocatenjargon',
               'Inclusief begeleidende infosheet voor je medewerker',
             ].map((li) => (
               <li class="flex items-start gap-3 pb-3 border-b border-ink/10">
@@ -152,8 +152,8 @@ const dvPairs = [
             {[
               { q: 'Hoe lang duurt het voor we een contract hebben?', a: 'Standaard binnen 5 werkdagen na aanleveren van de gegevens. Spoed kan, dan binnen 48 uur tegen een spoedtoeslag.' },
               { q: 'Wat als de cao verandert?', a: 'Voor abonnementsklanten: gratis update. Voor losse klanten: tegen meerprijs. We monitoren actief de relevante cao\'s.' },
-              { q: "Werkt dit voor zzp'ers ook?", a: 'Voor zzp\'ers maken we juist een opdracht-overeenkomst — vergelijkbaar product, vermijdt schijnzelfstandigheid. Vraag het ons als je twijfelt.' },
-              { q: 'Kan ik dit contract zelf nog aanpassen?', a: 'Ja. Je krijgt het in Word én PDF. Voor grote wijzigingen kun je altijd opnieuw bij ons aankloppen — als abonnementsklant gratis voor kleine aanpassingen.' },
+              { q: "Werkt dit voor zzp'ers ook?", a: 'Voor zzp\'ers maken we juist een opdracht-overeenkomst - vergelijkbaar product, vermijdt schijnzelfstandigheid. Vraag het ons als je twijfelt.' },
+              { q: 'Kan ik dit contract zelf nog aanpassen?', a: 'Ja. Je krijgt het in Word én PDF. Voor grote wijzigingen kun je altijd opnieuw bij ons aankloppen - als abonnementsklant gratis voor kleine aanpassingen.' },
             ].map((f) => (
               <details class="faq-item">
                 <summary>{f.q}</summary>

@@ -141,7 +141,7 @@
     @apply font-bold;
   }
 
-  /* Photo blob — organic rounded shape */
+  /* Photo blob - organic rounded shape */
   .photo-blob {
     border-radius: 50% 50% 8% 50% / 50% 50% 8% 50%;
     @apply overflow-hidden bg-magenta-soft;
@@ -155,7 +155,7 @@
     @apply bg-gold-soft;
   }
 
-  /* Brush stroke highlight — magenta swoosh BEHIND text. Text color stays inherited (dark). */
+  /* Brush stroke highlight - magenta swoosh BEHIND text. Text color stays inherited (dark). */
   .brush {
     position: relative;
     display: inline-block;
@@ -180,24 +180,17 @@
   /* When brush is on a dark surface and the text is white, use a softer pink so contrast remains. */
   .brush--on-dark::after { background: var(--color-magenta-soft); opacity: 0.55; }
 
-  /* Strikethrough effect for "wat we niet doen" */
+  /* Subtiele "doorgehaald" voor wat we niet doen - native line-through, dunne magenta lijn,
+     gedimde tekst zodat het niet schreeuwt. */
   .strike-through {
-    position: relative;
-    display: inline-block;
     color: rgba(42, 21, 48, 0.5);
-  }
-  .strike-through::after {
-    content: "";
-    position: absolute;
-    left: -4%;
-    right: -4%;
-    top: 52%;
-    height: 4px;
-    background: var(--color-magenta);
-    transform: rotate(-2deg);
+    text-decoration: line-through;
+    text-decoration-color: rgba(224, 39, 122, 0.55);
+    text-decoration-thickness: 2px;
+    text-decoration-skip-ink: auto;
   }
 
-  /* Decorative stamp badge — like a rubber stamp on a contract */
+  /* Decorative stamp badge - like a rubber stamp on a contract */
   .stamp {
     display: inline-block;
     font-family: var(--font-display);
@@ -285,7 +278,7 @@
 }
 
 /* =========================================================
-   FRANCHISE — ACCENT SHIFT
+   FRANCHISE - ACCENT SHIFT
    Klant-zijde gebruikt magenta als accent, franchise gebruikt goud.
    De rest van het canvas (cream achtergrond, donkere tekst) blijft gelijk
    zodat content rustig leesbaar is. Distinctie komt uit:

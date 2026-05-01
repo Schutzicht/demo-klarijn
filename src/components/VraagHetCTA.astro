@@ -1,20 +1,26 @@
 ---
-// Drijvende "Vraag het Klarijn" knop met modal-formulier
-// Sluit aan bij briefing: "Op elk moment moet iemand intuïtief contact op kunnen nemen"
+// Drijvende "Vraag het Klarijn" knop - Eibert hoofd + speech bubble.
+// Op hover roteert de bubble (zelfde animatie als BrandLogo).
+// Luistert naar `vraaghet:open` event om modal met pre-filled vraag te tonen.
 ---
 
 <button
   type="button"
-  class="vraaghet-fab fixed left-4 md:left-8 bottom-4 md:bottom-8 z-[60] inline-flex items-center gap-3 bg-aubergine text-white px-4 py-3 md:py-3.5 rounded-full font-semibold text-sm border-0 cursor-pointer transition-all hover:-translate-y-0.5 hover:bg-aubergine-deep group"
-  style="box-shadow: 0 12px 30px rgba(94, 31, 92, 0.35);"
+  class="vraaghet-fab fixed left-4 md:left-8 bottom-4 md:bottom-8 z-[60] inline-flex items-center -gap-2 border-0 cursor-pointer transition-transform hover:-translate-y-0.5 group bg-transparent p-0"
   data-vraaghet-open
-  aria-label="Vraag het Klarijn — open contactformulier"
+  aria-label="Vraag het Klarijn"
 >
-  <img src="/img/vraag-het-bubble.webp" alt="" aria-hidden="true" class="w-9 h-auto group-hover:scale-110 transition-transform" />
-  <span class="hidden md:inline-block leading-tight">
-    Snel een vraag?
-    <span class="block text-xs font-medium text-white/75">Antwoord binnen 1 werkdag</span>
+  <!-- Eibert hoofd -->
+  <span class="relative w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-[3px] border-white shadow-[0_8px_20px_rgba(94,31,92,0.3)] z-10">
+    <img src="/img/eibert.webp" alt="" aria-hidden="true" class="w-full h-full object-cover scale-110 transition-transform group-hover:scale-125 duration-500" />
   </span>
+  <!-- Speech bubble - lichtjes overlapt links -->
+  <img
+    src="/img/vraag-het-bubble.webp"
+    alt=""
+    aria-hidden="true"
+    class="-ml-3 md:-ml-4 w-12 md:w-16 h-auto transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-105 drop-shadow-[0_8px_18px_rgba(224,39,122,0.45)]"
+  />
 </button>
 
 <div class="modal-backdrop" data-vraaghet-modal role="dialog" aria-modal="true" aria-labelledby="vh-title">
@@ -22,10 +28,13 @@
     <button type="button" class="absolute right-4 top-4 w-9 h-9 rounded-full bg-paper-2 hover:bg-magenta hover:text-white grid place-items-center text-xl cursor-pointer border-0 transition-all" data-vraaghet-close aria-label="Sluiten">×</button>
 
     <div class="flex items-start gap-4 mb-5">
-      <img src="/img/vraag-het-bubble.webp" alt="" aria-hidden="true" class="w-16 md:w-20 h-auto shrink-0" />
-      <div>
-        <h2 id="vh-title" class="font-display text-3xl md:text-4xl text-aubergine mt-1 mb-1 leading-tight">Vraag het Klarijn.</h2>
-        <p class="text-ink-soft text-sm m-0">Geen drempel, geen formulier-bureaucratie. Antwoord binnen 1 werkdag.</p>
+      <span class="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-[3px] border-white shadow-[0_4px_14px_rgba(94,31,92,0.2)] shrink-0">
+        <img src="/img/eibert.webp" alt="" aria-hidden="true" class="w-full h-full object-cover scale-110" />
+      </span>
+      <img src="/img/vraag-het-bubble.webp" alt="" aria-hidden="true" class="w-14 md:w-16 h-auto -ml-6 mt-1 shrink-0" />
+      <div class="ml-1">
+        <h2 id="vh-title" class="font-display text-2xl md:text-3xl text-aubergine mt-1 mb-1 leading-tight">Vraag het Eibert.</h2>
+        <p class="text-ink-soft text-sm m-0">Antwoord binnen 1 werkdag, vaak sneller.</p>
       </div>
     </div>
 
@@ -38,7 +47,7 @@
         <label class="form-label">E-mail<input class="form-input" required type="email" name="email" /></label>
         <label class="form-label">Telefoon<input class="form-input" type="tel" name="telefoon" /></label>
       </div>
-      <label class="form-label">Je vraag<textarea class="form-input min-h-28 resize-y" required name="vraag" placeholder="Wat is er aan de hand? In 2-3 zinnen is genoeg."></textarea></label>
+      <label class="form-label">Je vraag<textarea class="form-input min-h-28 resize-y" required name="vraag" placeholder="Wat is er aan de hand? In 2-3 zinnen is genoeg." data-vraaghet-textarea></textarea></label>
       <button type="submit" class="btn btn-primary w-full justify-center">Verstuur <span class="arrow">→</span></button>
       <p class="text-center text-xs text-ink-soft m-0">Bij voorkeur antwoord per:
         <label class="inline-flex items-center gap-1 ml-2"><input type="radio" name="contact_via" value="bel" checked class="accent-magenta" /> bellen</label>
@@ -54,27 +63,35 @@
     const modal = document.querySelector<HTMLElement>('[data-vraaghet-modal]');
     const closeBtn = document.querySelector<HTMLButtonElement>('[data-vraaghet-close]');
     const form = document.querySelector<HTMLFormElement>('[data-vraaghet-form]');
+    const textarea = document.querySelector<HTMLTextAreaElement>('[data-vraaghet-textarea]');
     if (!fab || !modal) return;
     if ((fab as any).dataset.bound) return;
     (fab as any).dataset.bound = '1';
 
-    const open = () => {
+    const open = (prefilled?: string) => {
       modal.setAttribute('data-open', '');
       document.body.style.overflow = 'hidden';
-      const firstInput = modal.querySelector<HTMLInputElement>('input[name="naam"]');
-      setTimeout(() => firstInput?.focus(), 200);
+      if (textarea && prefilled) textarea.value = prefilled;
+      const target = prefilled
+        ? modal.querySelector<HTMLInputElement>('input[name="naam"]')
+        : modal.querySelector<HTMLInputElement>('input[name="naam"]');
+      setTimeout(() => target?.focus(), 200);
     };
     const close = () => {
       modal.removeAttribute('data-open');
       document.body.style.overflow = '';
     };
-    fab.addEventListener('click', open);
+    fab.addEventListener('click', () => open());
     closeBtn?.addEventListener('click', close);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) close();
-    });
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.hasAttribute('data-open')) close();
+    });
+
+    // Listener voor de HeroAsk + andere callers
+    document.addEventListener('vraaghet:open', (e) => {
+      const detail = (e as CustomEvent).detail || {};
+      open(detail.question || '');
     });
 
     form?.addEventListener('submit', (e) => {
@@ -93,10 +110,7 @@
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bind);
-  } else {
-    bind();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind);
+  else bind();
   document.addEventListener('astro:page-load', bind);
 </script>

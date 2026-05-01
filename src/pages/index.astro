@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import DirkVraagtPanel from '../components/DirkVraagtPanel.astro';
-import Stamp from '../components/Stamp.astro';
+import HeroAsk from '../components/HeroAsk.astro';
 import SectionDivider from '../components/SectionDivider.astro';
 import AnimatedNumber from '../components/AnimatedNumber.astro';
 import WhatWeDontDo from '../components/WhatWeDontDo.astro';
@@ -34,7 +34,7 @@ const ldFaq = {
 ---
 
 <Layout
-  title="Klarijn — Vraag het Klarijn. Helderheid in juridische oplossingen."
+  title="Klarijn - Vraag het Klarijn. Helderheid in juridische oplossingen."
   description="Klarijn brengt helderheid in juridische oplossingen. Voor mkb, familiebedrijven en de maakindustrie."
   active="Home"
 >
@@ -59,25 +59,18 @@ const ldFaq = {
             Vraag het<br/>
             <span class="brush">Klarijn</span>.
           </h1>
-          <p class="text-lg md:text-xl text-ink-soft max-w-[48ch] mb-10 leading-relaxed" data-reveal data-reveal-delay="2">
-            Praktisch juridisch advies voor ondernemers met de voeten in de klei. Geen ivoren toren, wel heldere antwoorden — en een vaste jurist die jouw zaak kent.
+          <p class="text-lg md:text-xl text-ink-soft max-w-[48ch] mb-8 leading-relaxed" data-reveal data-reveal-delay="2">
+            Praktisch juridisch advies voor ondernemers met de voeten in de klei. Geen ivoren toren, wel heldere antwoorden van een vaste jurist die jouw zaak kent.
           </p>
-          <div class="flex gap-3 flex-wrap" data-reveal data-reveal-delay="3">
-            <a class="btn btn-primary" href="/oplossingen">Bekijk oplossingen <span class="arrow">→</span></a>
-            <a class="btn btn-ghost" href="/contact">Direct contact</a>
+
+          <!-- Interactieve "Vraag het Klarijn" - rode draad uit briefing -->
+          <div data-reveal data-reveal-delay="3">
+            <HeroAsk />
           </div>
-          <div class="mt-12 flex gap-x-8 gap-y-3 flex-wrap text-sm text-ink-soft" data-reveal data-reveal-delay="4">
-            {[
-              'Vaste jurist, geen wisseltrucs',
-              'Vooraf duidelijke prijs',
-              'Antwoord in plain Nederlands'
-            ].map((t) => (
-              <span class="inline-flex items-center gap-2">
-                <svg class="text-magenta shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                {t}
-              </span>
-            ))}
-          </div>
+
+          <p class="mt-6 text-sm text-ink-soft" data-reveal data-reveal-delay="4">
+            Of <a href="/oplossingen" class="text-aubergine font-semibold hover:text-magenta">bekijk al onze oplossingen</a> · <a href="/contact" class="text-aubergine font-semibold hover:text-magenta">direct contact</a>
+          </p>
         </div>
 
         <!-- Editorial visual: hero photo with the Klarijn "VRAAG HET" pop-up -->
@@ -95,11 +88,6 @@ const ldFaq = {
             loading="eager"
             aria-hidden="true"
           />
-
-          <!-- Single tasteful stamp top-right -->
-          <div class="absolute -top-3 -right-3 z-10 hidden md:block" data-reveal data-reveal-delay="3">
-            <Stamp text="Sinds 2018" rotate={6} variant="magenta" />
-          </div>
         </div>
       </div>
     </div>
@@ -110,10 +98,10 @@ const ldFaq = {
     <div class="flex gap-12 whitespace-nowrap animate-ticker font-display text-2xl md:text-3xl">
       {[...Array(2)].map(() => (
         <Fragment>
-          <span class="inline-flex items-center gap-12">Vraag het Klarijn<span class="text-white/60 not-italic">✦</span></span>
-          <span class="inline-flex items-center gap-12">Helderheid in juridische oplossingen<span class="text-white/60">✦</span></span>
-          <span class="inline-flex items-center gap-12">Voor doeners, niet voor advocaten<span class="text-white/60">✦</span></span>
-          <span class="inline-flex items-center gap-12">Geen jargon. Wel resultaat.<span class="text-white/60">✦</span></span>
+          <span class="inline-flex items-center gap-12">Vraag het Klarijn<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
+          <span class="inline-flex items-center gap-12">Helderheid in juridische oplossingen<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
+          <span class="inline-flex items-center gap-12">Voor doeners, niet voor advocaten<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
+          <span class="inline-flex items-center gap-12">Geen jargon. Wel resultaat.<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
         </Fragment>
       ))}
     </div>
@@ -160,7 +148,7 @@ const ldFaq = {
           { t: 'Zakelijke blik', d: 'We snappen de juridische issues van jou als ondernemer. We houden je een eerlijke spiegel voor.', icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
           { t: 'Duidelijke route', d: 'In onze samenwerking zorgen we ervoor dat je altijd begrijpt waar we naartoe gaan en welke stappen we daarbij nemen.', icon: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>' },
           { t: 'Oplossing', d: "Hoe lastig de situatie ook lijkt, er is altijd een oplossing. We nemen je mee in de mogelijkheden, risico's en kansen.", icon: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>' },
-          { t: 'Netwerk van specialisten', d: 'We weten wanneer aanvullende specialisten nodig zijn — IE, fiscaal, AVG. Jij merkt niets van de inzet, je hebt contact met Klarijn.', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+          { t: 'Netwerk van specialisten', d: 'We weten wanneer aanvullende specialisten nodig zijn - IE, fiscaal, AVG. Jij merkt niets van de inzet, je hebt contact met Klarijn.', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
         ].map((f, i) => (
           <article class="bg-white rounded-card p-7 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all" data-reveal data-reveal-delay={(i % 3) + 1}>
             <div class="w-12 h-12 rounded-xl text-magenta grid place-items-center mb-4" style="background-color: rgba(224, 39, 122, 0.12);">
@@ -187,7 +175,7 @@ const ldFaq = {
           <span class="eyebrow">Vraag het Klarijn</span>
           <h2 class="display-2 mt-3 mb-4">Andere ondernemers<br/>vroegen ons dit.</h2>
           <p class="text-lg text-ink-soft max-w-[50ch] mb-6 leading-relaxed">
-            Echte vragen, echte antwoorden. Op de productpagina's vind je nog meer voorbeelden — en uiteraard: stel je eigen vraag wanneer je maar wilt.
+            Echte vragen, echte antwoorden. Op de productpagina's vind je nog meer voorbeelden - en uiteraard: stel je eigen vraag wanneer je maar wilt.
           </p>
           <div class="flex gap-3 flex-wrap">
             <a href="/contact" class="btn btn-primary">Stel je vraag <span class="arrow">→</span></a>
@@ -229,9 +217,6 @@ const ldFaq = {
       <div class="relative bg-aubergine text-white rounded-jumbo p-8 md:p-14 grid lg:grid-cols-[1.2fr_.8fr] gap-8 items-center overflow-hidden" data-reveal>
         <div class="absolute -top-32 -right-28 w-96 h-96 pointer-events-none rounded-full opacity-30"
              style="background: radial-gradient(circle, var(--color-magenta) 0%, transparent 70%);"></div>
-        <div class="absolute top-8 right-8 hidden md:block z-20">
-          <Stamp text="Maandelijks opzegbaar" rotate={6} variant="gold" />
-        </div>
         <div class="relative z-10">
           <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-magenta-soft">Het abonnement</span>
           <h2 class="text-white display-2 mt-3 mb-4">Eén vaste jurist.<br/>De hele werkweek bereikbaar.</h2>
@@ -270,10 +255,7 @@ const ldFaq = {
       <div class="grid sm:grid-cols-[260px_1fr] gap-8 lg:gap-12 items-center bg-white p-7 md:p-12 rounded-jumbo shadow-sm">
         <div class="relative">
           <div class="photo-blob aspect-square shrink-0 max-sm:w-44 max-sm:mx-auto">
-            <img src="/img/klarijn-werkomgeving-1.jpg" alt="Werkmoment bij Klarijn" loading="lazy" class="w-full h-full object-cover" />
-          </div>
-          <div class="absolute -bottom-3 -right-3 max-sm:hidden">
-            <Stamp text="Klant sinds 2022" rotate={-10} variant="purple" />
+            <img src="https://i.pravatar.cc/400?u=klarijn-dirk-jan-bouw" alt="Portret Dirk-Jan van der Velde" loading="lazy" class="w-full h-full object-cover" />
           </div>
         </div>
         <div>
@@ -301,64 +283,36 @@ const ldFaq = {
         <div class="absolute -right-24 -top-12 w-[460px] h-[460px] pointer-events-none opacity-35 rounded-full"
              style="background: radial-gradient(circle, var(--color-magenta) 0%, transparent 70%);"></div>
         <div class="relative z-10">
-          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-gold">Voor juristen — Franchise</span>
+          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-gold">Voor juristen - Franchise</span>
           <h2 class="text-white display-2 mt-3 mb-4">Een eigen praktijk.<br/>Met een sterke ploeg achter je.</h2>
           <p class="text-white/85 text-lg max-w-[55ch] leading-relaxed">
-            In 2026 rolt Klarijn de franchiseformule landelijk uit. Voor juristen die ondernemend zijn, met de voeten in de klei willen staan, en samen sterk willen werken — met een backoffice die marketing, automatisering en specialisme regelt.
+            In 2026 rolt Klarijn de franchiseformule landelijk uit. Voor juristen die ondernemend zijn, met de voeten in de klei willen staan, en samen sterk willen werken - met een backoffice die marketing, automatisering en specialisme regelt.
           </p>
           <div class="flex gap-3 flex-wrap mt-6">
             <a href="/franchise" class="btn btn-primary">Ontdek de franchise <span class="arrow">→</span></a>
             <a href="/franchise/beslisboom" class="btn btn-ghost-light">Doe de match-test</a>
           </div>
         </div>
-        <div class="relative z-10 bg-white/5 border border-white/15 rounded-card p-5 max-w-[320px] mx-auto" aria-hidden="true">
-          <svg viewBox="0 0 280 280" class="w-full h-auto">
-            <defs>
-              <pattern id="dot" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1.4" fill="rgba(242,164,201,.4)"/>
-              </pattern>
-            </defs>
-            <rect width="280" height="280" fill="url(#dot)"/>
-            <path d="M40 70 Q 60 30 110 40 Q 160 30 200 55 Q 240 70 235 120 Q 245 165 220 210 Q 200 250 150 255 Q 100 260 70 240 Q 30 220 35 175 Q 25 120 40 70 Z"
-                  fill="rgba(224,39,122,.2)" stroke="#E0277A" stroke-width="2.5" stroke-dasharray="4 6"/>
-            <g fill="#F2A4C9">
-              <circle cx="105" cy="105" r="7"/>
-              <circle cx="160" cy="85" r="7"/>
-              <circle cx="190" cy="155" r="7"/>
-              <circle cx="120" cy="180" r="7"/>
-              <circle cx="160" cy="210" r="7"/>
-              <circle cx="80" cy="145" r="7"/>
-            </g>
-            <g fill="#E0277A" stroke="white" stroke-width="2.5">
-              <circle cx="135" cy="145" r="11"/>
-            </g>
-            <text x="140" y="245" font-family="Poppins, sans-serif" font-weight="600" font-size="11" fill="white" text-anchor="middle" letter-spacing="2">RAYONS · 2026</text>
-          </svg>
+        <!-- Compact rayon mini-card: clean typography ipv abstracte map -->
+        <div class="relative z-10 bg-white/8 backdrop-blur-sm border border-white/15 rounded-card p-5 md:p-6 max-w-[340px] mx-auto">
+          <div class="flex items-baseline justify-between mb-3">
+            <span class="font-display text-xl text-white leading-none">14 rayons</span>
+            <span class="text-[.62rem] font-bold uppercase tracking-[.18em] text-gold">in 2026</span>
+          </div>
+          <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
+            <span class="inline-flex items-center gap-2 text-magenta-soft font-semibold">
+              <span class="relative flex w-1.5 h-1.5">
+                <span class="animate-ping absolute inset-0 rounded-full bg-magenta-soft opacity-70"></span>
+                <span class="relative w-1.5 h-1.5 rounded-full bg-magenta-soft"></span>
+              </span>
+              Zwolle <span class="text-white/50 text-xs">· pilot</span>
+            </span>
+            {['Rotterdam','Eindhoven','Amsterdam','Groningen','Maastricht','Breda','Utrecht'].map((c) => (
+              <span class="text-white/85">{c}</span>
+            ))}
+            <span class="text-white/55">+ 6 anderen</span>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== FAQ ========== -->
-  <section class="section-y bg-paper-2">
-    <div class="max-w-[780px] mx-auto px-4 md:px-8">
-      <div class="text-center mb-8" data-reveal>
-        <span class="eyebrow justify-center">Veelgestelde vragen</span>
-        <h2 class="display-2 mt-3">Wat klanten ons<br/>vragen.</h2>
-      </div>
-      <div class="grid gap-2.5" data-reveal data-reveal-delay="1">
-        {[
-          { q: 'Wat is het verschil tussen Klarijn en een advocatenkantoor?', a: 'Wij zijn juristen, geen advocaten. Voor 90% van wat een ondernemer juridisch tegenkomt, hoef je geen advocaat te hebben. Wel iemand die het kan duiden, regelen en voor je opkomt.' },
-          { q: 'Werken jullie met vaste prijzen?', a: 'Voor onze standaardproducten: ja, altijd. Voor maatwerktrajecten geven we vooraf een heldere offerte, geen open einde. Geen uurtarieven die ineens oplopen.' },
-          { q: 'Wat zit er in het abonnement?', a: 'Onbeperkt korte vragen, een vaste jurist, voorrang in agenda en 30% korting op alle standaardproducten. Maandelijks opzegbaar.' },
-          { q: 'Hoe snel kunnen jullie schakelen?', a: 'Eerste reactie binnen 1 werkdag. Voor abonnementsklanten meestal sneller. Bij echte spoed (kort geding bijvoorbeeld) schakelen we direct.' },
-          { q: 'Kan ik wisselen van jurist?', a: 'Ja, altijd. Maar onze ervaring leert: één vast aanspreekpunt werkt het prettigst. Daar zijn we ook op ingericht.' },
-        ].map((f) => (
-          <details class="faq-item">
-            <summary>{f.q}</summary>
-            <div class="px-6 pb-5 text-ink-soft leading-relaxed">{f.a}</div>
-          </details>
-        ))}
       </div>
     </div>
   </section>
@@ -370,7 +324,7 @@ const ldFaq = {
         <div>
           <span class="eyebrow">Klant bij Klarijn?</span>
           <h3 class="text-2xl font-semibold text-aubergine mt-1 mb-1">Bekijk de voortgang van je dossier</h3>
-          <p class="text-ink-soft m-0">Direct naar het klantportaal — beheerd door Klarijn.</p>
+          <p class="text-ink-soft m-0">Direct naar het klantportaal - beheerd door Klarijn.</p>
         </div>
         <a href="https://portal.klarijn.nl" target="_blank" rel="noopener" class="btn btn-purple">Mijn Voortgang <span class="arrow">→</span></a>
       </div>

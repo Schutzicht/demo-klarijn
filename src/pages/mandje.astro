@@ -3,14 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 ---
 
-<Layout title="Mijn lijst — Klarijn" description="Bekijk je geselecteerde producten en vraag een offerte aan." showBasket={false}>
+<Layout title="Mijn lijst - Klarijn" description="Bekijk je geselecteerde producten en vraag een offerte aan." showBasket={false}>
   <Fragment slot="head">
     <meta name="robots" content="noindex" />
   </Fragment>
 
   <PageHero
     title="Mijn lijst."
-    lead="Hier staan jouw geselecteerde producten. Vul je gegevens in en wij maken er een passende offerte van. Geen verplichtingen — wel binnen 1 werkdag een reactie."
+    lead="Hier staan jouw geselecteerde producten. Vul je gegevens in en wij maken er een passende offerte van. Geen verplichtingen - wel binnen 1 werkdag een reactie."
     crumbs={[{ label: 'Home', href: '/' }, { label: 'Mijn lijst' }]}
   />
 
@@ -24,13 +24,13 @@ import PageHero from '../components/PageHero.astro';
 
           <div class="hidden text-center bg-white rounded-card shadow-sm p-12" data-basket-empty>
             <h3 class="text-2xl font-semibold text-aubergine mb-3">Je lijst is nog leeg</h3>
-            <p class="text-ink-soft mb-5">Bekijk onze oplossingen en voeg toe wat je nodig denkt te hebben. Geen zorgen — we kijken er samen nog naar.</p>
+            <p class="text-ink-soft mb-5">Bekijk onze oplossingen en voeg toe wat je nodig denkt te hebben. Geen zorgen - we kijken er samen nog naar.</p>
             <a href="/oplossingen" class="btn btn-primary">Bekijk oplossingen <span class="arrow">→</span></a>
           </div>
 
           <div class="mt-8 bg-paper-2 rounded-card p-6 border-l-4 border-magenta">
             <strong class="block text-lg font-semibold text-aubergine mb-1">Twijfel je nog?</strong>
-            <p class="text-ink-soft m-0">Niet alles wat in je lijst staat hoeft een verplichting te worden. We kijken samen wat past — en wat misschien beter wacht.</p>
+            <p class="text-ink-soft m-0">Niet alles wat in je lijst staat hoeft een verplichting te worden. We kijken samen wat past - en wat misschien beter wacht.</p>
           </div>
         </div>
 
@@ -50,7 +50,7 @@ import PageHero from '../components/PageHero.astro';
             </div>
             <label class="form-label">Vestigingsplaats<input class="form-input" name="plaats" placeholder="Voor doorverwijzing naar het juiste rayon" /></label>
             <label class="form-label">Korte toelichting (optioneel)
-              <textarea class="form-input min-h-32 resize-y" name="toelichting" placeholder="Vertel kort wat de aanleiding is — handig om vooraf te weten."></textarea>
+              <textarea class="form-input min-h-32 resize-y" name="toelichting" placeholder="Vertel kort wat de aanleiding is - handig om vooraf te weten."></textarea>
             </label>
             <input type="hidden" name="selectie_xml" value="" />
             <label class="flex items-start gap-2.5 text-sm font-normal text-ink normal-case tracking-normal">

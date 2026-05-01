@@ -36,7 +36,7 @@ export const questions: Question[] = [
     q: 'Welke werkwijze spreekt jou aan?',
     a: [
       { label: 'Praktisch, direct, no-nonsense', score: 2 },
-      { label: 'Gemixt — soms strategisch, soms uitvoerend', score: 1 },
+      { label: 'Gemixt - soms strategisch, soms uitvoerend', score: 1 },
       { label: 'Vooral procederen en juridische geschillen', score: -1 },
     ],
   },
@@ -60,7 +60,7 @@ export const questions: Question[] = [
     q: 'Wat vind je van marketing & acquisitie?',
     a: [
       { label: 'Leuk, daar draai ik graag aan', score: 1 },
-      { label: 'Niet mijn favoriet — graag ondersteuning', score: 1 },
+      { label: 'Niet mijn favoriet - graag ondersteuning', score: 1 },
       { label: 'Heb er geen affiniteit mee', score: -1 },
     ],
   },
@@ -68,14 +68,14 @@ export const questions: Question[] = [
     q: 'Heb je interesse in een specialisatie naast generieke ondernemerszaken?',
     a: [
       { label: 'Ja: arbeidsrecht / contracten / IE / privacy', score: 2 },
-      { label: 'Misschien — eerst breed beginnen', score: 1 },
+      { label: 'Misschien - eerst breed beginnen', score: 1 },
       { label: 'Geen sterke voorkeur', score: 0 },
     ],
   },
   {
     q: 'Hoe sta je tegenover een vaste backoffice voor automatisering en ondersteuning?',
     a: [
-      { label: 'Onmisbaar — daar wil ik mijn tijd niet aan kwijt', score: 2 },
+      { label: 'Onmisbaar - daar wil ik mijn tijd niet aan kwijt', score: 2 },
       { label: 'Handig, mits ik er invloed op heb', score: 1 },
       { label: 'Liever zelf alles regelen', score: -1 },
     ],

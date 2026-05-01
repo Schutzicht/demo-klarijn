@@ -47,7 +47,7 @@ export const products: Product[] = [
     tagline: 'Branchespecifiek + jaar update',
     price: '€ 1.150',
     priceLabel: 'incl. update-recht 1 jaar',
-    description: "Op maat voor jouw branche. Niet zo'n template van internet — eentje die houdbaar is.",
+    description: "Op maat voor jouw branche. Niet zo'n template van internet - eentje die houdbaar is.",
     icon: 'document',
   },
   {

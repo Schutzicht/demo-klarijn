@@ -1,4 +1,4 @@
-// Klarijn — basket logic (vanilla TS, runs in browser)
+// Klarijn - basket logic (vanilla TS, runs in browser)
 // Persists in localStorage. Wires up:
 // - .add-btn[data-slug] toggles items
 // - [data-basket-count] shows count
@@ -47,6 +47,12 @@ function render() {
   document.querySelectorAll<HTMLElement>('[data-basket-count]').forEach((el) => {
     el.textContent = String(items.length);
     el.dataset.count = String(items.length);
+  });
+
+  // FAB visibility - alleen tonen als er items zijn
+  document.querySelectorAll<HTMLElement>('[data-basket-fab]').forEach((el) => {
+    if (items.length > 0) el.setAttribute('data-active', '');
+    else el.removeAttribute('data-active');
   });
 
   // Add buttons state
@@ -125,6 +131,40 @@ function stampBurst(x: number, y: number, text: string) {
   setTimeout(() => el.remove(), 1000);
 }
 
+// Subtiel geluidje bij toevoegen — twee-toon "ping" via Web Audio API.
+let audioCtx: AudioContext | null = null;
+function playAddSound() {
+  try {
+    const win = window as unknown as { AudioContext?: typeof AudioContext; webkitAudioContext?: typeof AudioContext };
+    const Ctor = win.AudioContext || win.webkitAudioContext;
+    if (!Ctor) return;
+    if (!audioCtx) audioCtx = new Ctor();
+    const ctx = audioCtx;
+    if (ctx.state === 'suspended') ctx.resume();
+    const now = ctx.currentTime;
+
+    // Twee-toon chord: kwint omhoog (helder, kort)
+    const tone = (freq: number, start: number, dur: number, vol: number) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, now + start);
+      gain.gain.exponentialRampToValueAtTime(vol, now + start + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + start + dur);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(now + start);
+      osc.stop(now + start + dur + 0.02);
+    };
+    // Eerste tik: heldere C6 (1047 Hz)
+    tone(1046.5, 0, 0.18, 0.06);
+    // Iets later: G6 (1568 Hz) - subtiel kwint hoger, geeft "klik" gevoel
+    tone(1567.98, 0.06, 0.16, 0.04);
+  } catch {
+    /* fail silently */
+  }
+}
+
 function init() {
   // Wire add buttons
   document.querySelectorAll<HTMLButtonElement>('.add-btn[data-slug]').forEach((btn) => {
@@ -144,6 +184,7 @@ function init() {
       });
       const r = btn.getBoundingClientRect();
       stampBurst(r.left + r.width / 2, r.top + r.height / 2, btn.dataset.stamp || 'Genoteerd');
+      playAddSound();
       const fab = document.querySelector<HTMLElement>('.basket-fab');
       if (fab) {
         fab.classList.remove('bump');
