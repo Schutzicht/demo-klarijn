@@ -87,8 +87,8 @@ const ldFaq = {
   </section>
 
   <!-- ========== MARQUEE - boven de vouw, direct na hero ========== -->
-  <div class="bg-magenta text-white py-4 overflow-hidden border-y border-magenta-deep" aria-hidden="true">
-    <div class="flex gap-12 whitespace-nowrap animate-ticker font-display text-2xl md:text-3xl">
+  <div class="bg-magenta text-white py-3 md:py-4 overflow-hidden border-y border-magenta-deep" aria-hidden="true">
+    <div class="flex gap-8 md:gap-12 whitespace-nowrap animate-ticker font-display text-xl md:text-3xl">
       {[...Array(2)].map(() => (
         <Fragment>
           <span class="inline-flex items-center gap-12">Vraag het Klarijn<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
@@ -266,6 +266,10 @@ const ldFaq = {
           <div class="photo-blob aspect-square shrink-0 max-sm:w-44 max-sm:mx-auto">
             <img src="/img/stock/p3.jpg" alt="Portret Dirk-Jan van der Velde" loading="lazy" class="w-full h-full object-cover" />
           </div>
+          <!-- Mini "moment" thumbnail: handshake — context van het gesprek met Klarijn -->
+          <div class="hidden md:block absolute -bottom-4 -right-4 w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
+            <img src="/img/stock/scene-handshake.jpg" alt="" aria-hidden="true" loading="lazy" class="w-full h-full object-cover" />
+          </div>
         </div>
         <div>
           <blockquote class="m-0 text-2xl md:text-3xl font-semibold leading-snug text-ink relative pl-12 max-sm:text-center max-sm:pl-0">
@@ -287,12 +291,18 @@ const ldFaq = {
   <section class="section-y bg-paper">
     <div class="max-w-[1240px] mx-auto px-4 md:px-8">
       <div class="relative text-white rounded-jumbo p-8 md:p-14 grid lg:grid-cols-[1.2fr_.8fr] gap-8 items-center overflow-hidden"
-           style="background: linear-gradient(135deg, #3D0F3B 0%, #5E1F5C 60%, #6B2569 100%);"
+           style="background: linear-gradient(135deg, #14080F 0%, #1F0E1A 55%, #2A1422 100%);"
            data-reveal>
-        <div class="absolute -right-24 -top-12 w-[460px] h-[460px] pointer-events-none opacity-35 rounded-full"
+        <!-- Magenta glow rechts -->
+        <div class="absolute -right-24 -top-12 w-[460px] h-[460px] pointer-events-none opacity-30 rounded-full"
              style="background: radial-gradient(circle, var(--color-magenta) 0%, transparent 70%);"></div>
+        <!-- Subtiele scene-foto als sfeer-overlay links -->
+        <div class="absolute -left-20 -bottom-20 w-[360px] h-[360px] pointer-events-none opacity-20 rounded-full overflow-hidden mix-blend-luminosity"
+             aria-hidden="true">
+          <img src="/img/stock/scene-talking.jpg" alt="" class="w-full h-full object-cover" loading="lazy" />
+        </div>
         <div class="relative z-10">
-          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-gold mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-gold">Voor juristen - Franchise</span>
+          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-magenta">Voor juristen - Franchise</span>
           <h2 class="text-white display-2 mt-3 mb-4">Een eigen praktijk.<br/>Met een sterke ploeg achter je.</h2>
           <p class="text-white/85 text-lg max-w-[55ch] leading-relaxed">
             In 2026 rolt Klarijn de franchiseformule landelijk uit. Voor juristen die ondernemend zijn, met de voeten in de klei willen staan, en samen sterk willen werken - met een backoffice die marketing, automatisering en specialisme regelt.
@@ -303,16 +313,16 @@ const ldFaq = {
           </div>
         </div>
         <!-- Compact rayon mini-card: clean typography ipv abstracte map -->
-        <div class="relative z-10 bg-white/8 backdrop-blur-sm border border-white/15 rounded-card p-5 md:p-6 max-w-[340px] mx-auto">
+        <div class="relative z-10 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-card p-5 md:p-6 max-w-[340px] mx-auto">
           <div class="flex items-baseline justify-between mb-3">
             <span class="font-display text-xl text-white leading-none">Rayons</span>
-            <span class="text-[.62rem] font-bold uppercase tracking-[.18em] text-magenta-soft">Landelijke dekking</span>
+            <span class="text-[.62rem] font-bold uppercase tracking-[.18em] text-magenta">Landelijke dekking</span>
           </div>
           <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
-            <span class="inline-flex items-center gap-2 text-magenta-soft font-semibold">
+            <span class="inline-flex items-center gap-2 text-magenta font-semibold">
               <span class="relative flex w-1.5 h-1.5">
-                <span class="animate-ping absolute inset-0 rounded-full bg-magenta-soft opacity-70"></span>
-                <span class="relative w-1.5 h-1.5 rounded-full bg-magenta-soft"></span>
+                <span class="animate-ping absolute inset-0 rounded-full bg-magenta opacity-70"></span>
+                <span class="relative w-1.5 h-1.5 rounded-full bg-magenta"></span>
               </span>
               Zwolle <span class="text-white/50 text-xs">· pilot</span>
             </span>

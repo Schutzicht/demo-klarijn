@@ -31,9 +31,9 @@ const homeHref = variant === 'franchise' ? '/franchise' : '/';
 const isFranchise = variant === 'franchise';
 
 // Header background bij scroll: licht-glass op klant (cream body),
-// donker-glass op franchise (aubergine body).
+// near-black glass op franchise (donkere bg).
 const bgClass = isFranchise
-  ? 'group-data-[scrolled]/hdr:bg-[rgba(94,31,92,0.85)] group-data-[scrolled]/hdr:border-white/12 group-data-[scrolled]/hdr:shadow-[0_4px_24px_rgba(0,0,0,0.18)]'
+  ? 'group-data-[scrolled]/hdr:bg-[rgba(20,12,18,0.85)] group-data-[scrolled]/hdr:border-white/10 group-data-[scrolled]/hdr:shadow-[0_4px_24px_rgba(0,0,0,0.3)]'
   : 'group-data-[scrolled]/hdr:bg-[rgba(250,246,242,0.85)] group-data-[scrolled]/hdr:border-ink/10 group-data-[scrolled]/hdr:shadow-[0_4px_24px_rgba(94,31,92,0.05)]';
 ---
 

@@ -295,13 +295,15 @@
    "Soort dark version, niet te dark" = aubergine ipv aubergine-deep als hoofdkleur.
    ========================================================= */
 
-/* Franchise body: muted aubergine met atmosferische gradient overlay
-   zodat het niet als één blok kitsch-paars voelt. */
+/* Franchise body: bijna zwart met warme ondertoon.
+   Magenta is het roze brand-accent in CTA's en details, niet in het canvas.
+   Nauwelijks paars - voornamelijk dark met een vleugje warmte. */
 body.is-franchise {
-  background-color: #4A2548;
+  background-color: #14080F;
   background-image:
-    radial-gradient(ellipse 1200px 900px at 12% -5%, rgba(122, 45, 120, 0.55) 0%, transparent 55%),
-    radial-gradient(ellipse 1100px 800px at 92% 95%, rgba(38, 8, 37, 0.55) 0%, transparent 55%);
+    radial-gradient(ellipse 900px 700px at 8% -5%, rgba(224, 39, 122, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 1100px 800px at 95% 100%, rgba(94, 31, 92, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 800px 600px at 50% 40%, rgba(255, 255, 255, 0.015) 0%, transparent 70%);
   background-attachment: fixed;
   color: var(--color-paper);
 }
