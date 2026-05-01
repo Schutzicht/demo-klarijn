@@ -16,8 +16,17 @@ interface Props {
 }
 const { title, eyebrow = 'Vraag het Klarijn', pairs } = Astro.props;
 
-const askerImg = (p: Pair) =>
-  p.img || `https://i.pravatar.cc/200?u=klarijn-${p.who.toLowerCase().replace(/\s+/g, '-')}`;
+// Vaste mapping naam → numerieke pravatar ID (curated adult portretten).
+// Voorkomt random kid-photos die seed-strings opleveren.
+const NAME_TO_ID: Record<string, number> = {
+  sander: 11, esther: 13, eline: 14, dirk: 11, joris: 33, sandra: 44,
+  kees: 65, mariska: 49, rik: 8, femke: 16, tim: 53,
+};
+const askerImg = (p: Pair) => {
+  if (p.img) return p.img;
+  const id = NAME_TO_ID[p.who.toLowerCase()] ?? 26;
+  return `https://i.pravatar.cc/240?img=${id}`;
+};
 ---
 
 <div class="bg-white rounded-card p-7 md:p-10 shadow-sm">

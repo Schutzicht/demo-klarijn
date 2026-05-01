@@ -68,21 +68,9 @@ const ldFaq = {
           </div>
         </div>
 
-        <!-- Editorial visual: hero photo with the Klarijn "VRAAG HET" pop-up -->
-        <div class="relative max-w-[520px] mx-auto w-full" data-reveal data-reveal-delay="1">
-          <div class="aspect-[4/5] photo-blob shadow-[0_30px_60px_-12px_rgba(94,31,92,0.25)]">
-            <img src="/img/eibert.webp" alt="Eibert Westerveld, mede-oprichter Klarijn" loading="eager" class="w-full h-full object-cover" />
-          </div>
-
-          <!-- Floating speech bubble (Klarijn's official 'VRAAG HET' pop-up) -->
-          <img
-            src="/img/vraag-het-bubble.webp"
-            alt=""
-            class="absolute -left-[6%] bottom-[6%] w-[36%] z-20 animate-bubble-float"
-            style="filter: drop-shadow(0 18px 40px rgba(224, 39, 122, .42));"
-            loading="eager"
-            aria-hidden="true"
-          />
+        <!-- Hero rechterkolom: interactieve "Vraag het Klarijn" module -->
+        <div class="w-full max-w-[540px] lg:max-w-none mx-auto" data-reveal data-reveal-delay="2">
+          <HeroAsk />
         </div>
       </div>
     </div>
@@ -101,13 +89,6 @@ const ldFaq = {
       ))}
     </div>
   </div>
-
-  <!-- ========== VRAAG HET KLARIJN - interactive Q&A pattern ========== -->
-  <section class="section-y bg-paper-2">
-    <div class="max-w-[1240px] mx-auto px-4 md:px-8" data-reveal>
-      <HeroAsk />
-    </div>
-  </section>
 
   <!-- ========== ANIMATED STATS ========== -->
   <section class="py-14 md:py-16 bg-paper">
@@ -257,7 +238,7 @@ const ldFaq = {
       <div class="grid sm:grid-cols-[260px_1fr] gap-8 lg:gap-12 items-center bg-white p-7 md:p-12 rounded-jumbo shadow-sm">
         <div class="relative">
           <div class="photo-blob aspect-square shrink-0 max-sm:w-44 max-sm:mx-auto">
-            <img src="https://i.pravatar.cc/400?u=klarijn-dirk-jan-bouw" alt="Portret Dirk-Jan van der Velde" loading="lazy" class="w-full h-full object-cover" />
+            <img src="https://i.pravatar.cc/400?img=26" alt="Portret Dirk-Jan van der Velde" loading="lazy" class="w-full h-full object-cover" />
           </div>
         </div>
         <div>

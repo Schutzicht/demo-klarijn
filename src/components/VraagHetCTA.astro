@@ -11,22 +11,21 @@
   aria-label="Vraag het Klarijn"
 >
   <span class="relative inline-block transition-transform duration-300 group-hover:-translate-y-1">
-    <!-- Eibert avatar - ingezoomd op gezicht -->
+    <!-- Eibert avatar - alleen het hoofd (zit bovenin de afbeelding) -->
     <span class="block w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-[3px] border-white shadow-[0_8px_24px_rgba(94,31,92,0.35)]">
       <img
         src="/img/eibert.webp"
         alt=""
         aria-hidden="true"
-        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        style="object-position: 50% 22%; transform: scale(1.5);"
+        class="w-full h-full object-cover object-top scale-[1.6] origin-top"
       />
     </span>
-    <!-- Speech bubble - alsof het uit Eibert's hoofd komt, rechtsboven -->
+    <!-- Speech bubble - hoog boven Eibert, recht in rust, draait bij hover -->
     <img
       src="/img/vraag-het-bubble.webp"
       alt=""
       aria-hidden="true"
-      class="absolute -top-6 -right-7 md:-top-7 md:-right-8 w-12 md:w-14 h-auto rotate-[12deg] transition-transform duration-300 group-hover:rotate-[20deg] group-hover:scale-110 drop-shadow-[0_8px_20px_rgba(224,39,122,0.5)]"
+      class="absolute -top-12 -right-6 md:-top-14 md:-right-7 w-12 md:w-14 h-auto rotate-0 transition-transform duration-300 group-hover:rotate-[14deg] drop-shadow-[0_8px_20px_rgba(224,39,122,0.5)]"
     />
   </span>
 </button>
@@ -35,25 +34,24 @@
   <div class="modal-panel" data-modal-panel>
     <button type="button" class="absolute right-4 top-4 w-9 h-9 rounded-full bg-paper-2 hover:bg-magenta hover:text-white grid place-items-center text-xl cursor-pointer border-0 transition-all" data-vraaghet-close aria-label="Sluiten">×</button>
 
-    <div class="flex items-start gap-4 mb-5">
-      <span class="relative shrink-0">
+    <div class="flex items-start gap-5 mb-5">
+      <span class="relative shrink-0 mt-2">
         <span class="block w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-[3px] border-white shadow-[0_4px_14px_rgba(94,31,92,0.2)]">
           <img
             src="/img/eibert.webp"
             alt=""
             aria-hidden="true"
-            class="w-full h-full object-cover"
-            style="object-position: 50% 22%; transform: scale(1.5);"
+            class="w-full h-full object-cover object-top scale-[1.6] origin-top"
           />
         </span>
         <img
           src="/img/vraag-het-bubble.webp"
           alt=""
           aria-hidden="true"
-          class="absolute -top-7 -right-7 md:-top-8 md:-right-8 w-14 md:w-16 h-auto rotate-[12deg]"
+          class="absolute -top-10 -right-7 md:-top-12 md:-right-8 w-14 md:w-16 h-auto rotate-0"
         />
       </span>
-      <div class="ml-1">
+      <div>
         <h2 id="vh-title" class="font-display text-2xl md:text-3xl text-aubergine mt-1 mb-1 leading-tight">Vraag het Eibert.</h2>
         <p class="text-ink-soft text-sm m-0">Antwoord binnen 1 werkdag, vaak sneller.</p>
       </div>
