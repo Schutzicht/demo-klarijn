@@ -86,7 +86,21 @@ const ldFaq = {
     </div>
   </section>
 
-  <!-- ========== VRAAG HET KLARIJN - direct onder de hero (eerste vouw) ========== -->
+  <!-- ========== MARQUEE - boven de vouw, direct na hero ========== -->
+  <div class="bg-magenta text-white py-4 overflow-hidden border-y border-magenta-deep" aria-hidden="true">
+    <div class="flex gap-12 whitespace-nowrap animate-ticker font-display text-2xl md:text-3xl">
+      {[...Array(2)].map(() => (
+        <Fragment>
+          <span class="inline-flex items-center gap-12">Vraag het Klarijn<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
+          <span class="inline-flex items-center gap-12">Helderheid in juridische oplossingen<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
+          <span class="inline-flex items-center gap-12">Voor doeners, niet voor advocaten<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
+          <span class="inline-flex items-center gap-12">Geen jargon. Wel resultaat.<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
+        </Fragment>
+      ))}
+    </div>
+  </div>
+
+  <!-- ========== VRAAG HET KLARIJN - direct onder de hero/marquee ========== -->
   <section class="section-y bg-paper-2">
     <div class="max-w-[1240px] mx-auto px-4 md:px-8" data-reveal>
       <div class="grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-start">
@@ -101,20 +115,6 @@ const ldFaq = {
       </div>
     </div>
   </section>
-
-  <!-- ========== MARQUEE ========== -->
-  <div class="bg-magenta text-white py-4 overflow-hidden border-y border-magenta-deep" aria-hidden="true">
-    <div class="flex gap-12 whitespace-nowrap animate-ticker font-display text-2xl md:text-3xl">
-      {[...Array(2)].map(() => (
-        <Fragment>
-          <span class="inline-flex items-center gap-12">Vraag het Klarijn<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
-          <span class="inline-flex items-center gap-12">Helderheid in juridische oplossingen<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
-          <span class="inline-flex items-center gap-12">Voor doeners, niet voor advocaten<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
-          <span class="inline-flex items-center gap-12">Geen jargon. Wel resultaat.<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
-        </Fragment>
-      ))}
-    </div>
-  </div>
 
   <!-- ========== ANIMATED STATS ========== -->
   <section class="py-14 md:py-16 bg-paper">
