@@ -25,9 +25,9 @@ const franchiseNav: NavItem[] = [
   { label: 'Contact', href: '/franchise/contact' },
 ];
 const items = variant === 'franchise' ? franchiseNav : klantNav;
-const otherSideHref = variant === 'franchise' ? '/' : '/franchise';
+const otherSideHref = variant === 'franchise' ? '/home' : '/franchise';
 const otherSideLabel = variant === 'franchise' ? '← Klant-website' : 'Voor juristen';
-const homeHref = variant === 'franchise' ? '/franchise' : '/';
+const homeHref = variant === 'franchise' ? '/franchise' : '/home';
 const isFranchise = variant === 'franchise';
 
 // Header background bij scroll: licht-glass op klant (cream body),
