@@ -1,0 +1,14 @@
+node_modules
+.git
+.tmp
+dist
+build
+.strapi
+public/uploads
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.vscode
+.idea
