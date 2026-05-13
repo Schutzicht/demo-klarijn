@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_page_marquee_items",
+  "info": {
+    "displayName": "Marquee item",
+    "icon": "message",
+    "description": "Een korte tekst die meeloopt in de banner onder de hero."
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80,
+      "description": "Korte slogan-tekst, max 80 tekens. Voorbeeld: 'Vraag het Klarijn'."
+    }
+  }
+}

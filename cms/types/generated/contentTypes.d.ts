@@ -444,8 +444,8 @@ export interface ApiDecisionQuestionDecisionQuestion
   extends Struct.CollectionTypeSchema {
   collectionName: 'decision_questions';
   info: {
-    description: 'Vragen voor de franchise match-test (beslisboom).';
-    displayName: 'Decision Question';
+    description: 'Vragen voor de franchise match-test op /franchise/beslisboom.';
+    displayName: 'Match-test vraag';
     pluralName: 'decision-questions';
     singularName: 'decision-question';
   };
@@ -453,6 +453,15 @@ export interface ApiDecisionQuestionDecisionQuestion
     draftAndPublish: true;
   };
   attributes: {
+    answerOptions: Schema.Attribute.Component<'tree.answer-option', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 2;
+        },
+        number
+      >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -463,7 +472,6 @@ export interface ApiDecisionQuestionDecisionQuestion
       'api::decision-question.decision-question'
     > &
       Schema.Attribute.Private;
-    options: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
     question: Schema.Attribute.Text & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -475,8 +483,8 @@ export interface ApiDecisionQuestionDecisionQuestion
 export interface ApiDirkVraagtDirkVraagt extends Struct.CollectionTypeSchema {
   collectionName: 'dirk_vraagts';
   info: {
-    description: 'Vraag-en-antwoord paren voor de Vraag-het-Klarijn sectie.';
-    displayName: 'Dirk Vraagt (Q&A)';
+    description: 'Vraag-en-antwoord paren voor de Vraag-het-Klarijn sectie op de site.';
+    displayName: 'Vraag het Klarijn (Q&A)';
     pluralName: 'dirk-vraagts';
     singularName: 'dirk-vraagt';
   };
@@ -495,6 +503,7 @@ export interface ApiDirkVraagtDirkVraagt extends Struct.CollectionTypeSchema {
       'api::dirk-vraagt.dirk-vraagt'
     > &
       Schema.Attribute.Private;
+    photo: Schema.Attribute.Media<'images'>;
     photoUrl: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     question: Schema.Attribute.Text & Schema.Attribute.Required;
@@ -512,7 +521,7 @@ export interface ApiDirkVraagtDirkVraagt extends Struct.CollectionTypeSchema {
 export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   collectionName: 'homepages';
   info: {
-    description: 'Hero-content en homepage-specifieke tekst.';
+    description: 'Hero-tekst, marquee-banner en cijfers op de homepage.';
     displayName: 'Homepage';
     pluralName: 'homepages';
     singularName: 'homepage';
@@ -536,9 +545,9 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
       'api::homepage.homepage'
     > &
       Schema.Attribute.Private;
-    marqueeItems: Schema.Attribute.JSON;
+    marqueeItems: Schema.Attribute.Component<'page.marquee-item', true>;
     publishedAt: Schema.Attribute.DateTime;
-    stats: Schema.Attribute.JSON;
+    stats: Schema.Attribute.Component<'page.stat', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -548,8 +557,8 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
 export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
   collectionName: 'offices';
   info: {
-    description: 'Kantoorpagina-template (Zwolle, en later andere rayons).';
-    displayName: 'Office';
+    description: 'Kantoorpagina-template. E\u00E9n item per vestiging. Verschijnt op /kantoor-[slug].';
+    displayName: 'Kantoor';
     pluralName: 'offices';
     singularName: 'office';
   };
@@ -558,7 +567,6 @@ export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
   };
   attributes: {
     address: Schema.Attribute.Text;
-    areaServed: Schema.Attribute.JSON;
     city: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -578,6 +586,7 @@ export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     quote: Schema.Attribute.Text;
     quoteAuthorName: Schema.Attribute.String;
+    serviceAreas: Schema.Attribute.Component<'office.service-area', true>;
     slug: Schema.Attribute.UID<'name'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -588,7 +597,7 @@ export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
-    description: 'Standaardproducten in de catalogus.';
+    description: 'Standaardproducten in de catalogus. Verschijnt op /oplossingen.';
     displayName: 'Product';
     pluralName: 'products';
     singularName: 'product';
@@ -616,7 +625,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
         'family',
         'folder',
       ]
-    >;
+    > &
+      Schema.Attribute.DefaultTo<'document'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -639,7 +649,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
 export interface ApiRayonRayon extends Struct.CollectionTypeSchema {
   collectionName: 'rayons';
   info: {
-    description: 'Geografische rayons waar Klarijn actief is of komt.';
+    description: 'Geografische rayons waar Klarijn actief is of komt. Verschijnt op /franchise.';
     displayName: 'Rayon';
     pluralName: 'rayons';
     singularName: 'rayon';
@@ -670,8 +680,8 @@ export interface ApiRayonRayon extends Struct.CollectionTypeSchema {
 export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
   collectionName: 'site_settings';
   info: {
-    description: 'Globale instellingen: prijzen, contactgegevens, externe URLs.';
-    displayName: 'Site Settings';
+    description: 'Globale instellingen die op meerdere paginas verschijnen. Wijzig hier eenmalig prijzen, contactgegevens of externe links.';
+    displayName: 'Site instellingen';
     pluralName: 'site-settings';
     singularName: 'site-setting';
   };
@@ -712,8 +722,8 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
 export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
   collectionName: 'team_members';
   info: {
-    description: 'Klarijn-juristen en support.';
-    displayName: 'Team Member';
+    description: 'Klarijn-juristen, oprichters en support. Verschijnt op /over-ons en kantoorpaginas.';
+    displayName: 'Team';
     pluralName: 'team-members';
     singularName: 'team-member';
   };
@@ -735,12 +745,14 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     location: Schema.Attribute.String;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    photo: Schema.Attribute.Media<'images'>;
     photoUrl: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     role: Schema.Attribute.String;
     type: Schema.Attribute.Enumeration<
       ['oprichter', 'senior', 'jurist', 'support', 'rayonhouder']
-    >;
+    > &
+      Schema.Attribute.DefaultTo<'jurist'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -750,7 +762,7 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
 export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
   collectionName: 'testimonials';
   info: {
-    description: 'Klant- of franchise-quotes.';
+    description: 'Klant-quotes die verschijnen op homepage, abonnement, kantoorpaginas.';
     displayName: 'Testimonial';
     pluralName: 'testimonials';
     singularName: 'testimonial';
@@ -763,6 +775,7 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    displayOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -771,10 +784,12 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     location: Schema.Attribute.String;
+    photo: Schema.Attribute.Media<'images'>;
     photoUrl: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     quote: Schema.Attribute.Text & Schema.Attribute.Required;
     role: Schema.Attribute.String;
+    scenePhoto: Schema.Attribute.Media<'images'>;
     scenePhotoUrl: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

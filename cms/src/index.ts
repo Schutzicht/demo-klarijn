@@ -50,7 +50,6 @@ async function seedCollection<T extends Record<string, any>>(
   strapi: Core.Strapi,
   uid: any,
   items: T[],
-  uniqueKey: keyof T,
 ) {
   const existing = await strapi.documents(uid).count({});
   if (existing > 0) return false;
@@ -74,13 +73,13 @@ export default {
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     try {
-      await seedCollection(strapi, 'api::product.product', products, 'slug');
-      await seedCollection(strapi, 'api::team-member.team-member', teamMembers, 'name');
-      await seedCollection(strapi, 'api::dirk-vraagt.dirk-vraagt', dirkVraagts, 'who');
-      await seedCollection(strapi, 'api::rayon.rayon', rayons, 'city');
-      await seedCollection(strapi, 'api::testimonial.testimonial', testimonials, 'author');
-      await seedCollection(strapi, 'api::decision-question.decision-question', decisionQuestions, 'question');
-      await seedCollection(strapi, 'api::office.office', offices, 'slug');
+      await seedCollection(strapi, 'api::product.product', products);
+      await seedCollection(strapi, 'api::team-member.team-member', teamMembers);
+      await seedCollection(strapi, 'api::dirk-vraagt.dirk-vraagt', dirkVraagts);
+      await seedCollection(strapi, 'api::rayon.rayon', rayons);
+      await seedCollection(strapi, 'api::testimonial.testimonial', testimonials);
+      await seedCollection(strapi, 'api::decision-question.decision-question', decisionQuestions);
+      await seedCollection(strapi, 'api::office.office', offices);
       await seedSingle(strapi, 'api::site-setting.site-setting', siteSettings);
       await seedSingle(strapi, 'api::homepage.homepage', homepageContent);
       await setPublicReadPermissions(strapi);

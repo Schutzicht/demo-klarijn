@@ -5,6 +5,26 @@ const STRAPI_URL = (import.meta.env.STRAPI_URL || process.env.STRAPI_URL || '').
 const STRAPI_TOKEN = import.meta.env.STRAPI_TOKEN || process.env.STRAPI_TOKEN || '';
 
 export const isStrapiEnabled = !!STRAPI_URL;
+export const strapiBaseUrl = STRAPI_URL;
+
+// Strapi geeft media-URLs relatief terug (/uploads/...). Deze functie maakt er een
+// absolute URL van zodat Astro ze direct kan gebruiken. Geef je een leeg/absoluut
+// pad mee, dan komt die ongewijzigd terug.
+export function resolveMediaUrl(url?: string | null): string | undefined {
+  if (!url) return undefined;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  if (url.startsWith('/uploads/')) return STRAPI_URL ? `${STRAPI_URL}${url}` : url;
+  return url;
+}
+
+// Helper voor Strapi v5 media-velden die de shape { url, alternativeText } hebben.
+export function mediaUrl(field: any): string | undefined {
+  if (!field) return undefined;
+  if (typeof field === 'string') return resolveMediaUrl(field);
+  if (field?.url) return resolveMediaUrl(field.url);
+  if (field?.data?.attributes?.url) return resolveMediaUrl(field.data.attributes.url);
+  return undefined;
+}
 
 type Query = Record<string, string | number | boolean | undefined>;
 
@@ -40,11 +60,12 @@ export async function fetchCollection<T = any>(pluralName: string, query: Query 
   const data = await strapiFetch<T[]>(`/${pluralName}`, {
     'pagination[pageSize]': 100,
     'sort[0]': 'displayOrder:asc',
+    populate: '*',
     ...query,
   });
   return data;
 }
 
 export async function fetchSingle<T = any>(singularName: string, query: Query = {}): Promise<T | null> {
-  return strapiFetch<T>(`/${singularName}`, query);
+  return strapiFetch<T>(`/${singularName}`, { populate: '*', ...query });
 }

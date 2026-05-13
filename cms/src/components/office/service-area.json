@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_office_service_areas",
+  "info": {
+    "displayName": "Servicegebied",
+    "icon": "pin",
+    "description": "Een stad of regio waar dit kantoor klanten bedient."
+  },
+  "options": {},
+  "attributes": {
+    "city": {
+      "type": "string",
+      "required": true,
+      "description": "Plaatsnaam. Voorbeeld: 'Zwolle', 'Kampen'."
+    }
+  }
+}

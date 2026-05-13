@@ -5,30 +5,26 @@
     "singularName": "rayon",
     "pluralName": "rayons",
     "displayName": "Rayon",
-    "description": "Geografische rayons waar Klarijn actief is of komt."
+    "description": "Geografische rayons waar Klarijn actief is of komt. Verschijnt op /franchise."
   },
-  "options": {
-    "draftAndPublish": true
-  },
+  "options": { "draftAndPublish": true },
   "pluginOptions": {},
   "attributes": {
     "city": {
       "type": "string",
-      "required": true
+      "required": true,
+      "description": "Plaatsnaam van het rayon. Voorbeeld: 'Zwolle', 'Rotterdam'."
     },
     "status": {
       "type": "enumeration",
-      "enum": [
-        "actief",
-        "pilot",
-        "beschikbaar",
-        "voorbereiding"
-      ],
-      "default": "beschikbaar"
+      "enum": ["actief", "pilot", "beschikbaar", "voorbereiding"],
+      "default": "beschikbaar",
+      "description": "Pilot = eerste rayon waar het wordt uitgetest. Actief = rayonhouder is bezig. Beschikbaar = zoekt nog rayonhouder. Voorbereiding = wordt later opgestart."
     },
     "displayOrder": {
       "type": "integer",
-      "default": 0
+      "default": 0,
+      "description": "Lager getal = bovenaan in de rayon-lijst."
     }
   }
 }

@@ -3,7 +3,7 @@
 // - STRAPI_URL gezet -> haalt uit Strapi
 // - Geen STRAPI_URL of fetch faalt -> gebruikt src/data/*
 
-import { fetchCollection, fetchSingle, isStrapiEnabled } from './strapi';
+import { fetchCollection, fetchSingle, isStrapiEnabled, mediaUrl } from './strapi';
 
 import { products as localProducts, type Product } from '../data/products';
 import { klantVragen as localKlantVragen, franchiseVragen as localFranchiseVragen, klarijnAnswerer } from '../data/dirkVraagt';
@@ -40,7 +40,7 @@ export type DirkVraag = {
 };
 
 function mapDirkVraagt(d: any): DirkVraag {
-  return { who: d.who, role: d.role, q: d.question, a: d.answer, img: d.photoUrl };
+  return { who: d.who, role: d.role, q: d.question, a: d.answer, img: mediaUrl(d.photo) || d.photoUrl };
 }
 
 export async function getKlantVragen(): Promise<DirkVraag[]> {
@@ -66,7 +66,12 @@ export type DecisionQuestion = {
 export async function getDecisionQuestions(): Promise<DecisionQuestion[]> {
   const data = await fetchCollection<any>('decision-questions');
   if (!data) return localDecisionQuestions;
-  return data.map((d) => ({ q: d.question, a: Array.isArray(d.options) ? d.options : [] }));
+  return data.map((d) => ({
+    q: d.question,
+    a: Array.isArray(d.answerOptions)
+      ? d.answerOptions.map((o: any) => ({ label: o.label, score: Number(o.score) || 0 }))
+      : [],
+  }));
 }
 
 export { matchThreshold };
@@ -105,7 +110,7 @@ export async function getTeamMembers(location?: string): Promise<TeamMember[]> {
     email: d.email,
     location: d.location,
     type: d.type,
-    photoUrl: d.photoUrl,
+    photoUrl: mediaUrl(d.photo) || d.photoUrl,
   }));
 }
 
@@ -159,8 +164,8 @@ export async function getTestimonials(): Promise<Testimonial[]> {
     author: d.author,
     role: d.role,
     location: d.location,
-    photoUrl: d.photoUrl,
-    scenePhotoUrl: d.scenePhotoUrl,
+    photoUrl: mediaUrl(d.photo) || d.photoUrl,
+    scenePhotoUrl: mediaUrl(d.scenePhoto) || d.scenePhotoUrl,
     featured: d.featured,
   }));
 }
@@ -245,8 +250,12 @@ export async function getHomepageContent(): Promise<HomepageContent> {
     heroCtaPrimaryHref: data.heroCtaPrimaryHref || LOCAL_HOMEPAGE.heroCtaPrimaryHref,
     heroCtaSecondaryLabel: data.heroCtaSecondaryLabel || LOCAL_HOMEPAGE.heroCtaSecondaryLabel,
     heroCtaSecondaryHref: data.heroCtaSecondaryHref || LOCAL_HOMEPAGE.heroCtaSecondaryHref,
-    marqueeItems: Array.isArray(data.marqueeItems) ? data.marqueeItems : LOCAL_HOMEPAGE.marqueeItems,
-    stats: Array.isArray(data.stats) ? data.stats : LOCAL_HOMEPAGE.stats,
+    marqueeItems: Array.isArray(data.marqueeItems)
+      ? data.marqueeItems.map((m: any) => (typeof m === 'string' ? m : m.text)).filter(Boolean)
+      : LOCAL_HOMEPAGE.marqueeItems,
+    stats: Array.isArray(data.stats)
+      ? data.stats.map((s: any) => ({ value: s.value, label: s.label }))
+      : LOCAL_HOMEPAGE.stats,
   };
 }
 

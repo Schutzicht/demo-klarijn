@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_tree_answer_options",
+  "info": {
+    "displayName": "Antwoord-optie",
+    "icon": "check",
+    "description": "Een antwoord op een beslisboom-vraag, met punten-score."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "description": "Het antwoord zoals de bezoeker het ziet."
+    },
+    "score": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "description": "Punten die meetellen voor de match-score. Positief = match, negatief = mismatch. Voorbeelden: 2 (sterke ja), 1 (ja), 0 (neutraal), -1 (nee), -2 (sterke nee)."
+    }
+  }
+}

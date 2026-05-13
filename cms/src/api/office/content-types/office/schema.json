@@ -4,51 +4,63 @@
   "info": {
     "singularName": "office",
     "pluralName": "offices",
-    "displayName": "Office",
-    "description": "Kantoorpagina-template (Zwolle, en later andere rayons)."
+    "displayName": "Kantoor",
+    "description": "Kantoorpagina-template. Eén item per vestiging. Verschijnt op /kantoor-[slug]."
   },
-  "options": {
-    "draftAndPublish": true
-  },
+  "options": { "draftAndPublish": true },
   "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "description": "Naam van het kantoor. Voorbeeld: 'Klarijn Zwolle'."
     },
     "slug": {
       "type": "uid",
-      "targetField": "name"
+      "targetField": "name",
+      "description": "URL-deel. Wordt automatisch gegenereerd uit de naam."
     },
     "city": {
-      "type": "string"
+      "type": "string",
+      "description": "Stad. Voorbeeld: 'Zwolle'."
     },
     "address": {
-      "type": "text"
+      "type": "text",
+      "description": "Straat + huisnummer. Voorbeeld: 'Voorbeeldstraat 12'."
     },
     "postalCode": {
-      "type": "string"
+      "type": "string",
+      "description": "Postcode. Voorbeeld: '8011 AB'."
     },
     "phone": {
-      "type": "string"
+      "type": "string",
+      "description": "Telefoonnummer. Wordt klikbaar op de site."
     },
     "email": {
-      "type": "email"
+      "type": "email",
+      "description": "E-mailadres. Wordt klikbaar op de site."
     },
     "hours": {
-      "type": "text"
+      "type": "text",
+      "description": "Openingstijden. Eén regel per dag. Voorbeeld: 'Ma-Do · 08.30 - 17.30'."
     },
-    "areaServed": {
-      "type": "json"
+    "serviceAreas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "office.service-area",
+      "description": "Plaatsen die vanuit dit kantoor worden bediend. Klik 'Add an entry' per plaats."
     },
     "intro": {
-      "type": "text"
+      "type": "text",
+      "description": "Korte introductietekst op de kantoorpagina. 2-3 zinnen."
     },
     "quote": {
-      "type": "text"
+      "type": "text",
+      "description": "Optionele quote van de rayonhouder."
     },
     "quoteAuthorName": {
-      "type": "string"
+      "type": "string",
+      "description": "Naam onder de quote."
     }
   }
 }

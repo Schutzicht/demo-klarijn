@@ -4,43 +4,49 @@
   "info": {
     "singularName": "site-setting",
     "pluralName": "site-settings",
-    "displayName": "Site Settings",
-    "description": "Globale instellingen: prijzen, contactgegevens, externe URLs."
+    "displayName": "Site instellingen",
+    "description": "Globale instellingen die op meerdere paginas verschijnen. Wijzig hier eenmalig prijzen, contactgegevens of externe links."
   },
-  "options": {
-    "draftAndPublish": false
-  },
+  "options": { "draftAndPublish": false },
   "pluginOptions": {},
   "attributes": {
     "abonnementPriceMonthly": {
       "type": "decimal",
-      "default": 145.0
+      "default": 145.0,
+      "description": "Prijs van het Klarijn-abonnement per maand in euro's, excl. btw."
     },
     "contactPhonePrimary": {
       "type": "string",
-      "default": "06-51180138"
+      "default": "06-51180138",
+      "description": "Hoofdtelefoonnummer. Verschijnt in de footer en op de contactpagina."
     },
     "contactPhoneSecondary": {
       "type": "string",
-      "default": "06-10903140"
+      "default": "06-10903140",
+      "description": "Tweede telefoonnummer (optioneel)."
     },
     "contactEmailMain": {
       "type": "email",
-      "default": "vraaghet@klarijn.nl"
+      "default": "vraaghet@klarijn.nl",
+      "description": "Algemeen contact-emailadres."
     },
     "contactEmailBestelling": {
       "type": "email",
-      "default": "bestelling@klarijn.nl"
+      "default": "bestelling@klarijn.nl",
+      "description": "Adres waar offerte-aanvragen vanuit de productcatalogus naartoe worden gestuurd."
     },
     "mijnVoortgangUrl": {
-      "type": "string"
+      "type": "string",
+      "description": "Externe URL waar klanten doorverwezen worden voor 'Mijn Voortgang'. Bijv. dossier-portaal of CRM-dashboard."
     },
     "companySlogan": {
       "type": "string",
-      "default": "Vraag het Klarijn"
+      "default": "Vraag het Klarijn",
+      "description": "De pay-off die door de hele site terugkomt."
     },
     "companyDescription": {
-      "type": "text"
+      "type": "text",
+      "description": "Eén-zinnige bedrijfsomschrijving voor SEO meta tags en JSON-LD."
     }
   }
 }

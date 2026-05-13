@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_page_stats",
+  "info": {
+    "displayName": "Statistiek",
+    "icon": "chartPie",
+    "description": "Een cijfer met een label (bv. '14 vaste juristen')."
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true,
+      "description": "Het getal of de waarde. Voorbeeld: '14', '847', '€ 145'."
+    },
+    "label": {
+      "type": "string",
+      "required": true,
+      "description": "Het label onder het cijfer. Voorbeeld: 'Vaste juristen', 'Klanten'."
+    }
+  }
+}

@@ -61,20 +61,20 @@ export const testimonials = [
 ];
 
 export const decisionQuestions = [
-  { question: 'Heb je minimaal 3 jaar werkervaring als jurist of bedrijfsjurist?', options: [{ label: 'Ja', score: 1 }, { label: 'Nog niet, maar wel verwante ervaring', score: 0 }, { label: 'Nee', score: -2 }], displayOrder: 1 },
-  { question: 'Wat past het beste bij jou?', options: [{ label: 'Ik wil ondernemen, mijn eigen praktijk opbouwen', score: 2 }, { label: 'Ik wil zelfstandig werken, maar liever zonder de hele last', score: 1 }, { label: 'Ik werk liever in loondienst', score: -2 }], displayOrder: 2 },
-  { question: 'Hoeveel uur per week wil je in je praktijk steken?', options: [{ label: '32+ uur (volwaardig)', score: 2 }, { label: '20-32 uur', score: 1 }, { label: 'Minder dan 20 uur', score: -1 }], displayOrder: 3 },
-  { question: 'Welke werkwijze spreekt jou aan?', options: [{ label: 'Praktisch, direct, no-nonsense', score: 2 }, { label: 'Gemixt - soms strategisch, soms uitvoerend', score: 1 }, { label: 'Vooral procederen en juridische geschillen', score: -1 }], displayOrder: 4 },
-  { question: 'Hoe sta je tegenover een franchiseformule?', options: [{ label: 'Top: gedeelde merknaam, eigen rayon, samen sterk', score: 2 }, { label: 'Open, mits ik genoeg vrijheid hou', score: 1 }, { label: 'Liever volledig onafhankelijk', score: -2 }], displayOrder: 5 },
-  { question: 'Heb je affiniteit met ondernemers in mkb / familiebedrijven / maakindustrie?', options: [{ label: 'Ja, mijn voorkeursdoelgroep', score: 2 }, { label: 'Beetje, ik werk breder', score: 1 }, { label: 'Niet echt', score: -1 }], displayOrder: 6 },
-  { question: 'Wat vind je van marketing & acquisitie?', options: [{ label: 'Leuk, daar draai ik graag aan', score: 1 }, { label: 'Niet mijn favoriet - graag ondersteuning', score: 1 }, { label: 'Heb er geen affiniteit mee', score: -1 }], displayOrder: 7 },
-  { question: 'Heb je interesse in een specialisatie naast generieke ondernemerszaken?', options: [{ label: 'Ja: arbeidsrecht / contracten / IE / privacy', score: 2 }, { label: 'Misschien - eerst breed beginnen', score: 1 }, { label: 'Geen sterke voorkeur', score: 0 }], displayOrder: 8 },
-  { question: 'Hoe sta je tegenover een vaste backoffice voor automatisering en ondersteuning?', options: [{ label: 'Onmisbaar - daar wil ik mijn tijd niet aan kwijt', score: 2 }, { label: 'Handig, mits ik er invloed op heb', score: 1 }, { label: 'Liever zelf alles regelen', score: -1 }], displayOrder: 9 },
-  { question: 'In welke regio wil je een rayon opbouwen?', options: [{ label: 'Ik heb een specifieke regio voor ogen', score: 2 }, { label: 'Ik ben flexibel', score: 1 }, { label: 'Weet ik nog niet', score: 0 }], displayOrder: 10 },
+  { question: 'Heb je minimaal 3 jaar werkervaring als jurist of bedrijfsjurist?', answerOptions: [{ label: 'Ja', score: 1 }, { label: 'Nog niet, maar wel verwante ervaring', score: 0 }, { label: 'Nee', score: -2 }], displayOrder: 1 },
+  { question: 'Wat past het beste bij jou?', answerOptions: [{ label: 'Ik wil ondernemen, mijn eigen praktijk opbouwen', score: 2 }, { label: 'Ik wil zelfstandig werken, maar liever zonder de hele last', score: 1 }, { label: 'Ik werk liever in loondienst', score: -2 }], displayOrder: 2 },
+  { question: 'Hoeveel uur per week wil je in je praktijk steken?', answerOptions: [{ label: '32+ uur (volwaardig)', score: 2 }, { label: '20-32 uur', score: 1 }, { label: 'Minder dan 20 uur', score: -1 }], displayOrder: 3 },
+  { question: 'Welke werkwijze spreekt jou aan?', answerOptions: [{ label: 'Praktisch, direct, no-nonsense', score: 2 }, { label: 'Gemixt - soms strategisch, soms uitvoerend', score: 1 }, { label: 'Vooral procederen en juridische geschillen', score: -1 }], displayOrder: 4 },
+  { question: 'Hoe sta je tegenover een franchiseformule?', answerOptions: [{ label: 'Top: gedeelde merknaam, eigen rayon, samen sterk', score: 2 }, { label: 'Open, mits ik genoeg vrijheid hou', score: 1 }, { label: 'Liever volledig onafhankelijk', score: -2 }], displayOrder: 5 },
+  { question: 'Heb je affiniteit met ondernemers in mkb / familiebedrijven / maakindustrie?', answerOptions: [{ label: 'Ja, mijn voorkeursdoelgroep', score: 2 }, { label: 'Beetje, ik werk breder', score: 1 }, { label: 'Niet echt', score: -1 }], displayOrder: 6 },
+  { question: 'Wat vind je van marketing & acquisitie?', answerOptions: [{ label: 'Leuk, daar draai ik graag aan', score: 1 }, { label: 'Niet mijn favoriet - graag ondersteuning', score: 1 }, { label: 'Heb er geen affiniteit mee', score: -1 }], displayOrder: 7 },
+  { question: 'Heb je interesse in een specialisatie naast generieke ondernemerszaken?', answerOptions: [{ label: 'Ja: arbeidsrecht / contracten / IE / privacy', score: 2 }, { label: 'Misschien - eerst breed beginnen', score: 1 }, { label: 'Geen sterke voorkeur', score: 0 }], displayOrder: 8 },
+  { question: 'Hoe sta je tegenover een vaste backoffice voor automatisering en ondersteuning?', answerOptions: [{ label: 'Onmisbaar - daar wil ik mijn tijd niet aan kwijt', score: 2 }, { label: 'Handig, mits ik er invloed op heb', score: 1 }, { label: 'Liever zelf alles regelen', score: -1 }], displayOrder: 9 },
+  { question: 'In welke regio wil je een rayon opbouwen?', answerOptions: [{ label: 'Ik heb een specifieke regio voor ogen', score: 2 }, { label: 'Ik ben flexibel', score: 1 }, { label: 'Weet ik nog niet', score: 0 }], displayOrder: 10 },
 ];
 
 export const offices = [
-  { name: 'Klarijn Zwolle', slug: 'zwolle', city: 'Zwolle', address: 'Voorbeeldstraat 12', postalCode: '8011 AB', phone: '038 222 00 00', email: 'zwolle@klarijn.nl', hours: 'Ma-Do · 08.30 - 17.30\nVrijdag · 08.30 - 16.00\nOp afspraak ook \'s avonds', areaServed: ['Zwolle', 'Kampen', 'Apeldoorn', 'Hattem', 'Deventer'], intro: 'Het Klarijn-kantoor Zwolle bedient ondernemers in IJsselland, Veluwe en Salland. Op afspraak ontvangen we je op kantoor; veel werk doen we online of telefonisch. We rijden ook graag de provincie in als dat handig is.', quote: 'Ik ben zelf opgegroeid op een melkveebedrijf. Voor de buren zonder bedrijfsjurist was er nooit ruimte om bij een advocaat aan te kloppen. Daar zit voor mij de drive achter Klarijn: praktische juridische hulp die echt landt in de schuur - niet alleen op papier.', quoteAuthorName: 'Eibert Lijnbach' },
+  { name: 'Klarijn Zwolle', city: 'Zwolle', address: 'Voorbeeldstraat 12', postalCode: '8011 AB', phone: '038 222 00 00', email: 'zwolle@klarijn.nl', hours: 'Ma-Do · 08.30 - 17.30\nVrijdag · 08.30 - 16.00\nOp afspraak ook \'s avonds', serviceAreas: [{ city: 'Zwolle' }, { city: 'Kampen' }, { city: 'Apeldoorn' }, { city: 'Hattem' }, { city: 'Deventer' }], intro: 'Het Klarijn-kantoor Zwolle bedient ondernemers in IJsselland, Veluwe en Salland. Op afspraak ontvangen we je op kantoor; veel werk doen we online of telefonisch. We rijden ook graag de provincie in als dat handig is.', quote: 'Ik ben zelf opgegroeid op een melkveebedrijf. Voor de buren zonder bedrijfsjurist was er nooit ruimte om bij een advocaat aan te kloppen. Daar zit voor mij de drive achter Klarijn: praktische juridische hulp die echt landt in de schuur - niet alleen op papier.', quoteAuthorName: 'Eibert Lijnbach' },
 ];
 
 export const siteSettings = {
@@ -96,10 +96,10 @@ export const homepageContent = {
   heroCtaSecondaryLabel: 'Direct contact',
   heroCtaSecondaryHref: '/contact',
   marqueeItems: [
-    'Vraag het Klarijn',
-    'Helderheid in juridische oplossingen',
-    'Voor doeners, niet voor advocaten',
-    'Geen jargon. Wel resultaat.',
+    { text: 'Vraag het Klarijn' },
+    { text: 'Helderheid in juridische oplossingen' },
+    { text: 'Voor doeners, niet voor advocaten' },
+    { text: 'Geen jargon. Wel resultaat.' },
   ],
   stats: [
     { value: '14', label: 'Vaste juristen' },

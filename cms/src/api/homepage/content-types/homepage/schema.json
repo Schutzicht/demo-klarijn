@@ -5,36 +5,46 @@
     "singularName": "homepage",
     "pluralName": "homepages",
     "displayName": "Homepage",
-    "description": "Hero-content en homepage-specifieke tekst."
+    "description": "Hero-tekst, marquee-banner en cijfers op de homepage."
   },
-  "options": {
-    "draftAndPublish": true
-  },
+  "options": { "draftAndPublish": true },
   "pluginOptions": {},
   "attributes": {
     "heroTitle": {
-      "type": "string"
+      "type": "string",
+      "description": "Grote titel in de hero. Gebruik \\n voor een nieuwe regel. Voorbeeld: 'Vraag het\\nKlarijn'."
     },
     "heroLead": {
-      "type": "text"
+      "type": "text",
+      "description": "Subtekst onder de titel. 1-2 zinnen."
     },
     "heroCtaPrimaryLabel": {
-      "type": "string"
+      "type": "string",
+      "description": "Tekst op de primaire knop. Voorbeeld: 'Bekijk oplossingen'."
     },
     "heroCtaPrimaryHref": {
-      "type": "string"
+      "type": "string",
+      "description": "Waar de primaire knop heen linkt. Voorbeeld: '/oplossingen'."
     },
     "heroCtaSecondaryLabel": {
-      "type": "string"
+      "type": "string",
+      "description": "Tekst op de secundaire knop. Voorbeeld: 'Direct contact'."
     },
     "heroCtaSecondaryHref": {
-      "type": "string"
+      "type": "string",
+      "description": "Waar de secundaire knop heen linkt."
     },
     "marqueeItems": {
-      "type": "json"
+      "type": "component",
+      "repeatable": true,
+      "component": "page.marquee-item",
+      "description": "De korte slogans die door de roze banner lopen onder de hero. Klik 'Add an entry' per slogan."
     },
     "stats": {
-      "type": "json"
+      "type": "component",
+      "repeatable": true,
+      "component": "page.stat",
+      "description": "Statistieken-blok (cijfers met labels). Verschijnt in de 'Doelgroepen + getallen' sectie."
     }
   }
 }

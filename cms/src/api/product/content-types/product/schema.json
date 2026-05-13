@@ -5,25 +5,59 @@
     "singularName": "product",
     "pluralName": "products",
     "displayName": "Product",
-    "description": "Standaardproducten in de catalogus."
+    "description": "Standaardproducten in de catalogus. Verschijnt op /oplossingen."
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "title": { "type": "string", "required": true },
-    "slug": { "type": "uid", "targetField": "title", "required": true },
-    "tag": { "type": "string" },
-    "tagline": { "type": "string" },
-    "price": { "type": "string" },
-    "priceLabel": { "type": "string" },
-    "description": { "type": "text" },
+    "title": {
+      "type": "string",
+      "required": true,
+      "description": "Naam van het product zoals klanten het zien. Voorbeeld: 'Arbeidscontract Op Maat'."
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true,
+      "description": "URL-vriendelijke versie van de titel. Wordt automatisch gegenereerd. Bepaalt het webadres /product/[slug]."
+    },
+    "tag": {
+      "type": "string",
+      "description": "Categorie-label. Voorbeeld: 'Arbeid', 'Contracten', 'Geschillen'."
+    },
+    "tagline": {
+      "type": "string",
+      "description": "Korte sub-titel onder de naam. Max 60 tekens. Voorbeeld: 'Volledig en cao-conform'."
+    },
+    "price": {
+      "type": "string",
+      "description": "Prijsweergave zoals zichtbaar op de site. Voorbeeld: '€ 595', 'NCNP', 'vanaf € 2.450'."
+    },
+    "priceLabel": {
+      "type": "string",
+      "description": "Toelichting onder de prijs. Voorbeeld: 'vaste prijs', 'no-cure-no-pay', 'incl. update-recht 1 jaar'."
+    },
+    "description": {
+      "type": "text",
+      "description": "Volledige omschrijving op de product-kaart. 1-2 zinnen."
+    },
     "icon": {
       "type": "enumeration",
-      "enum": ["contract", "gavel", "briefcase", "document", "shield", "house", "star", "handshake", "family", "folder"]
+      "enum": ["contract", "gavel", "briefcase", "document", "shield", "house", "star", "handshake", "family", "folder"],
+      "default": "document",
+      "description": "Welk icoon op de product-kaart staat. Kies wat het beste past bij het onderwerp."
     },
-    "featured": { "type": "boolean", "default": false },
-    "displayOrder": { "type": "integer", "default": 0 }
+    "featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Pin op de homepage (max 6 featured worden getoond)."
+    },
+    "displayOrder": {
+      "type": "integer",
+      "default": 0,
+      "description": "Lager getal = eerder in de lijst. Gebruik om volgorde te bepalen (1, 2, 3...)."
+    }
   }
 }

@@ -5,36 +5,58 @@
     "singularName": "testimonial",
     "pluralName": "testimonials",
     "displayName": "Testimonial",
-    "description": "Klant- of franchise-quotes."
+    "description": "Klant-quotes die verschijnen op homepage, abonnement, kantoorpaginas."
   },
-  "options": {
-    "draftAndPublish": true
-  },
+  "options": { "draftAndPublish": true },
   "pluginOptions": {},
   "attributes": {
     "quote": {
       "type": "text",
-      "required": true
+      "required": true,
+      "description": "De uitspraak. Eerste persoon. Geen aanhalingstekens nodig - die plaatst de site zelf."
     },
     "author": {
       "type": "string",
-      "required": true
+      "required": true,
+      "description": "Naam van degene die het zei."
     },
     "role": {
-      "type": "string"
+      "type": "string",
+      "description": "Functie + bedrijfsnaam. Voorbeeld: 'Eigenaar Bouwbedrijf Van der Velde'."
     },
     "location": {
-      "type": "string"
+      "type": "string",
+      "description": "Plaats. Voorbeeld: 'Apeldoorn'."
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
     },
     "photoUrl": {
-      "type": "string"
+      "type": "string",
+      "description": "Fallback-pad als nog geen foto is geupload."
+    },
+    "scenePhoto": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
     },
     "scenePhotoUrl": {
-      "type": "string"
+      "type": "string",
+      "description": "Optionele tweede sfeerfoto (handen schudden, samenwerken etc) die naast het portret verschijnt."
     },
     "featured": {
       "type": "boolean",
-      "default": false
+      "default": false,
+      "description": "Aanvinken om deze quote op de homepage te tonen."
+    },
+    "displayOrder": {
+      "type": "integer",
+      "default": 0,
+      "description": "Lager getal = eerder in de lijst."
     }
   }
 }
