@@ -68,6 +68,47 @@ async function seedSingle(strapi: Core.Strapi, uid: any, data: Record<string, an
   return true;
 }
 
+// Zorgt dat de Vercel-rebuild webhook altijd bestaat (idempotent).
+// Triggert op alle content-events zodat publish/update/delete -> Astro rebuild.
+async function ensureVercelWebhook(strapi: Core.Strapi) {
+  const url = process.env.VERCEL_DEPLOY_HOOK;
+  if (!url) {
+    strapi.log.info('[seed] VERCEL_DEPLOY_HOOK niet gezet - skip webhook');
+    return;
+  }
+  try {
+    const store = (strapi as any).get?.('webhookStore') ?? (strapi as any).webhookStore;
+    if (!store) {
+      strapi.log.warn('[seed] webhookStore niet beschikbaar');
+      return;
+    }
+    const all = await store.findWebhooks();
+    if (all.some((w: any) => w.name === 'Vercel rebuild')) {
+      strapi.log.info('[seed] Vercel webhook bestaat al');
+      return;
+    }
+    await store.createWebhook({
+      name: 'Vercel rebuild',
+      url,
+      headers: {},
+      events: [
+        'entry.create',
+        'entry.update',
+        'entry.delete',
+        'entry.publish',
+        'entry.unpublish',
+        'media.create',
+        'media.update',
+        'media.delete',
+      ],
+      enabled: true,
+    });
+    strapi.log.info('[seed] Vercel webhook aangemaakt');
+  } catch (err) {
+    strapi.log.warn('[seed] Vercel webhook setup faalde:', err);
+  }
+}
+
 export default {
   register(/* { strapi }: { strapi: Core.Strapi } */) {},
 
@@ -83,6 +124,7 @@ export default {
       await seedSingle(strapi, 'api::site-setting.site-setting', siteSettings);
       await seedSingle(strapi, 'api::homepage.homepage', homepageContent);
       await setPublicReadPermissions(strapi);
+      await ensureVercelWebhook(strapi);
     } catch (err) {
       strapi.log.error('[seed] Bootstrap seed failed:', err);
     }
