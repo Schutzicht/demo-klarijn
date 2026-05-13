@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "offices",
+  "info": {
+    "singularName": "office",
+    "pluralName": "offices",
+    "displayName": "Office",
+    "description": "Kantoorpagina-template (Zwolle, en later andere rayons)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "city": {
+      "type": "string"
+    },
+    "address": {
+      "type": "text"
+    },
+    "postalCode": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "hours": {
+      "type": "text"
+    },
+    "areaServed": {
+      "type": "json"
+    },
+    "intro": {
+      "type": "text"
+    },
+    "quote": {
+      "type": "text"
+    },
+    "quoteAuthorName": {
+      "type": "string"
+    }
+  }
+}

@@ -1,11 +1,11 @@
 ---
-import { klantVragen, franchiseVragen, klarijnAnswerer, type DirkVraag } from '../data/dirkVraagt';
+import { getKlantVragen, getFranchiseVragen, klarijnAnswerer, type DirkVraag } from '../lib/content';
 
 interface Props {
   variant?: 'klant' | 'franchise';
 }
 const { variant = 'klant' } = Astro.props;
-const items: DirkVraag[] = variant === 'franchise' ? franchiseVragen : klantVragen;
+const items: DirkVraag[] = variant === 'franchise' ? await getFranchiseVragen() : await getKlantVragen();
 const data = JSON.stringify(items);
 const klarijnImg = klarijnAnswerer.img;
 ---

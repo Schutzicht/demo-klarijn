@@ -6,8 +6,9 @@ import HeroAsk from '../components/HeroAsk.astro';
 import SectionDivider from '../components/SectionDivider.astro';
 import AnimatedNumber from '../components/AnimatedNumber.astro';
 import WhatWeDontDo from '../components/WhatWeDontDo.astro';
-import { products } from '../data/products';
+import { getProducts } from '../lib/content';
 
+const products = await getProducts();
 const featured = products.slice(0, 6);
 
 const ldOrg = {

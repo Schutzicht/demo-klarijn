@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "products",
+  "info": {
+    "singularName": "product",
+    "pluralName": "products",
+    "displayName": "Product",
+    "description": "Standaardproducten in de catalogus."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "tag": { "type": "string" },
+    "tagline": { "type": "string" },
+    "price": { "type": "string" },
+    "priceLabel": { "type": "string" },
+    "description": { "type": "text" },
+    "icon": {
+      "type": "enumeration",
+      "enum": ["contract", "gavel", "briefcase", "document", "shield", "house", "star", "handshake", "family", "folder"]
+    },
+    "featured": { "type": "boolean", "default": false },
+    "displayOrder": { "type": "integer", "default": 0 }
+  }
+}

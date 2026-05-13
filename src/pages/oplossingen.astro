@@ -2,7 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import ProductCard from '../components/ProductCard.astro';
-import { products } from '../data/products';
+import { getProducts } from '../lib/content';
+
+const products = await getProducts();
 
 const ldList = {
   '@context': 'https://schema.org',

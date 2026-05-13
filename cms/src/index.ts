@@ -1,0 +1,91 @@
+import type { Core } from '@strapi/strapi';
+import {
+  products,
+  teamMembers,
+  dirkVraagts,
+  rayons,
+  testimonials,
+  decisionQuestions,
+  offices,
+  siteSettings,
+  homepageContent,
+} from './seed/data';
+
+// Lijst van content-types die publiek leesbaar moeten zijn (vanuit Astro).
+const PUBLIC_READ_TYPES = [
+  'api::product.product',
+  'api::team-member.team-member',
+  'api::dirk-vraagt.dirk-vraagt',
+  'api::rayon.rayon',
+  'api::testimonial.testimonial',
+  'api::decision-question.decision-question',
+  'api::office.office',
+  'api::site-setting.site-setting',
+  'api::homepage.homepage',
+];
+
+async function setPublicReadPermissions(strapi: Core.Strapi) {
+  const publicRole = await strapi
+    .query('plugin::users-permissions.role')
+    .findOne({ where: { type: 'public' } });
+  if (!publicRole) return;
+
+  for (const uid of PUBLIC_READ_TYPES) {
+    for (const action of ['find', 'findOne']) {
+      const actionId = `${uid}.${action}`;
+      const existing = await strapi.query('plugin::users-permissions.permission').findOne({
+        where: { action: actionId, role: publicRole.id },
+      });
+      if (!existing) {
+        await strapi.query('plugin::users-permissions.permission').create({
+          data: { action: actionId, role: publicRole.id },
+        });
+      }
+    }
+  }
+  strapi.log.info('[seed] Public read permissions ensured for all content-types.');
+}
+
+async function seedCollection<T extends Record<string, any>>(
+  strapi: Core.Strapi,
+  uid: any,
+  items: T[],
+  uniqueKey: keyof T,
+) {
+  const existing = await strapi.documents(uid).count({});
+  if (existing > 0) return false;
+  for (const item of items) {
+    await strapi.documents(uid).create({ data: item as any, status: 'published' });
+  }
+  strapi.log.info(`[seed] Seeded ${items.length} ${uid}`);
+  return true;
+}
+
+async function seedSingle(strapi: Core.Strapi, uid: any, data: Record<string, any>) {
+  const existing = await strapi.documents(uid).findFirst();
+  if (existing) return false;
+  await strapi.documents(uid).create({ data, status: 'published' });
+  strapi.log.info(`[seed] Seeded single ${uid}`);
+  return true;
+}
+
+export default {
+  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    try {
+      await seedCollection(strapi, 'api::product.product', products, 'slug');
+      await seedCollection(strapi, 'api::team-member.team-member', teamMembers, 'name');
+      await seedCollection(strapi, 'api::dirk-vraagt.dirk-vraagt', dirkVraagts, 'who');
+      await seedCollection(strapi, 'api::rayon.rayon', rayons, 'city');
+      await seedCollection(strapi, 'api::testimonial.testimonial', testimonials, 'author');
+      await seedCollection(strapi, 'api::decision-question.decision-question', decisionQuestions, 'question');
+      await seedCollection(strapi, 'api::office.office', offices, 'slug');
+      await seedSingle(strapi, 'api::site-setting.site-setting', siteSettings);
+      await seedSingle(strapi, 'api::homepage.homepage', homepageContent);
+      await setPublicReadPermissions(strapi);
+    } catch (err) {
+      strapi.log.error('[seed] Bootstrap seed failed:', err);
+    }
+  },
+};

@@ -6,9 +6,10 @@ import ProductIcon from '../components/ProductIcon.astro';
 import DirkVraagtInline from '../components/DirkVraagtInline.astro';
 import Stamp from '../components/Stamp.astro';
 import SectionDivider from '../components/SectionDivider.astro';
-import { productBySlug, products } from '../data/products';
+import { getProducts, getProductBySlug } from '../lib/content';
 
-const product = productBySlug('arbeidscontract')!;
+const product = (await getProductBySlug('arbeidscontract'))!;
+const products = await getProducts();
 const related = products.filter((p) => ['handboek-fake','avg-scan','uwv'].includes(p.slug) || p.slug === 'avg-scan' || p.slug === 'uwv').slice(0, 3);
 const samen = products.filter((p) => ['avg-scan','uwv','algemene-voorwaarden'].includes(p.slug));
 

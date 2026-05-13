@@ -1,0 +1,40 @@
+{
+  "kind": "singleType",
+  "collectionName": "homepages",
+  "info": {
+    "singularName": "homepage",
+    "pluralName": "homepages",
+    "displayName": "Homepage",
+    "description": "Hero-content en homepage-specifieke tekst."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heroTitle": {
+      "type": "string"
+    },
+    "heroLead": {
+      "type": "text"
+    },
+    "heroCtaPrimaryLabel": {
+      "type": "string"
+    },
+    "heroCtaPrimaryHref": {
+      "type": "string"
+    },
+    "heroCtaSecondaryLabel": {
+      "type": "string"
+    },
+    "heroCtaSecondaryHref": {
+      "type": "string"
+    },
+    "marqueeItems": {
+      "type": "json"
+    },
+    "stats": {
+      "type": "json"
+    }
+  }
+}

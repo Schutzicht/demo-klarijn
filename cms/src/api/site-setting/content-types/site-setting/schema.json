@@ -1,0 +1,46 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Settings",
+    "description": "Globale instellingen: prijzen, contactgegevens, externe URLs."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "abonnementPriceMonthly": {
+      "type": "decimal",
+      "default": 145.0
+    },
+    "contactPhonePrimary": {
+      "type": "string",
+      "default": "06-51180138"
+    },
+    "contactPhoneSecondary": {
+      "type": "string",
+      "default": "06-10903140"
+    },
+    "contactEmailMain": {
+      "type": "email",
+      "default": "vraaghet@klarijn.nl"
+    },
+    "contactEmailBestelling": {
+      "type": "email",
+      "default": "bestelling@klarijn.nl"
+    },
+    "mijnVoortgangUrl": {
+      "type": "string"
+    },
+    "companySlogan": {
+      "type": "string",
+      "default": "Vraag het Klarijn"
+    },
+    "companyDescription": {
+      "type": "text"
+    }
+  }
+}

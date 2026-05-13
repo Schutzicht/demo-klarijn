@@ -1,6 +1,7 @@
 ---
-import { questions, matchThreshold } from '../data/decisionTree';
+import { getDecisionQuestions, matchThreshold } from '../lib/content';
 
+const questions = await getDecisionQuestions();
 const data = JSON.stringify({ questions, matchThreshold });
 ---
 

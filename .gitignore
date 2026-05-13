@@ -22,3 +22,10 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Strapi local DB + uploads + build artefacts
+cms/.tmp/
+cms/build/
+cms/dist/
+cms/.strapi/
+cms/public/uploads/

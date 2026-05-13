@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rayons",
+  "info": {
+    "singularName": "rayon",
+    "pluralName": "rayons",
+    "displayName": "Rayon",
+    "description": "Geografische rayons waar Klarijn actief is of komt."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "actief",
+        "pilot",
+        "beschikbaar",
+        "voorbereiding"
+      ],
+      "default": "beschikbaar"
+    },
+    "displayOrder": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
