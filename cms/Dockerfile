@@ -22,6 +22,9 @@ RUN addgroup -g 1001 strapi && adduser -D -u 1001 -G strapi strapi
 
 COPY --from=builder --chown=strapi:strapi /opt/app .
 
+# Strapi vereist dat deze folder bestaat; volume overschrijft 'm tijdens runtime
+RUN mkdir -p /opt/app/public/uploads && chown -R strapi:strapi /opt/app/public
+
 USER strapi
 
 ENV NODE_ENV=production \
