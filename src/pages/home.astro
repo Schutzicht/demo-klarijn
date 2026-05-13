@@ -6,10 +6,16 @@ import HeroAsk from '../components/HeroAsk.astro';
 import SectionDivider from '../components/SectionDivider.astro';
 import AnimatedNumber from '../components/AnimatedNumber.astro';
 import WhatWeDontDo from '../components/WhatWeDontDo.astro';
-import { getProducts } from '../lib/content';
+import { getProducts, getHomepageContent } from '../lib/content';
 
 const products = await getProducts();
 const featured = products.slice(0, 6);
+const hp = await getHomepageContent();
+
+// heroTitle bevat een \n voor de regel-break: splits in twee delen.
+const heroLines = hp.heroTitle.split('\n');
+const heroFirst = heroLines[0] ?? '';
+const heroSecond = heroLines[1] ?? '';
 
 const ldOrg = {
   '@context': 'https://schema.org',
@@ -58,15 +64,14 @@ const ldFaq = {
         <div>
           <span class="eyebrow" data-reveal>Voor mkb · familiebedrijven · maakindustrie</span>
           <h1 class="display-1 mt-4 mb-8 text-balance text-aubergine" data-reveal data-reveal-delay="1">
-            Vraag het<br/>
-            <span class="brush">Klarijn</span>.
+            {heroFirst}{heroSecond && <Fragment><br/><span class="brush">{heroSecond}</span></Fragment>}
           </h1>
           <p class="text-lg md:text-xl text-ink-soft max-w-[48ch] mb-8 leading-relaxed" data-reveal data-reveal-delay="2">
-            Praktisch juridisch advies voor ondernemers met de voeten in de klei. Geen ivoren toren, wel heldere antwoorden van een vaste jurist die jouw zaak kent.
+            {hp.heroLead}
           </p>
           <div class="flex gap-3 flex-wrap" data-reveal data-reveal-delay="3">
-            <a class="btn btn-primary" href="/oplossingen">Bekijk oplossingen <span class="arrow">→</span></a>
-            <a class="btn btn-ghost" href="/contact">Direct contact</a>
+            <a class="btn btn-primary" href={hp.heroCtaPrimaryHref}>{hp.heroCtaPrimaryLabel} <span class="arrow">→</span></a>
+            <a class="btn btn-ghost" href={hp.heroCtaSecondaryHref}>{hp.heroCtaSecondaryLabel}</a>
           </div>
         </div>
 
@@ -93,10 +98,9 @@ const ldFaq = {
     <div class="flex gap-8 md:gap-12 whitespace-nowrap animate-ticker font-display text-xl md:text-3xl">
       {[...Array(2)].map(() => (
         <Fragment>
-          <span class="inline-flex items-center gap-12">Vraag het Klarijn<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
-          <span class="inline-flex items-center gap-12">Helderheid in juridische oplossingen<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
-          <span class="inline-flex items-center gap-12">Voor doeners, niet voor advocaten<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
-          <span class="inline-flex items-center gap-12">Geen jargon. Wel resultaat.<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
+          {hp.marqueeItems.map((m) => (
+            <span class="inline-flex items-center gap-12">{m}<span class="inline-block w-1.5 h-1.5 bg-white/55 rounded-full"></span></span>
+          ))}
         </Fragment>
       ))}
     </div>
