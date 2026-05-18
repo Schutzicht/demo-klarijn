@@ -1,10 +1,10 @@
 ---
-// Strategiesessie tool: één bord per onderwerp met vierkante post-its.
-// State leeft in URL hash zodat de link gedeeld kan worden.
+// Strategiesessie: minimalistische tool waar het board domineert.
+// State alleen in URL hash wanneer expliciet gedeeld.
 import '../styles/global.css';
 
 const seed = {
-  v: 6,
+  v: 7,
   meta: { titel: 'Strategiesessie Klarijn' },
   boards: [
     {
@@ -18,7 +18,7 @@ const seed = {
         { text: 'Klant en franchise gescheiden', c: 3 },
         { text: 'Beheer door eigen team', c: 4 },
         { text: 'Productcatalogus tonen', c: 2 },
-        { text: 'Abonnement als hoofdpropositie', c: 0 },
+        { text: 'Abonnement hoofdpropositie', c: 0 },
         { text: 'Mobiel-eerste presentatie', c: 1 },
         { text: 'AVG-proof, geen tracking', c: 3 },
         { text: 'Match-test franchise', c: 4 },
@@ -62,7 +62,7 @@ const seed = {
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap"
       rel="stylesheet"
     />
-    <style>
+    <style is:global>
       :root {
         --ag-indigo: #2d3fe0;
         --ag-indigo-hover: #1f2bb8;
@@ -71,72 +71,117 @@ const seed = {
         --ink-soft: #56575c;
         --ink-muted: #8b8c93;
         --paper: #fafaf7;
-        --board-bg: #f5f3ee;
+        --board-bg: #ffffff;
         --border: rgba(15,15,18,0.08);
         --border-soft: rgba(15,15,18,0.05);
       }
+      *, *::before, *::after { box-sizing: border-box; }
       html, body {
         background: var(--paper);
         font-family: 'Inter', system-ui, sans-serif;
         color: var(--ink);
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
+        margin: 0;
       }
 
-      /* Top bar */
+      /* === Top bar === */
       .topbar {
-        background: rgba(250,250,247,0.85);
-        backdrop-filter: blur(12px);
+        background: rgba(250,250,247,0.92);
+        backdrop-filter: blur(14px);
         border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 40;
       }
-      .brand-mark {
+      .topbar-inner {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 0 24px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         font-family: 'Outfit', sans-serif;
+      }
+      .brand-text {
+        font-size: 14px;
         font-weight: 600;
+        color: var(--ink);
         letter-spacing: -0.01em;
       }
-
-      /* Buttons */
+      .brand-sep {
+        color: var(--ink-muted);
+        font-size: 12px;
+        margin: 0 2px;
+      }
+      .brand-client {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ink-soft);
+      }
+      .toolbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
       .btn {
         font-family: 'Inter', sans-serif;
         font-size: 13px;
         font-weight: 500;
-        padding: 7px 14px;
+        padding: 7px 12px;
         border-radius: 8px;
         transition: all 0.15s;
         display: inline-flex;
         align-items: center;
         gap: 6px;
         white-space: nowrap;
+        cursor: pointer;
+        border: none;
+        background: transparent;
       }
-      .btn-ghost {
-        color: var(--ink-soft);
-      }
-      .btn-ghost:hover {
-        background: var(--ag-indigo-sky);
-        color: var(--ag-indigo);
-      }
-      .btn-primary {
-        background: var(--ag-indigo);
-        color: white;
-        font-weight: 600;
-      }
-      .btn-primary:hover { background: var(--ag-indigo-hover); }
+      .btn-ghost { color: var(--ink-soft); }
+      .btn-ghost:hover { background: rgba(15,15,18,0.04); color: var(--ink); }
+      .btn-primary { background: var(--ink); color: white; font-weight: 600; padding: 7px 14px; }
+      .btn-primary:hover { background: #1f2024; }
 
-      /* Tabs (underline style) */
+      /* === Sub-header met tabs === */
+      .subhead {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 28px 24px 0;
+      }
+      .session-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink-muted);
+        letter-spacing: 0.01em;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
       .tab-bar {
         display: flex;
-        gap: 28px;
+        gap: 32px;
         border-bottom: 1px solid var(--border);
-        align-items: stretch;
       }
       .tab {
         font-family: 'Outfit', sans-serif;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 500;
         color: var(--ink-soft);
         background: transparent;
         cursor: pointer;
-        padding: 14px 2px;
+        padding: 12px 0 14px;
+        border: none;
         border-bottom: 2px solid transparent;
         margin-bottom: -1px;
         transition: color 0.15s, border-color 0.15s;
@@ -145,8 +190,8 @@ const seed = {
       }
       .tab:hover { color: var(--ink); }
       .tab[aria-selected="true"] {
-        color: var(--ag-indigo);
-        border-bottom-color: var(--ag-indigo);
+        color: var(--ink);
+        border-bottom-color: var(--ink);
         font-weight: 600;
       }
       .tab-count {
@@ -154,9 +199,9 @@ const seed = {
         align-items: center;
         justify-content: center;
         margin-left: 10px;
-        min-width: 22px;
-        height: 20px;
-        padding: 0 7px;
+        min-width: 20px;
+        height: 18px;
+        padding: 0 6px;
         border-radius: 999px;
         background: rgba(15,15,18,0.06);
         color: var(--ink-muted);
@@ -165,40 +210,76 @@ const seed = {
         font-family: 'Inter', sans-serif;
       }
       .tab[aria-selected="true"] .tab-count {
-        background: var(--ag-indigo-sky);
-        color: var(--ag-indigo);
+        background: var(--ink);
+        color: white;
       }
 
-      /* Board canvas - clean cream zoals Miro/Lucid */
+      /* === Board === */
+      .canvas-wrap {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 24px 24px 48px;
+      }
+      .board-context {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .board-question {
+        font-family: 'Outfit', sans-serif;
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+        line-height: 1.2;
+        margin: 0;
+      }
+      .board-hint {
+        font-size: 13px;
+        color: var(--ink-muted);
+      }
       .board {
-        background: #f6f3ec;
+        background: var(--board-bg);
         border: 1px solid var(--border);
-        border-radius: 12px;
-        box-shadow: inset 0 1px 2px rgba(15,15,18,0.02);
+        border-radius: 14px;
+        padding: 28px;
+        min-height: 540px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(15,15,18,0.04);
+      }
+      .postit-wall {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: flex-start;
       }
 
-      /* Post-it kleuren - Miro-stijl, vrolijk maar niet kinderachtig */
-      .pi-0 { background: #FEEB8E; }   /* yellow */
-      .pi-1 { background: #FFB9C8; }   /* pink */
-      .pi-2 { background: #B5E3C3; }   /* mint */
-      .pi-3 { background: #BCD3F2; }   /* sky */
-      .pi-4 { background: #FFC9A6; }   /* peach */
+      /* === Post-its === */
+      .pi-0 { background: #FEEB8E; }
+      .pi-1 { background: #FFB9C8; }
+      .pi-2 { background: #B5E3C3; }
+      .pi-3 { background: #BCD3F2; }
+      .pi-4 { background: #FFC9A6; }
 
       .postit {
         position: relative;
-        width: 104px;
-        height: 104px;
-        padding: 11px 12px;
+        width: 112px;
+        height: 112px;
+        padding: 13px;
         box-shadow:
-          0 1px 1px rgba(15,15,18,0.06),
-          0 4px 8px -2px rgba(15,15,18,0.14),
-          0 8px 16px -6px rgba(15,15,18,0.10);
+          0 1px 1px rgba(15,15,18,0.05),
+          0 5px 10px -2px rgba(15,15,18,0.12),
+          0 12px 22px -8px rgba(15,15,18,0.12);
         font-family: 'Caveat', cursive;
-        font-size: 16px;
+        font-size: 17px;
         line-height: 1.15;
         color: #1a1a1d;
         word-break: break-word;
-        transition: transform 0.18s ease, box-shadow 0.18s ease, z-index 0s 0.18s;
+        transition: transform 0.16s ease, box-shadow 0.16s ease, z-index 0s 0.16s;
         cursor: text;
         display: flex;
         align-items: flex-start;
@@ -207,10 +288,10 @@ const seed = {
       .postit:focus-within, .postit:hover {
         box-shadow:
           0 2px 4px rgba(15,15,18,0.08),
-          0 12px 24px -6px rgba(15,15,18,0.22);
+          0 14px 28px -6px rgba(15,15,18,0.24);
         transform: scale(1.06) rotate(0deg) !important;
         z-index: 10;
-        transition: transform 0.18s ease, box-shadow 0.18s ease, z-index 0s 0s;
+        transition: transform 0.16s ease, box-shadow 0.16s ease, z-index 0s 0s;
       }
       .postit-text {
         outline: none;
@@ -220,7 +301,7 @@ const seed = {
       }
       .postit-text:empty::before {
         content: attr(data-placeholder);
-        color: rgba(15,15,18,0.30);
+        color: rgba(15,15,18,0.3);
         font-style: italic;
         font-family: 'Inter', sans-serif;
         font-size: 12px;
@@ -249,10 +330,10 @@ const seed = {
       .postit .x:hover { background: white; color: #c81e6b; }
 
       .add-postit {
-        width: 104px;
-        height: 104px;
-        border: 1.5px dashed rgba(15,15,18,0.20);
-        border-radius: 2px;
+        width: 112px;
+        height: 112px;
+        border: 1.5px dashed rgba(15,15,18,0.18);
+        border-radius: 4px;
         display: grid;
         place-items: center;
         font-family: 'Inter', sans-serif;
@@ -260,7 +341,7 @@ const seed = {
         font-weight: 500;
         color: var(--ink-muted);
         cursor: pointer;
-        background: rgba(255,255,255,0.4);
+        background: rgba(15,15,18,0.015);
         transition: all 0.15s;
         align-self: flex-start;
       }
@@ -268,22 +349,103 @@ const seed = {
         background: white;
         border-color: var(--ag-indigo);
         color: var(--ag-indigo);
-        transform: scale(1.03);
       }
 
-      /* Typografie */
-      .eyebrow {
-        font-family: 'Outfit', sans-serif;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--ag-indigo);
+      /* === Footer === */
+      .footer {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 20px 24px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        border-top: 1px solid var(--border);
       }
-      .display {
+      .footer-text {
+        font-size: 12px;
+        color: var(--ink-muted);
+      }
+
+      /* === Modal === */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: rgba(15,15,18,0.4);
+        backdrop-filter: blur(4px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+      .modal-backdrop[data-open] { display: flex; }
+      .modal {
+        background: white;
+        border-radius: 14px;
+        padding: 28px;
+        max-width: 460px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(15,15,18,0.25);
+        border: 1px solid var(--border);
+      }
+      .modal h3 {
         font-family: 'Outfit', sans-serif;
-        font-weight: 700;
-        letter-spacing: -0.02em;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 0 0 6px;
+      }
+      .modal p {
+        font-size: 13px;
+        color: var(--ink-soft);
+        line-height: 1.5;
+        margin: 0 0 16px;
+      }
+      .modal-input {
+        flex: 1;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 12px;
+        font-size: 12px;
+        font-family: 'Menlo', monospace;
+        color: var(--ink-soft);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .modal-input:focus { outline: none; border-color: var(--ag-indigo); }
+      .modal-close {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink-soft);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+        padding: 12px 0 0;
+        border-top: 1px solid var(--border);
+        margin-top: 12px;
+      }
+      .modal-close:hover { color: var(--ink); }
+
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--ink);
+        color: white;
+        font-size: 13px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        box-shadow: 0 8px 24px rgba(15,15,18,0.3);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 60;
       }
 
       @media print {
@@ -292,84 +454,61 @@ const seed = {
         .postit { box-shadow: none; border: 1px solid #ccc; transform: none !important; }
         body { background: white; }
         .board { background: white; border: 1px solid #ddd; }
-        .print-block { display: block !important; break-inside: avoid; page-break-before: always; }
+        .print-block { break-inside: avoid; page-break-before: always; }
         .print-block:first-child { page-break-before: auto; }
       }
     </style>
   </head>
-  <body class="min-h-screen">
-    <!-- Top bar -->
-    <header class="topbar sticky top-0 z-40 no-print">
-      <div class="max-w-[1240px] mx-auto px-5 md:px-8 flex items-center justify-between gap-3 h-[56px]">
-        <div class="flex items-center gap-2.5">
-          <img src="/agensea-logo.png" alt="" width="22" height="22" class="rounded" />
-          <span class="brand-mark text-[15px] text-[var(--ink)]">Agensea</span>
-          <span class="text-[var(--ink-muted)] text-sm leading-none mx-0.5">/</span>
-          <span class="brand-mark text-[15px] text-[var(--ink-soft)]">Klarijn</span>
+  <body>
+    <header class="topbar no-print">
+      <div class="topbar-inner">
+        <div class="brand">
+          <img src="/agensea-logo.png" alt="" width="20" height="20" style="border-radius: 4px" />
+          <span class="brand-text">Agensea</span>
+          <span class="brand-sep">/</span>
+          <span class="brand-client">Klarijn</span>
         </div>
-        <div class="flex items-center gap-1">
+        <div class="toolbar-actions">
           <button type="button" data-action="reset" class="btn btn-ghost">Reset</button>
           <button type="button" data-action="share" class="btn btn-ghost">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-            Delen
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Deel sessie
           </button>
-          <button type="button" data-action="print" class="btn btn-primary ml-1">Export PDF</button>
+          <button type="button" data-action="print" class="btn btn-primary">Export PDF</button>
         </div>
       </div>
     </header>
 
-    <!-- Page header -->
-    <section class="max-w-[1240px] mx-auto px-5 md:px-8 pt-10 md:pt-14 pb-6">
-      <div class="eyebrow mb-3">Strategiesessie · 90 minuten</div>
-      <h1 class="display text-3xl md:text-[34px] text-[var(--ink)] leading-tight mb-2">
-        Klarijn website 2.0
-      </h1>
-      <p class="text-[15px] text-[var(--ink-soft)] max-w-[62ch] leading-relaxed">
-        Twee onderwerpen, één bord per onderwerp. Plak per inzicht een post-it, één regel volstaat. De link is deelbaar, dus inzichten kunnen ook na afloop bijgevoegd worden.
-      </p>
+    <section class="subhead no-print">
+      <div class="session-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+        Strategiesessie Klarijn website
+      </div>
+      <div class="tab-bar" role="tablist" id="tabs"></div>
     </section>
 
-    <!-- Tab bar -->
-    <nav class="max-w-[1240px] mx-auto px-5 md:px-8 no-print">
-      <div class="tab-bar" role="tablist" id="tabs"></div>
-    </nav>
+    <div class="toast" id="toast"></div>
 
-    <!-- Toast -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[var(--ink)] text-white text-sm px-4 py-2 rounded-full shadow-2xl pointer-events-none opacity-0 transition-opacity duration-300 z-50 no-print"></div>
+    <main class="canvas-wrap" id="boards"></main>
 
-    <!-- Boards -->
-    <main class="max-w-[1240px] mx-auto px-5 md:px-8 pt-6 pb-16">
-      <div id="boards"></div>
-
-      <div class="pt-8 mt-6 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
-        <p class="text-xs text-[var(--ink-muted)] m-0">
-          Automatisch opgeslagen in browser. Wijzigingen zitten ook in de URL.
-        </p>
-        <div class="flex items-center gap-2 text-xs text-[var(--ink-muted)]">
-          <img src="/agensea-logo.png" alt="" width="14" height="14" class="rounded" />
-          <span>Agensea sessietool</span>
-        </div>
+    <footer class="footer no-print">
+      <span class="footer-text">Automatisch opgeslagen in deze browser.</span>
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px; color: var(--ink-muted);">
+        <img src="/agensea-logo.png" alt="" width="14" height="14" style="border-radius: 3px" />
+        <span>Agensea sessietool</span>
       </div>
-    </main>
+    </footer>
 
-    <!-- Share modal -->
-    <div id="share-modal" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm items-center justify-center p-4 no-print" style="display:none">
-      <div class="bg-white rounded-xl p-7 md:p-8 max-w-md w-full shadow-2xl border border-[var(--border)]">
-        <h3 class="display text-xl text-[var(--ink)] mb-2">Sessie delen</h3>
-        <p class="text-sm text-[var(--ink-soft)] mb-4 leading-relaxed">
-          Deze link bevat alle huidige post-its. Stuur naar de klant of collega; zij zien bij openen exact wat hier staat en kunnen zelf bijplakken.
-        </p>
-        <div class="flex gap-2 mb-4">
-          <input id="share-url" type="text" readonly
-                 class="flex-1 bg-[var(--paper)] border border-[var(--border)] rounded-lg px-3 py-2 text-xs font-mono text-[var(--ink-soft)] focus:outline-none" />
+    <div class="modal-backdrop no-print" id="share-modal">
+      <div class="modal">
+        <h3>Sessie delen</h3>
+        <p>Deze link bevat alle huidige post-its. Stuur naar de klant of collega, zij zien bij openen exact wat hier staat en kunnen zelf bijplakken.</p>
+        <div style="display:flex; gap:8px; margin-bottom:12px">
+          <input id="share-url" class="modal-input" type="text" readonly />
           <button id="share-copy" type="button" class="btn btn-primary">Kopieer</button>
         </div>
-        <p class="text-xs text-[var(--ink-muted)] mb-4 leading-relaxed">
-          Wijzigingen aan hun kant zijn pas zichtbaar wanneer zij hun bijgewerkte link terugsturen.
-        </p>
-        <button type="button" data-close-modal class="text-sm font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] w-full text-center pt-3 border-t border-[var(--border)]">
-          Sluiten
-        </button>
+        <p style="margin-bottom:0">Wijzigingen aan hun kant zijn pas zichtbaar wanneer zij hun bijgewerkte link terugsturen.</p>
+        <button type="button" data-close-modal class="modal-close">Sluiten</button>
       </div>
     </div>
 
@@ -380,7 +519,8 @@ const seed = {
       const SEED = JSON.parse(seedEl.textContent);
       const clone = (o) => JSON.parse(JSON.stringify(o));
 
-      const LS_KEY = 'klarijn_strategie_v5';
+      const LS_KEY = 'klarijn_strategie_v7';
+      const SEED_V = SEED.v;
       let state;
       let activeTab = 0;
 
@@ -399,17 +539,18 @@ const seed = {
           history.replaceState(null, '', '#s=' + encodeURIComponent(b64));
         } catch {}
       }
-
-      const SEED_V = SEED.v || 1;
-      const fromHash = decodeFromHash();
-      // Alleen URL-state gebruiken als versie matcht. Oude links vallen terug op verse seed.
-      if (fromHash && fromHash.boards && fromHash.v === SEED_V) {
-        state = fromHash;
-      } else {
-        if (fromHash && fromHash.v !== SEED_V) {
-          // Oude versie in URL gevonden, wis hash zodat we niet opnieuw in deze fallback komen
+      function clearHash() {
+        if (location.hash) {
           history.replaceState(null, '', location.pathname + location.search);
         }
+      }
+
+      const fromHash = decodeFromHash();
+      if (fromHash && fromHash.boards && fromHash.v === SEED_V) {
+        state = fromHash;
+        clearHash(); // schoonmaken zodra geladen, URL blijft kort
+      } else {
+        if (fromHash) clearHash(); // oude versie of corrupt, weg ermee
         try {
           const stored = localStorage.getItem(LS_KEY);
           const parsed = stored ? JSON.parse(stored) : null;
@@ -426,7 +567,7 @@ const seed = {
         clearTimeout(saveTimer);
         saveTimer = setTimeout(() => {
           try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch {}
-          encodeToHash(state);
+          // NIET meer auto-encoderen naar URL. Pas bij Delen-klik.
         }, 200);
       }
 
@@ -434,8 +575,7 @@ const seed = {
       const boardsEl = document.getElementById('boards');
 
       function rndRotation() {
-        // -5 tot +5 graden, voelt levendiger en handgeplaatst
-        return (Math.random() * 10 - 5).toFixed(2);
+        return (Math.random() * 8 - 4).toFixed(2);
       }
 
       function makePostit(board, idx) {
@@ -488,17 +628,12 @@ const seed = {
         section.className = 'print-block';
         section.dataset.board = board.id;
         section.innerHTML = `
-          <header class="mb-4 flex items-baseline justify-between gap-3 flex-wrap">
-            <div>
-              <div class="eyebrow mb-1">${escapeHtml(board.label)}</div>
-              <h2 class="display text-2xl md:text-[28px] text-[var(--ink)] leading-tight m-0">${escapeHtml(board.vraag)}</h2>
-            </div>
-            <div class="text-xs text-[var(--ink-muted)]">
-              ${board.notes.length} ${board.notes.length === 1 ? 'post-it' : 'post-its'}
-            </div>
-          </header>
-          <div class="board p-6 md:p-9">
-            <div class="flex flex-wrap gap-3.5 items-start postit-wall min-h-[420px]"></div>
+          <div class="board-context">
+            <h2 class="board-question">${escapeHtml(board.vraag)}</h2>
+            <span class="board-hint">${board.notes.length} ${board.notes.length === 1 ? 'post-it' : 'post-its'}</span>
+          </div>
+          <div class="board">
+            <div class="postit-wall"></div>
           </div>
         `;
         const wall = section.querySelector('.postit-wall');
@@ -529,17 +664,19 @@ const seed = {
       function renderBoards() {
         boardsEl.innerHTML = '';
         const active = state.boards[activeTab];
-        if (active) {
-          const section = makeBoard(active);
-          boardsEl.appendChild(section);
-        }
+        if (active) boardsEl.appendChild(makeBoard(active));
         state.boards.forEach((b, i) => {
           if (i === activeTab) return;
           const section = makeBoard(b, true);
-          section.classList.add('hidden', 'print:block');
+          section.style.display = 'none';
+          section.classList.add('print-only');
           section.style.marginTop = '32px';
           boardsEl.appendChild(section);
         });
+        // print: laat alle prints zien
+        const style = document.createElement('style');
+        style.textContent = '@media print { .print-only { display: block !important; } }';
+        boardsEl.appendChild(style);
       }
 
       function renderAll() {
@@ -575,19 +712,27 @@ const seed = {
       document.querySelector('[data-action="share"]').addEventListener('click', () => {
         encodeToHash(state);
         shareUrl.value = location.href;
-        shareModal.style.display = 'flex';
+        shareModal.setAttribute('data-open', '');
+        setTimeout(() => { shareUrl.select(); }, 50);
       });
       document.querySelectorAll('[data-close-modal]').forEach(b => {
-        b.addEventListener('click', () => { shareModal.style.display = 'none'; });
+        b.addEventListener('click', () => {
+          shareModal.removeAttribute('data-open');
+          clearHash();
+        });
       });
       shareModal.addEventListener('click', (e) => {
-        if (e.target === shareModal) shareModal.style.display = 'none';
+        if (e.target === shareModal) {
+          shareModal.removeAttribute('data-open');
+          clearHash();
+        }
       });
       document.getElementById('share-copy').addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(location.href);
           showToast('Link gekopieerd');
-          shareModal.style.display = 'none';
+          shareModal.removeAttribute('data-open');
+          clearHash();
         } catch {
           shareUrl.select();
           document.execCommand('copy');
@@ -596,7 +741,6 @@ const seed = {
       });
 
       renderAll();
-      encodeToHash(state);
     </script>
   </body>
 </html>
