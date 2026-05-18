@@ -1,5 +1,5 @@
 ---
-// Strategiesessie: twee borden (Doelstellingen, Doelgroepen) met vierkante post-its.
+// Strategiesessie tool: één bord per onderwerp met vierkante post-its.
 // State leeft in URL hash zodat de link gedeeld kan worden.
 import '../styles/global.css';
 
@@ -9,7 +9,7 @@ const seed = {
     {
       id: 'doelstellingen',
       label: 'Doelstellingen',
-      hint: 'Wat moet de website concreet bereiken?',
+      vraag: 'Wat moet de website concreet bereiken?',
       notes: [
         { text: 'Direct contact stimuleren', c: 0 },
         { text: 'Vindbaarheid op juridische vragen', c: 2 },
@@ -21,7 +21,7 @@ const seed = {
     {
       id: 'doelgroepen',
       label: 'Doelgroepen',
-      hint: 'Wie willen we bereiken? Type bezoeker of branche.',
+      vraag: 'Wie willen we bereiken?',
       notes: [
         { text: 'MKB met geschil', c: 3 },
         { text: 'Familiebedrijf in overdracht', c: 1 },
@@ -44,166 +44,240 @@ const seed = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
         --ag-indigo: #2d3fe0;
-        --ag-indigo-sky: #e8eafe;
-        --ag-cream: #f4f1ec;
-        --ag-dark: #0d0d0d;
-        --board-bg: #efeae0;
+        --ag-indigo-hover: #1f2bb8;
+        --ag-indigo-sky: #eef0fe;
+        --ink: #0f0f12;
+        --ink-soft: #56575c;
+        --ink-muted: #8b8c93;
+        --paper: #fafaf7;
+        --board-bg: #f5f3ee;
+        --border: rgba(15,15,18,0.08);
+        --border-soft: rgba(15,15,18,0.05);
       }
       html, body {
-        background: var(--ag-cream);
+        background: var(--paper);
         font-family: 'Inter', system-ui, sans-serif;
-        color: #2a2a2a;
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
       }
-      /* Board: papier-textuur via subtiele dots */
+
+      /* Top bar */
+      .topbar {
+        background: rgba(250,250,247,0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .brand-mark {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      /* Buttons */
+      .btn {
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 7px 14px;
+        border-radius: 8px;
+        transition: all 0.15s;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+      }
+      .btn-ghost {
+        color: var(--ink-soft);
+      }
+      .btn-ghost:hover {
+        background: var(--ag-indigo-sky);
+        color: var(--ag-indigo);
+      }
+      .btn-primary {
+        background: var(--ag-indigo);
+        color: white;
+        font-weight: 600;
+      }
+      .btn-primary:hover { background: var(--ag-indigo-hover); }
+
+      /* Tabs (underline style) */
+      .tab-bar {
+        display: flex;
+        gap: 28px;
+        border-bottom: 1px solid var(--border);
+        align-items: stretch;
+      }
+      .tab {
+        font-family: 'Outfit', sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--ink-soft);
+        background: transparent;
+        cursor: pointer;
+        padding: 14px 2px;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        transition: color 0.15s, border-color 0.15s;
+        display: inline-flex;
+        align-items: center;
+      }
+      .tab:hover { color: var(--ink); }
+      .tab[aria-selected="true"] {
+        color: var(--ag-indigo);
+        border-bottom-color: var(--ag-indigo);
+        font-weight: 600;
+      }
+      .tab-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 10px;
+        min-width: 22px;
+        height: 20px;
+        padding: 0 7px;
+        border-radius: 999px;
+        background: rgba(15,15,18,0.06);
+        color: var(--ink-muted);
+        font-size: 11px;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+      }
+      .tab[aria-selected="true"] .tab-count {
+        background: var(--ag-indigo-sky);
+        color: var(--ag-indigo);
+      }
+
+      /* Board canvas */
       .board {
         background-color: var(--board-bg);
         background-image:
-          radial-gradient(rgba(0,0,0,0.04) 1px, transparent 1px);
-        background-size: 22px 22px;
-        border: 1px solid rgba(0,0,0,0.06);
-        box-shadow: inset 0 1px 2px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.04);
+          linear-gradient(rgba(15,15,18,0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(15,15,18,0.025) 1px, transparent 1px);
+        background-size: 28px 28px;
+        background-position: -1px -1px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 1px 2px rgba(15,15,18,0.03);
       }
-      /* Vijf post-it kleuren */
-      .pi-0 { background: #FFEC8B; }
-      .pi-1 { background: #FFB8CE; }
-      .pi-2 { background: #B8F2D4; }
-      .pi-3 { background: #B8D4FF; }
-      .pi-4 { background: #FFCFA8; }
+
+      /* Post-it kleuren - verfijnde, gedempte palette */
+      .pi-0 { background: #FCE7A0; }   /* butter */
+      .pi-1 { background: #F8C9D9; }   /* dusty rose */
+      .pi-2 { background: #D2E7CB; }   /* sage */
+      .pi-3 { background: #C7D7ED; }   /* soft sky */
+      .pi-4 { background: #F4D5B8; }   /* warm beige */
+
       .postit {
         position: relative;
-        width: 128px;
-        height: 128px;
-        padding: 14px;
+        width: 144px;
+        height: 144px;
+        padding: 16px;
         box-shadow:
-          0 1px 1px rgba(0,0,0,0.05),
-          0 8px 14px -5px rgba(0,0,0,0.18),
-          inset 0 -10px 16px -10px rgba(0,0,0,0.08);
+          0 1px 1px rgba(15,15,18,0.04),
+          0 8px 16px -6px rgba(15,15,18,0.15);
         font-family: 'Caveat', cursive;
-        font-size: 1.1rem;
-        line-height: 1.15;
-        color: #1f1f1f;
+        font-size: 18px;
+        line-height: 1.2;
+        color: #1a1a1d;
         word-break: break-word;
-        transition: transform 0.18s ease, box-shadow 0.18s ease, z-index 0s 0.18s;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, z-index 0s 0.2s;
         cursor: text;
         display: flex;
         align-items: flex-start;
-      }
-      .postit::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 16px;
-        height: 16px;
-        background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.09) 50%);
+        border-radius: 1px;
       }
       .postit:focus-within, .postit:hover {
         box-shadow:
-          0 2px 3px rgba(0,0,0,0.06),
-          0 20px 32px -8px rgba(0,0,0,0.24),
-          inset 0 -10px 16px -10px rgba(0,0,0,0.08);
-        transform: translateY(-4px) rotate(0deg) !important;
+          0 2px 4px rgba(15,15,18,0.06),
+          0 18px 32px -8px rgba(15,15,18,0.22);
+        transform: translateY(-3px) rotate(0deg) !important;
         z-index: 10;
-        transition: transform 0.18s ease, box-shadow 0.18s ease, z-index 0s 0s;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, z-index 0s 0s;
       }
       .postit-text {
         outline: none;
         flex: 1;
         min-height: 100%;
+        width: 100%;
       }
       .postit-text:empty::before {
         content: attr(data-placeholder);
-        color: rgba(0,0,0,0.32);
+        color: rgba(15,15,18,0.30);
         font-style: italic;
-        font-size: 0.95rem;
         font-family: 'Inter', sans-serif;
+        font-size: 14px;
       }
       .postit .x {
         position: absolute;
-        top: 4px;
-        right: 4px;
+        top: 6px;
+        right: 6px;
         opacity: 0;
         transition: opacity 0.15s;
-        font-size: 0.95rem;
-        background: rgba(255,255,255,0.7);
-        border-radius: 50%;
+        font-size: 14px;
+        background: rgba(255,255,255,0.85);
+        border-radius: 999px;
         width: 22px;
         height: 22px;
         display: grid;
         place-items: center;
         cursor: pointer;
         font-family: 'Inter', sans-serif;
-        color: #555;
+        color: var(--ink-soft);
         line-height: 1;
         z-index: 2;
+        border: 1px solid rgba(15,15,18,0.06);
       }
       .postit:hover .x, .postit:focus-within .x { opacity: 1; }
       .postit .x:hover { background: white; color: #c81e6b; }
+
       .add-postit {
-        width: 128px;
-        height: 128px;
-        border: 2px dashed rgba(0,0,0,0.20);
+        width: 144px;
+        height: 144px;
+        border: 1.5px dashed rgba(15,15,18,0.18);
         border-radius: 4px;
         display: grid;
         place-items: center;
         font-family: 'Inter', sans-serif;
-        font-size: 0.8rem;
+        font-size: 13px;
         font-weight: 500;
-        color: rgba(0,0,0,0.45);
+        color: var(--ink-muted);
         cursor: pointer;
         background: rgba(255,255,255,0.35);
         transition: all 0.15s;
         align-self: flex-start;
       }
       .add-postit:hover {
-        background: rgba(255,255,255,0.7);
+        background: white;
         border-color: var(--ag-indigo);
         color: var(--ag-indigo);
-        transform: translateY(-2px);
       }
-      /* Tabs */
-      .tab {
+
+      /* Typografie */
+      .eyebrow {
         font-family: 'Outfit', sans-serif;
-        font-size: 0.95rem;
-        font-weight: 600;
-        padding: 10px 20px;
-        border-radius: 999px;
-        color: rgba(0,0,0,0.5);
-        background: transparent;
-        cursor: pointer;
-        transition: all 0.15s;
-        white-space: nowrap;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ag-indigo);
       }
-      .tab:hover { background: rgba(255,255,255,0.6); color: #1f1f1f; }
-      .tab[aria-selected="true"] {
-        background: var(--ag-indigo);
-        color: white;
-        box-shadow: 0 6px 14px -4px rgba(45,63,224,0.4);
+      .display {
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.02em;
       }
-      .tab-count {
-        display: inline-block;
-        margin-left: 8px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 1px 8px;
-        border-radius: 999px;
-        background: rgba(255,255,255,0.25);
-      }
-      .tab:not([aria-selected="true"]) .tab-count {
-        background: rgba(0,0,0,0.08);
-        color: rgba(0,0,0,0.55);
-      }
+
       @media print {
         .no-print { display: none !important; }
         .add-postit { display: none !important; }
         .postit { box-shadow: none; border: 1px solid #ccc; transform: none !important; }
-        .postit::after { display: none; }
         body { background: white; }
         .board { background: white; border: 1px solid #ddd; }
         .print-block { display: block !important; break-inside: avoid; page-break-before: always; }
@@ -212,95 +286,76 @@ const seed = {
     </style>
   </head>
   <body class="min-h-screen">
-    <!-- Top toolbar -->
-    <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-black/8 no-print">
-      <div class="max-w-[1280px] mx-auto px-4 md:px-8 flex items-center justify-between gap-3 h-14">
-        <div class="flex items-center gap-3">
-          <img src="/agensea-logo.png" alt="Agensea" width="20" height="20" class="rounded" />
-          <span class="font-semibold text-[15px] text-[#0d0d0d] tracking-tight" style="font-family:'Outfit',sans-serif">Agensea</span>
-          <span class="text-black/30 text-sm">×</span>
-          <span class="font-display text-lg text-[#5E1F5C]">Klarijn</span>
+    <!-- Top bar -->
+    <header class="topbar sticky top-0 z-40 no-print">
+      <div class="max-w-[1240px] mx-auto px-5 md:px-8 flex items-center justify-between gap-3 h-[56px]">
+        <div class="flex items-center gap-2.5">
+          <img src="/agensea-logo.png" alt="" width="22" height="22" class="rounded" />
+          <span class="brand-mark text-[15px] text-[var(--ink)]">Agensea</span>
+          <span class="text-[var(--ink-muted)] text-sm leading-none mx-0.5">/</span>
+          <span class="brand-mark text-[15px] text-[var(--ink-soft)]">Klarijn</span>
         </div>
         <div class="flex items-center gap-1">
-          <button type="button" data-action="reset"
-            class="text-xs font-medium text-black/55 hover:text-black hover:bg-[var(--ag-indigo-sky)] px-3 py-1.5 rounded-full transition-colors">
-            Reset
-          </button>
-          <button type="button" data-action="share"
-            class="text-xs font-medium text-black hover:bg-[var(--ag-indigo-sky)] hover:text-[var(--ag-indigo)] px-3 py-1.5 rounded-full transition-colors flex items-center gap-1.5">
+          <button type="button" data-action="reset" class="btn btn-ghost">Reset</button>
+          <button type="button" data-action="share" class="btn btn-ghost">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
-            Link delen
+            Delen
           </button>
-          <button type="button" data-action="print"
-            class="text-xs font-semibold text-white px-4 py-1.5 rounded-full transition-colors"
-            style="background: var(--ag-indigo)">
-            PDF
-          </button>
+          <button type="button" data-action="print" class="btn btn-primary ml-1">Export PDF</button>
         </div>
       </div>
     </header>
 
-    <!-- Hero -->
-    <section class="max-w-[1280px] mx-auto px-4 md:px-8 pt-10 md:pt-14 pb-6">
-      <div class="inline-flex items-center gap-2 mb-3">
-        <span class="text-[.65rem] font-bold uppercase tracking-[.2em] text-[var(--ag-indigo)]" style="font-family:'Outfit',sans-serif">
-          Werksessie · 90 minuten
-        </span>
-      </div>
-      <h1 class="font-display text-4xl md:text-5xl text-[#5E1F5C] leading-[.95] mb-3">
-        Strategiesessie<br/>
-        <span style="color: #E0277A">website Klarijn</span>
+    <!-- Page header -->
+    <section class="max-w-[1240px] mx-auto px-5 md:px-8 pt-10 md:pt-14 pb-6">
+      <div class="eyebrow mb-3">Strategiesessie · 90 minuten</div>
+      <h1 class="display text-3xl md:text-[34px] text-[var(--ink)] leading-tight mb-2">
+        Klarijn website 2.0
       </h1>
-      <p class="text-base text-black/65 max-w-[60ch] leading-relaxed">
-        Twee onderdelen, twee borden. Plak per onderwerp uw inzichten op een post-it. Eén regel per post-it volstaat. De link is deelbaar, dus de sessie kan ook na afloop worden aangevuld.
+      <p class="text-[15px] text-[var(--ink-soft)] max-w-[62ch] leading-relaxed">
+        Twee onderwerpen, één bord per onderwerp. Plak per inzicht een post-it, één regel volstaat. De link is deelbaar, dus inzichten kunnen ook na afloop bijgevoegd worden.
       </p>
     </section>
 
-    <!-- Tabs -->
-    <nav class="max-w-[1280px] mx-auto px-4 md:px-8 mb-5 no-print">
-      <div class="flex flex-wrap gap-2 items-center" role="tablist" id="tabs"></div>
+    <!-- Tab bar -->
+    <nav class="max-w-[1240px] mx-auto px-5 md:px-8 no-print">
+      <div class="tab-bar" role="tablist" id="tabs"></div>
     </nav>
 
     <!-- Toast -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#0d0d0d] text-white text-sm px-4 py-2 rounded-full shadow-2xl pointer-events-none opacity-0 transition-opacity duration-300 z-50 no-print"></div>
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[var(--ink)] text-white text-sm px-4 py-2 rounded-full shadow-2xl pointer-events-none opacity-0 transition-opacity duration-300 z-50 no-print"></div>
 
     <!-- Boards -->
-    <main class="max-w-[1280px] mx-auto px-4 md:px-8 pb-20">
+    <main class="max-w-[1240px] mx-auto px-5 md:px-8 pt-6 pb-16">
       <div id="boards"></div>
 
-      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
-        <p class="text-xs text-black/50 m-0">
-          Auto-save in browser. Wijzigingen zitten ook in de URL, zodat de link gedeeld kan worden.
+      <div class="pt-8 mt-6 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
+        <p class="text-xs text-[var(--ink-muted)] m-0">
+          Automatisch opgeslagen in browser. Wijzigingen zitten ook in de URL.
         </p>
-        <div class="flex items-center gap-2">
-          <img src="/agensea-logo.png" alt="Agensea" width="18" height="18" class="rounded" />
-          <span class="text-xs font-semibold" style="font-family:'Outfit',sans-serif">Agensea</span>
-          <span class="text-black/30 text-xs">×</span>
-          <span class="font-display text-xs text-[#5E1F5C]">Klarijn</span>
+        <div class="flex items-center gap-2 text-xs text-[var(--ink-muted)]">
+          <img src="/agensea-logo.png" alt="" width="14" height="14" class="rounded" />
+          <span>Agensea sessietool</span>
         </div>
       </div>
     </main>
 
     <!-- Share modal -->
     <div id="share-modal" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm items-center justify-center p-4 no-print" style="display:none">
-      <div class="bg-white rounded-2xl p-7 md:p-9 max-w-md w-full shadow-2xl">
-        <h3 class="font-display text-2xl text-[#5E1F5C] mb-2">Sessie delen</h3>
-        <p class="text-sm text-black/65 mb-4 leading-relaxed">
-          Deze link bevat alle huidige post-its. Stuur naar de klant of een collega, zij zien bij openen exact wat hier staat en kunnen zelf bijplakken.
+      <div class="bg-white rounded-xl p-7 md:p-8 max-w-md w-full shadow-2xl border border-[var(--border)]">
+        <h3 class="display text-xl text-[var(--ink)] mb-2">Sessie delen</h3>
+        <p class="text-sm text-[var(--ink-soft)] mb-4 leading-relaxed">
+          Deze link bevat alle huidige post-its. Stuur naar de klant of collega; zij zien bij openen exact wat hier staat en kunnen zelf bijplakken.
         </p>
         <div class="flex gap-2 mb-4">
           <input id="share-url" type="text" readonly
-                 class="flex-1 bg-[#faf9f6] border border-black/10 rounded-lg px-3 py-2 text-xs font-mono text-black/70 focus:outline-none" />
-          <button id="share-copy" type="button"
-                  class="text-xs font-semibold text-white px-4 py-2 rounded-lg transition-colors"
-                  style="background: var(--ag-indigo)">
-            Kopieer
-          </button>
+                 class="flex-1 bg-[var(--paper)] border border-[var(--border)] rounded-lg px-3 py-2 text-xs font-mono text-[var(--ink-soft)] focus:outline-none" />
+          <button id="share-copy" type="button" class="btn btn-primary">Kopieer</button>
         </div>
-        <p class="text-xs text-black/50 mb-4 leading-relaxed">
+        <p class="text-xs text-[var(--ink-muted)] mb-4 leading-relaxed">
           Wijzigingen aan hun kant zijn pas zichtbaar wanneer zij hun bijgewerkte link terugsturen.
         </p>
-        <button type="button" data-close-modal class="text-sm font-medium text-black/55 hover:text-black w-full text-center pt-2 border-t border-black/10">
+        <button type="button" data-close-modal class="text-sm font-medium text-[var(--ink-soft)] hover:text-[var(--ink)] w-full text-center pt-3 border-t border-[var(--border)]">
           Sluiten
         </button>
       </div>
@@ -313,7 +368,7 @@ const seed = {
       const SEED = JSON.parse(seedEl.textContent);
       const clone = (o) => JSON.parse(JSON.stringify(o));
 
-      const LS_KEY = 'klarijn_strategie_v4';
+      const LS_KEY = 'klarijn_strategie_v5';
       let state;
       let activeTab = 0;
 
@@ -359,7 +414,7 @@ const seed = {
       const boardsEl = document.getElementById('boards');
 
       function rndRotation() {
-        return (Math.random() * 6 - 3).toFixed(2);
+        return (Math.random() * 4 - 2).toFixed(2);
       }
 
       function makePostit(board, idx) {
@@ -409,15 +464,21 @@ const seed = {
 
       function makeBoard(board, isPrint = false) {
         const section = document.createElement('section');
-        section.className = 'board rounded-2xl p-5 md:p-8 print-block';
+        section.className = 'print-block';
         section.dataset.board = board.id;
-        if (!isPrint) section.dataset.tabPanel = board.id;
         section.innerHTML = `
-          <div class="mb-5">
-            <div class="text-[.65rem] font-bold uppercase tracking-[.2em] text-[var(--ag-indigo)]" style="font-family:'Outfit',sans-serif">${escapeHtml(board.label)}</div>
-            <h2 class="font-display text-2xl md:text-3xl text-[#5E1F5C] leading-tight mt-1">${escapeHtml(board.hint)}</h2>
+          <header class="mb-4 flex items-baseline justify-between gap-3 flex-wrap">
+            <div>
+              <div class="eyebrow mb-1">${escapeHtml(board.label)}</div>
+              <h2 class="display text-2xl md:text-[28px] text-[var(--ink)] leading-tight m-0">${escapeHtml(board.vraag)}</h2>
+            </div>
+            <div class="text-xs text-[var(--ink-muted)]">
+              ${board.notes.length} ${board.notes.length === 1 ? 'post-it' : 'post-its'}
+            </div>
+          </header>
+          <div class="board p-6 md:p-8">
+            <div class="flex flex-wrap gap-5 items-start postit-wall min-h-[280px]"></div>
           </div>
-          <div class="flex flex-wrap gap-4 items-start postit-wall min-h-[200px]"></div>
         `;
         const wall = section.querySelector('.postit-wall');
         board.notes.forEach((_, idx) => {
@@ -435,7 +496,7 @@ const seed = {
           btn.role = 'tab';
           btn.className = 'tab';
           btn.setAttribute('aria-selected', i === activeTab ? 'true' : 'false');
-          btn.innerHTML = `${escapeHtml(b.label)}<span class="tab-count">${b.notes.length}</span>`;
+          btn.innerHTML = `<span>${escapeHtml(b.label)}</span><span class="tab-count">${b.notes.length}</span>`;
           btn.addEventListener('click', () => {
             activeTab = i;
             renderAll();
@@ -446,18 +507,16 @@ const seed = {
 
       function renderBoards() {
         boardsEl.innerHTML = '';
-        // Show active board normally
         const active = state.boards[activeTab];
         if (active) {
           const section = makeBoard(active);
           boardsEl.appendChild(section);
         }
-        // For print: also append all OTHER boards as print-only blocks
         state.boards.forEach((b, i) => {
           if (i === activeTab) return;
           const section = makeBoard(b, true);
           section.classList.add('hidden', 'print:block');
-          section.style.marginTop = '24px';
+          section.style.marginTop = '32px';
           boardsEl.appendChild(section);
         });
       }
