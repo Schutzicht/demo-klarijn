@@ -4,7 +4,7 @@
 import '../styles/global.css';
 
 const seed = {
-  v: 8,
+  v: 9,
   meta: { titel: 'Strategiesessie Klarijn' },
   boards: [
     {
@@ -15,42 +15,46 @@ const seed = {
       groups: [
         {
           id: 'conversie',
-          label: 'Conversie & leads',
+          label: 'Klant in beweging krijgen',
+          hint: 'Acties die we willen dat een bezoeker doet.',
           notes: [
-            { text: 'Direct contact', c: 0 },
-            { text: 'Offerte via mandje', c: 1 },
-            { text: 'Abonnement-aanvraag', c: 2 },
-            { text: 'Match-test franchise', c: 3 },
+            { text: 'Bellen of mailen', c: 0 },
+            { text: 'Offerte aanvragen', c: 1 },
+            { text: 'Abonnement nemen', c: 2 },
+            { text: 'Franchise-test invullen', c: 3 },
           ],
         },
         {
           id: 'vindbaarheid',
-          label: 'Vindbaarheid',
+          label: 'Gevonden worden in Google',
+          hint: 'Zoekvragen waarop Klarijn moet verschijnen.',
           notes: [
-            { text: 'SEO op juridische vragen', c: 2 },
-            { text: 'Lokale findability', c: 4 },
-            { text: 'Schema.org / JSON-LD', c: 3 },
-            { text: 'AVG-proof', c: 0 },
+            { text: 'Vindbaar op concrete vragen', c: 2 },
+            { text: 'Vindbaar per regio', c: 4 },
+            { text: 'Resultaten met rijke previews', c: 3 },
+            { text: 'Geen tracking-cookies', c: 0 },
           ],
         },
         {
           id: 'positionering',
-          label: 'Positionering & merk',
+          label: 'Anders dan andere kantoren',
+          hint: 'Hoe Klarijn zich onderscheidt op de site.',
           notes: [
-            { text: 'Onderscheid van advocaten', c: 1 },
-            { text: 'Plain Nederlands', c: 0 },
-            { text: 'Voor doeners', c: 4 },
-            { text: 'Klant en franchise gescheiden', c: 3 },
+            { text: 'Niet als advocatenkantoor', c: 1 },
+            { text: 'Begrijpelijk Nederlands', c: 0 },
+            { text: 'Voor ondernemers met de voeten in de klei', c: 4 },
+            { text: 'Klant en jurist apart', c: 3 },
           ],
         },
         {
           id: 'beheer',
-          label: 'Beheer & techniek',
+          label: 'Praktisch en toekomstbestendig',
+          hint: 'Beheerbaarheid en techniek achter de schermen.',
           notes: [
-            { text: 'CMS door eigen team', c: 2 },
-            { text: 'Mobiel-eerste', c: 1 },
-            { text: 'Snelle laadtijd', c: 0 },
-            { text: 'Live in Q3', c: 4 },
+            { text: 'Beheer door eigen team', c: 2 },
+            { text: 'Werkt goed op mobiel', c: 1 },
+            { text: 'Snel laden', c: 0 },
+            { text: 'Live voor de zomer', c: 4 },
           ],
         },
       ],
@@ -63,34 +67,37 @@ const seed = {
       groups: [
         {
           id: 'klant',
-          label: 'Klant-zijde (MKB)',
+          label: 'Ondernemers met een vraag',
+          hint: 'MKB en familiebedrijven die juridische hulp nodig hebben.',
           notes: [
             { text: 'Aannemer met geschil', c: 1 },
             { text: 'Familiebedrijf in overdracht', c: 4 },
             { text: 'Cateraar of horeca', c: 0 },
-            { text: 'Webshop met IE-vraag', c: 2 },
-            { text: 'Mkb-directeur', c: 3 },
+            { text: 'Webshop met merken-vraag', c: 2 },
+            { text: 'Directeur middelgroot bedrijf', c: 3 },
             { text: 'Loonwerker', c: 1 },
-            { text: 'Detailhandel huur-issue', c: 4 },
+            { text: 'Winkel met huurprobleem', c: 4 },
           ],
         },
         {
           id: 'franchise',
-          label: 'Franchise-zijde (juristen)',
+          label: 'Juristen die overwegen mee te doen',
+          hint: 'Mensen die nadenken over een Klarijn-praktijk.',
           notes: [
-            { text: 'Bedrijfsjurist carrière-eval', c: 3 },
+            { text: 'Bedrijfsjurist op zoek naar verandering', c: 3 },
             { text: 'Advocaat overweegt overstap', c: 2 },
             { text: 'Jurist met specialisme', c: 0 },
-            { text: 'Burned-out big-law', c: 1 },
+            { text: 'Jurist klaar met groot kantoor', c: 1 },
           ],
         },
         {
           id: 'secundair',
-          label: 'Secundair',
+          label: 'Goed om mee te nemen',
+          hint: 'Doelgroepen die de site ook bezoeken, maar niet de hoofdfocus.',
           notes: [
             { text: 'Sollicitanten', c: 4 },
             { text: 'Pers en journalisten', c: 2 },
-            { text: 'Branche-partners', c: 3 },
+            { text: 'Accountants en makelaars', c: 3 },
             { text: 'Bestaande klanten', c: 0 },
           ],
         },
@@ -148,7 +155,7 @@ const seed = {
         z-index: 40;
       }
       .topbar-inner {
-        max-width: 1280px;
+        max-width: 1480px;
         margin: 0 auto;
         padding: 0 24px;
         height: 56px;
@@ -194,91 +201,91 @@ const seed = {
 
       /* === Hero === */
       .hero {
-        max-width: 1280px;
+        max-width: 1480px;
         margin: 0 auto;
-        padding: 56px 24px 24px;
+        padding: 64px 32px 32px;
       }
       .hero-eyebrow {
         font-family: 'Outfit', sans-serif;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.2em;
         text-transform: uppercase;
         color: var(--ag-indigo);
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        margin-bottom: 14px;
+        gap: 10px;
+        margin-bottom: 18px;
       }
       .hero-eyebrow::before {
         content: '';
         display: inline-block;
-        width: 22px;
+        width: 26px;
         height: 2px;
         background: var(--ag-indigo);
       }
       .hero-title {
         font-family: 'Outfit', sans-serif;
-        font-size: 42px;
+        font-size: 56px;
         font-weight: 700;
         letter-spacing: -0.02em;
-        line-height: 1.05;
+        line-height: 1.02;
         color: var(--ink);
-        margin: 0 0 14px;
+        margin: 0 0 18px;
       }
       .hero-title .accent { color: var(--klarijn-magenta); }
       .hero-lead {
-        font-size: 16px;
+        font-size: 17px;
         color: var(--ink-soft);
         max-width: 64ch;
-        line-height: 1.55;
+        line-height: 1.6;
         margin: 0;
       }
 
       /* === Sessie sectie === */
       .session {
-        max-width: 1280px;
+        max-width: 1480px;
         margin: 0 auto;
-        padding: 24px 24px 16px;
+        padding: 32px 32px 20px;
       }
       .session-head {
         display: flex;
         align-items: baseline;
-        gap: 14px;
-        margin-bottom: 6px;
+        gap: 18px;
+        margin-bottom: 8px;
       }
       .session-num {
         font-family: 'Outfit', sans-serif;
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 600;
         color: var(--ag-indigo);
         letter-spacing: 0.04em;
       }
       .session-title {
         font-family: 'Outfit', sans-serif;
-        font-size: 28px;
+        font-size: 36px;
         font-weight: 700;
         color: var(--ink);
-        letter-spacing: -0.01em;
+        letter-spacing: -0.015em;
         margin: 0;
-        line-height: 1.15;
+        line-height: 1.1;
       }
       .session-vraag {
-        font-size: 15px;
+        font-size: 17px;
         color: var(--ink-soft);
-        margin: 0 0 20px;
-        padding-left: calc(13px + 14px + 4px); /* alligneer onder titel */
+        margin: 0 0 26px;
+        padding-left: calc(15px + 18px + 4px);
       }
       .session-board {
         background: var(--board-bg);
         border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 20px;
+        border-radius: 16px;
+        padding: 28px;
       }
       .frames-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 14px;
+        gap: 18px;
       }
       @media (min-width: 900px) {
         .frames-grid { grid-template-columns: 1fr 1fr; }
@@ -288,10 +295,10 @@ const seed = {
       .frame {
         background: var(--frame-bg);
         border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 18px 18px 20px;
+        border-radius: 12px;
+        padding: 22px 22px 24px;
         box-shadow: 0 1px 2px rgba(15,15,18,0.04);
-        min-height: 200px;
+        min-height: 240px;
         display: flex;
         flex-direction: column;
       }
@@ -299,26 +306,32 @@ const seed = {
         display: flex;
         align-items: baseline;
         justify-content: space-between;
-        margin-bottom: 14px;
+        margin-bottom: 4px;
         gap: 12px;
       }
       .frame-label {
         font-family: 'Outfit', sans-serif;
-        font-size: 13px;
+        font-size: 16px;
         font-weight: 600;
         color: var(--ink);
-        letter-spacing: -0.005em;
+        letter-spacing: -0.01em;
         margin: 0;
       }
       .frame-count {
-        font-size: 11px;
+        font-size: 12px;
         color: var(--ink-muted);
         font-weight: 500;
+      }
+      .frame-hint {
+        font-size: 12.5px;
+        color: var(--ink-muted);
+        margin: 0 0 16px;
+        line-height: 1.45;
       }
       .postit-wall {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 14px;
         align-items: flex-start;
         flex: 1;
       }
@@ -332,16 +345,16 @@ const seed = {
 
       .postit {
         position: relative;
-        width: 100px;
-        height: 100px;
-        padding: 11px;
+        width: 118px;
+        height: 118px;
+        padding: 13px;
         box-shadow:
           0 1px 1px rgba(15,15,18,0.05),
           0 5px 10px -2px rgba(15,15,18,0.12),
           0 12px 22px -8px rgba(15,15,18,0.10);
         font-family: 'Caveat', cursive;
-        font-size: 16px;
-        line-height: 1.15;
+        font-size: 17.5px;
+        line-height: 1.18;
         color: #1a1a1d;
         word-break: break-word;
         transition: transform 0.16s ease, box-shadow 0.16s ease, z-index 0s 0.16s;
@@ -395,8 +408,8 @@ const seed = {
       .postit .x:hover { background: white; color: #c81e6b; }
 
       .add-postit {
-        width: 100px;
-        height: 100px;
+        width: 118px;
+        height: 118px;
         border: 1.5px dashed rgba(15,15,18,0.18);
         border-radius: 4px;
         display: grid;
@@ -418,7 +431,7 @@ const seed = {
 
       /* === Footer === */
       .footer {
-        max-width: 1280px;
+        max-width: 1480px;
         margin: 0 auto;
         padding: 20px 24px 32px;
         display: flex;
@@ -692,6 +705,7 @@ const seed = {
             <h3 class="frame-label">${escapeHtml(group.label)}</h3>
             <span class="frame-count">${group.notes.length}</span>
           </div>
+          ${group.hint ? `<p class="frame-hint">${escapeHtml(group.hint)}</p>` : ''}
           <div class="postit-wall"></div>
         `;
         const wall = frame.querySelector('.postit-wall');
