@@ -1,0 +1,767 @@
+---
+// Strategische sessie tool voor Klarijn.
+// Standalone pagina: geen header/footer/FAB.
+// Pre-fill met wat we al weten uit de briefing; tijdens de sessie aanvullen.
+// State persist in localStorage; export naar print/PDF.
+import '../styles/global.css';
+
+// Pre-fill state — alles wat we al weten op basis van de briefing en de demo.
+const defaults = {
+  meta: {
+    sessieDatum: '',
+    deelnemers: 'Eibert Lijnbach (mede-oprichter)\nWilliam Beurskens (mede-oprichter)\n[andere deelnemers]',
+    facilitator: 'Jorik — Agensea',
+  },
+  doelen: [
+    { titel: 'Helderheid & ontmythologisering', tekst: 'De website laat zien dat juridisch advies zonder jargon kan. "Vraag het Klarijn" is de rode draad in elke sectie.' },
+    { titel: 'Twee doelgroepen scherp gescheiden', tekst: 'Klant-zijde (MKB) en franchise-zijde (juristen) krijgen eigen route, copy en visueel onderscheid — zonder dat het verwarrend wordt.' },
+    { titel: 'Lead-conversie via productcatalogus', tekst: 'Standaardproducten met heldere prijzen + offerte-mandje (geen webshop) zorgt voor warme, gekwalificeerde leads.' },
+    { titel: 'Abonnement als kern-propositie', tekst: 'Het Klarijn-abonnement (€145/mnd) staat prominent, niet verstopt onderaan.' },
+    { titel: 'Mijn Voortgang als externe brug', tekst: 'Doorlink naar het klantportaal, beheerbaar via CMS zodat Klarijn van portaal-systeem kan wisselen zonder dev.' },
+    { titel: 'Franchise match-test', tekst: 'Beslisboom van 10 vragen voor potentiële franchisenemers — eerlijk advies vooraf in plaats van een verkooppraatje.' },
+    { titel: 'SEO + GEO voor concrete vragen', tekst: 'Vindbaar op "ontslag bij langdurig ziek", "huurverhoging bedrijfsruimte" — niet op "advocatenkantoor Zwolle".' },
+    { titel: 'CMS-beheerbaarheid', tekst: 'Team Klarijn beheert producten, team, rayons, prijzen en testimonials zonder dev-tussenkomst.' },
+    { titel: 'AVG-proof zonder tracking', tekst: 'Geen cookies, geen externe analytics-tracking — past bij de positionering.' },
+  ],
+  succesfactoren: [
+    { titel: 'Direct herkenbaar', tekst: 'Bezoeker snapt binnen 5 seconden dat dit anders is dan een advocatenkantoor.' },
+    { titel: 'Concrete lead-flow', tekst: 'Lijst → offerte → gesprek, met heldere prijsverwachting voor de offerteaanvraag.' },
+    { titel: 'Twee zijden zonder elkaar in de weg', tekst: 'Klant ziet geen franchise-content per ongeluk, en omgekeerd.' },
+    { titel: 'Mobiel-first', tekst: 'Aannemers en familiebedrijf-eigenaren openen de site doorgaans op telefoon.' },
+    { titel: 'Tijd-tot-eerste-antwoord', tekst: 'Vanaf de hero is binnen één klik duidelijk wat de eerste actie kan zijn (vragen, lijst maken, bellen).' },
+  ],
+  usps: [
+    { titel: 'Vaste prijzen', tekst: 'Geen uurtje-factuurtje, alles vooraf duidelijk.' },
+    { titel: 'Eén vaste jurist', tekst: 'Geen draaideur, geen "mijn collega zit erin" — vaste persoon door het hele traject.' },
+    { titel: 'Plain Nederlands', tekst: 'Geen jargon, geen ivoren toren. Als we het niet kunnen uitleggen, begrijpen we het zelf niet.' },
+    { titel: 'Voor doeners, door doeners', tekst: 'Eibert (bouw) en William (familiebedrijven) komen zelf uit het MKB.' },
+    { titel: 'Onbeperkt korte vragen', tekst: 'Via abonnement (€145/mnd) bereikbaar als een huisarts.' },
+    { titel: 'Geen open-einde offertes', tekst: 'Maatwerk krijgt fasering en prijs vooraf.' },
+    { titel: 'No-cure-no-pay incasso', tekst: 'Risico verschuift naar Klarijn, klant betaalt pas bij succes.' },
+  ],
+  doelgroepen: {
+    primair: ['De MKB-ondernemer met een juridische vraag', 'De jurist die overweegt te franchisen bij Klarijn'],
+    secundair: ['Bestaande klanten (portaal-link)', 'Sollicitanten', 'Pers/journalisten', 'Branche-partners (accountants, makelaars)'],
+    kenmerken: ['Praktisch ingesteld — "doeners"', 'Geen affiniteit met juridisch jargon', 'Tijdsdruk — vraag = nu', 'Mond-tot-mond gevoelig', 'Vertrouwen op basis van persoon, niet kantoor'],
+  },
+  persona1: {
+    naam: 'Dirk — MKB-ondernemer',
+    omschrijving: 'Aannemer/familiebedrijfsdirecteur/cateraar, 35-55 jaar, runt een bedrijf van 5-50 fte. Komt met een concrete vraag op de site — meestal onder lichte tijdsdruk.',
+    doel: [
+      'Snel duidelijkheid krijgen over een juridische vraag (geschil, contract, personeel)',
+      'Voorkomen dat hij een dure fout maakt',
+      'Inschatting krijgen van wat het gaat kosten',
+      'Liefst direct iemand spreken die hem snapt',
+    ],
+    wanneer: [
+      'Bij conflict met klant/leverancier/medewerker',
+      'Voorafgaand aan grote stap (overdracht, fusie, internationaal)',
+      'Na een vervelende ervaring bij een advocatenkantoor',
+      'Via mond-tot-mond van een andere ondernemer',
+      'Google-zoekopdracht op concrete vraag',
+    ],
+    vragen: [
+      'Mijn opdrachtgever betaalt al 4 maanden niet — wat doe ik?',
+      'Een medewerker is langdurig ziek, mag ik na 2 jaar ontslag aanvragen?',
+      'Mag mijn verhuurder de huur fors verhogen?',
+      'Hoe regel ik de overdracht naar mijn dochter zonder familieruzie?',
+      'Mijn algemene voorwaarden zijn 8 jaar oud — moet ik die updaten?',
+      'Mijn compagnon wil eruit — hoe regelen we dat netjes?',
+    ],
+    pijnpunten: [
+      'Advocaten zijn duur en onvoorspelbaar in kosten',
+      'Juridisch jargon — onbegrijpelijke offertes',
+      'Geen vaste contactpersoon, steeds opnieuw uitleggen',
+      'Lange wachttijden voor een eerste reactie',
+      'Geen overzicht over welk juridisch traject bij welk probleem hoort',
+      'Schaamte om "domme vraag" te stellen',
+    ],
+    wensen: [
+      'Vaste prijs vooraf, geen verrassingen',
+      'Antwoord binnen 1 werkdag',
+      'Eén persoon die me kent en het dossier kent',
+      'In gewone Nederlands antwoord, niet in artikel-en-lid taal',
+      'Een nuchtere inschatting: doen of niet doen',
+    ],
+    aandachtspunten: [
+      'Mobiel-first — opent vaak vanaf bouwplaats of in de auto',
+      'Geen tijd voor lange formulieren — direct bellen of Whatsappen werkt beter dan invulvelden',
+      'Wil zien dat hier mensen zitten die zijn werkelijkheid kennen',
+    ],
+  },
+  persona2: {
+    naam: 'Tim — Jurist die franchise overweegt',
+    omschrijving: 'Bedrijfsjurist of advocaat met 5-15 jaar ervaring, 30-45 jaar, overweegt eigen praktijk maar wil geen eenzaam ZZP-bestaan. Onderzoekt Klarijn als tussenweg.',
+    doel: [
+      'Begrijpen wat het Klarijn-model concreet inhoudt',
+      'Inschatten of zijn profiel matcht',
+      'Zien wat hij realistisch kan verdienen',
+      'Bepalen of franchise hem genoeg vrijheid laat',
+    ],
+    wanneer: [
+      'Na een carrière-evaluatie of slechte ervaring bij groot kantoor',
+      'Wanneer hij ontevreden is over autonomie in loondienst',
+      'Na contact met een Klarijn-rayonhouder op een netwerkevent',
+      'Via LinkedIn-bericht of vacature-advertentie',
+    ],
+    vragen: [
+      'Wat verdien ik ongeveer in jaar 1?',
+      'Mag ik vanuit Klarijn ook procederen?',
+      'Hoeveel autonomie hou ik over de inhoud van mijn werk?',
+      'Wie regelt marketing, IT, boekhouding — en wat betaal ik daarvoor?',
+      'Welke rayons zijn nog beschikbaar?',
+      'Kan ik mijn huidige cliënten meenemen?',
+    ],
+    pijnpunten: [
+      'In loondienst — weinig invloed op koers en cliënten',
+      'Bij eigen praktijk — te veel administratieve last',
+      'Geen ruggensteun bij gespecialiseerde vragen',
+      'Marketing en acquisitie is geen passie',
+      'Onzekerheid over inkomen in jaar 1',
+    ],
+    wensen: [
+      'Eigen rayon met geografische exclusiviteit',
+      'Backoffice die marketing en automatisering regelt',
+      'Specialisten in netwerk om aanvullend te kunnen werken',
+      'Eerlijk verdienmodel — geen verborgen fees',
+      'Behoud van inhoudelijke autonomie',
+    ],
+    aandachtspunten: [
+      'Wil concrete cijfers zien (omzet pilot Zwolle, fee-structuur, netto verdienen)',
+      'Match-test moet eerlijk zijn — ook "nee" als antwoord acceptabel',
+      'Niet teveel verkoop-praat; juristen prikken daar doorheen',
+    ],
+  },
+  aandachtspunten: [
+    { titel: 'Twee zijden visueel scherp', tekst: 'Klant = licht/paars-cream. Franchise = donker/near-black. Geen vermenging.' },
+    { titel: 'Geen jargon overall', tekst: 'Ook navigation labels en menu-items in plain Nederlands.' },
+    { titel: 'Vraag het Klarijn = rode draad', tekst: 'Op elke pagina zichtbaar als floating FAB + in iedere relevante sectie.' },
+    { titel: 'Productcatalogus mag niet aanvoelen als webshop', tekst: 'Offerte-mandje, geen "koop nu" — Klarijn checkt elke aanvraag.' },
+    { titel: 'Mobile-first', tekst: 'Demo nu volledig responsive — bewaken bij verdere uitbouw.' },
+    { titel: 'CMS = lage drempel', tekst: 'Klarijn-team moet content kunnen wijzigen zonder hulp.' },
+  ],
+  vervolgstappen: [
+    'Definitieve brand-tone vastleggen (huidige paars + magenta valideren of bijstellen)',
+    'Productcatalogus afkloppen — welke 10 zijn echt, welke prijzen kloppen',
+    'Team-foto\'s + bio-teksten aanleveren voor over-ons',
+    'Mijn Voortgang externe URL bepalen (welke tool: Asana, Clio, maatwerk)',
+    'Content schrijven voor: Werkwijze, Over ons, Abonnement, alle Productpaginas',
+    'Kantoorpagina-template uitwerken voor andere rayons (Zwolle staat als voorbeeld)',
+    'Webhosting + custom domein (klarijn.nl, cms.klarijn.nl)',
+    'CMS-instructie / mini-handleiding voor Klarijn-team',
+    'Go-live moment plannen',
+  ],
+  notities: '',
+};
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Strategische sessie · Klarijn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    <style>
+      /* Co-branding tokens: Agensea (indigo) voor tool-chrome, Klarijn (aubergine/magenta) voor inhoud */
+      :root {
+        --ag-indigo: #2d3fe0;
+        --ag-indigo-light: #4f5ef7;
+        --ag-indigo-sky: #e8eafe;
+        --ag-cream: #faf9f6;
+        --ag-dark: #0d0d0d;
+        --ag-text: #2a2a2a;
+      }
+      .ag-font { font-family: 'Outfit', 'Inter', system-ui, sans-serif; }
+      .ag-ui  { font-family: 'Inter', system-ui, sans-serif; }
+      .btn-ag-primary {
+        background: var(--ag-indigo);
+        color: white;
+        font-family: 'Inter', system-ui, sans-serif;
+      }
+      .btn-ag-primary:hover { background: var(--ag-indigo-light); }
+      .btn-ag-ghost {
+        color: var(--ag-text);
+        font-family: 'Inter', system-ui, sans-serif;
+      }
+      .btn-ag-ghost:hover { background: var(--ag-indigo-sky); color: var(--ag-indigo); }
+      .ag-text-indigo { color: var(--ag-indigo); }
+      .ag-bg-sky { background: var(--ag-indigo-sky); }
+      .ag-border-indigo { border-color: var(--ag-indigo); }
+    </style>
+  </head>
+  <body class="bg-paper-2 text-ink min-h-screen ag-ui" style="font-family: 'Inter', 'Poppins', system-ui, sans-serif;">
+    <!-- Sticky top toolbar — Agensea chrome -->
+    <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-ink/10 print:hidden">
+      <div class="max-w-[1100px] mx-auto px-4 md:px-8 flex items-center justify-between gap-3 h-14">
+        <div class="flex items-center gap-3">
+          <img src="/agensea-logo.png" alt="Agensea" width="20" height="20" class="rounded" />
+          <span class="ag-font font-semibold text-[15px] text-[var(--ag-dark)] tracking-tight">Agensea Hub</span>
+          <span class="text-ink-soft text-sm">·</span>
+          <span class="font-display text-base md:text-lg text-aubergine leading-none">Strategische sessie Klarijn</span>
+          <span class="ml-1 w-2 h-2 rounded-full bg-magenta animate-pulse" aria-hidden="true"></span>
+        </div>
+        <div class="flex items-center gap-1">
+          <button
+            type="button"
+            data-action="reset"
+            class="btn-ag-ghost text-xs font-medium px-3 py-1.5 rounded-full transition-colors"
+            title="Alle wijzigingen weggooien en terugzetten naar pre-fill"
+          >Reset</button>
+          <button
+            type="button"
+            data-action="copy-md"
+            class="btn-ag-ghost text-xs font-medium px-3 py-1.5 rounded-full transition-colors hidden sm:inline-flex"
+          >Kopieer markdown</button>
+          <button
+            type="button"
+            data-action="print"
+            class="btn-ag-primary text-xs font-semibold px-4 py-1.5 rounded-full transition-colors"
+          >Exporteer · PDF</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="max-w-[1100px] mx-auto px-4 md:px-8 pt-10 md:pt-14 pb-6 relative">
+      <!-- Subtiel Agensea-accent: indigo dot + cream gradient achter de titel -->
+      <div class="absolute -top-6 right-0 w-72 h-72 rounded-full opacity-40 pointer-events-none blur-3xl ag-bg-sky" aria-hidden="true"></div>
+
+      <div class="inline-flex items-center gap-3 mb-5 relative">
+        <span class="ag-font text-[.7rem] font-bold uppercase tracking-[.2em] text-[var(--ag-indigo)] flex items-center gap-2">
+          <span class="w-6 h-px bg-[var(--ag-indigo)]"></span>
+          Agensea Werksessie
+        </span>
+        <span class="text-ink-soft text-xs">·</span>
+        <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-magenta">1.5 uur · interactief</span>
+      </div>
+      <h1 class="font-display text-4xl md:text-6xl text-aubergine leading-[.95] mb-4 relative">
+        Strategische sessie<br/>
+        <span class="text-magenta">Klarijn-website 2.0</span>
+      </h1>
+      <p class="text-lg text-ink-soft max-w-[60ch] leading-relaxed mb-8 relative">
+        Dit document vullen we tijdens de sessie samen in. Pre-fill staat al op basis van wat we uit de briefing weten — vul aan, schrap, kleur in. Aan het einde exporteren we het als PDF en gaat het mee als bron voor de uitwerking.
+      </p>
+
+      <!-- Meta -->
+      <div class="grid sm:grid-cols-3 gap-4 max-w-[800px]" data-section="meta">
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-wider text-ink-soft">Datum</span>
+          <input type="text" data-key="meta.sessieDatum" placeholder="dd-mm-jjjj"
+                 class="block w-full mt-1 bg-white border border-ink/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-magenta/30 focus:border-magenta" />
+        </label>
+        <label class="block">
+          <span class="text-xs font-bold uppercase tracking-wider text-ink-soft">Facilitator</span>
+          <input type="text" data-key="meta.facilitator"
+                 class="block w-full mt-1 bg-white border border-ink/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-magenta/30 focus:border-magenta" />
+        </label>
+        <label class="block sm:col-span-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-ink-soft">Deelnemers</span>
+          <textarea data-key="meta.deelnemers" rows="3"
+                    class="block w-full mt-1 bg-white border border-ink/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-magenta/30 focus:border-magenta resize-y"></textarea>
+        </label>
+      </div>
+    </section>
+
+    <!-- Table of contents (desktop) -->
+    <aside class="hidden lg:block fixed top-24 left-[calc(50%+560px+24px)] w-[200px] print:hidden">
+      <div class="ag-font text-[.65rem] font-bold uppercase tracking-[.16em] ag-text-indigo mb-3">Werkvormen</div>
+      <nav class="space-y-1 text-sm">
+        <a href="#stip" class="block text-ink-soft hover:text-magenta">1 · Stip op de horizon</a>
+        <a href="#doelgroepen" class="block text-ink-soft hover:text-magenta">2 · Doelgroepen</a>
+        <a href="#persona1" class="block text-ink-soft hover:text-magenta">↳ Persona: MKB</a>
+        <a href="#persona2" class="block text-ink-soft hover:text-magenta">↳ Persona: Franchise</a>
+        <a href="#aandacht" class="block text-ink-soft hover:text-magenta">3 · Aandachtspunten</a>
+        <a href="#vervolg" class="block text-ink-soft hover:text-magenta">4 · Vervolgstappen</a>
+        <a href="#notities" class="block text-ink-soft hover:text-magenta">5 · Vrije notities</a>
+      </nav>
+    </aside>
+
+    <main class="max-w-[1100px] mx-auto px-4 md:px-8 pb-32 space-y-12">
+      <!-- ========== 1. STIP OP DE HORIZON ========== -->
+      <section id="stip">
+        <div class="flex items-baseline gap-3 mb-1">
+          <span class="text-magenta font-display text-3xl leading-none">01</span>
+          <h2 class="font-display text-2xl md:text-3xl text-aubergine">Stip op de horizon</h2>
+        </div>
+        <p class="text-ink-soft mb-8 max-w-[60ch]">Samen kijken we naar de doelstellingen voor de nieuwe website, wanneer dit een succes is en wat het onderscheidend vermogen van Klarijn is.</p>
+
+        <!-- Doelen -->
+        <div class="bg-white rounded-card p-6 md:p-8 shadow-sm mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-aubergine">Doelen van de nieuwe website</h3>
+            <button type="button" data-add="doelen" class="text-xs font-medium ag-text-indigo hover:ag-bg-sky px-3 py-1.5 rounded-full">+ Toevoegen</button>
+          </div>
+          <ul class="space-y-3" data-list="doelen"></ul>
+        </div>
+
+        <!-- Succesfactoren -->
+        <div class="bg-white rounded-card p-6 md:p-8 shadow-sm mb-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-aubergine">Succesfactoren</h3>
+            <button type="button" data-add="succesfactoren" class="text-xs font-medium ag-text-indigo hover:ag-bg-sky px-3 py-1.5 rounded-full">+ Toevoegen</button>
+          </div>
+          <ul class="space-y-3" data-list="succesfactoren"></ul>
+        </div>
+
+        <!-- USPs -->
+        <div class="bg-white rounded-card p-6 md:p-8 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-aubergine">USP's — Onderscheidend vermogen</h3>
+            <button type="button" data-add="usps" class="text-xs font-medium ag-text-indigo hover:ag-bg-sky px-3 py-1.5 rounded-full">+ Toevoegen</button>
+          </div>
+          <ul class="space-y-3" data-list="usps"></ul>
+        </div>
+      </section>
+
+      <!-- ========== 2. DOELGROEPEN ========== -->
+      <section id="doelgroepen">
+        <div class="flex items-baseline gap-3 mb-1">
+          <span class="text-magenta font-display text-3xl leading-none">02</span>
+          <h2 class="font-display text-2xl md:text-3xl text-aubergine">Doelgroepen</h2>
+        </div>
+        <p class="text-ink-soft mb-8 max-w-[60ch]">We brengen de belangrijkste doelgroepen in kaart en denken na over hun doelen, vragen, pijnpunten en wensen.</p>
+
+        <!-- Primair + Secundair + Kenmerken -->
+        <div class="grid md:grid-cols-3 gap-4 mb-8">
+          <div class="bg-white rounded-card p-6 shadow-sm">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-magenta mb-3">Primaire doelgroepen</h3>
+            <ul class="space-y-2 text-sm" data-simplelist="doelgroepen.primair"></ul>
+            <button type="button" data-add-simple="doelgroepen.primair" class="text-xs font-medium ag-text-indigo hover:underline mt-3">+ Toevoegen</button>
+          </div>
+          <div class="bg-white rounded-card p-6 shadow-sm">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-magenta mb-3">Secundaire doelgroepen</h3>
+            <ul class="space-y-2 text-sm" data-simplelist="doelgroepen.secundair"></ul>
+            <button type="button" data-add-simple="doelgroepen.secundair" class="text-xs font-medium ag-text-indigo hover:underline mt-3">+ Toevoegen</button>
+          </div>
+          <div class="bg-white rounded-card p-6 shadow-sm">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-magenta mb-3">Kenmerken bezoekers</h3>
+            <ul class="space-y-2 text-sm" data-simplelist="doelgroepen.kenmerken"></ul>
+            <button type="button" data-add-simple="doelgroepen.kenmerken" class="text-xs font-medium ag-text-indigo hover:underline mt-3">+ Toevoegen</button>
+          </div>
+        </div>
+
+        <!-- Persona 1 -->
+        <article id="persona1" class="bg-white rounded-card p-6 md:p-8 shadow-sm mb-6 border-l-4 border-magenta">
+          <div class="flex items-baseline gap-2 mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-magenta">Persona 1</span>
+          </div>
+          <input type="text" data-key="persona1.naam"
+                 class="block w-full font-display text-2xl md:text-3xl text-aubergine bg-transparent border-0 border-b border-ink/10 px-0 py-1 focus:outline-none focus:border-magenta mb-4" />
+          <textarea data-key="persona1.omschrijving" rows="3"
+                    class="block w-full text-base text-ink-soft leading-relaxed bg-transparent border border-ink/8 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-magenta/20 focus:border-magenta mb-6 resize-y"></textarea>
+
+          <div class="grid md:grid-cols-2 gap-5">
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Doel op de website</h4><button type="button" data-add-simple="persona1.doel" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona1.doel"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Wanneer in aanraking</h4><button type="button" data-add-simple="persona1.wanneer" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona1.wanneer"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Vragen</h4><button type="button" data-add-simple="persona1.vragen" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona1.vragen"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Pijnpunten / frustraties</h4><button type="button" data-add-simple="persona1.pijnpunten" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona1.pijnpunten"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Wensen</h4><button type="button" data-add-simple="persona1.wensen" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona1.wensen"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Aandachtspunten</h4><button type="button" data-add-simple="persona1.aandachtspunten" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona1.aandachtspunten"></ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Persona 2 -->
+        <article id="persona2" class="bg-white rounded-card p-6 md:p-8 shadow-sm border-l-4 border-aubergine">
+          <div class="flex items-baseline gap-2 mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-aubergine">Persona 2 · Franchise-zijde</span>
+          </div>
+          <input type="text" data-key="persona2.naam"
+                 class="block w-full font-display text-2xl md:text-3xl text-aubergine bg-transparent border-0 border-b border-ink/10 px-0 py-1 focus:outline-none focus:border-aubergine mb-4" />
+          <textarea data-key="persona2.omschrijving" rows="3"
+                    class="block w-full text-base text-ink-soft leading-relaxed bg-transparent border border-ink/8 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-aubergine/20 focus:border-aubergine mb-6 resize-y"></textarea>
+
+          <div class="grid md:grid-cols-2 gap-5">
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Doel op de website</h4><button type="button" data-add-simple="persona2.doel" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona2.doel"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Wanneer in aanraking</h4><button type="button" data-add-simple="persona2.wanneer" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona2.wanneer"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Vragen</h4><button type="button" data-add-simple="persona2.vragen" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona2.vragen"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Pijnpunten / frustraties</h4><button type="button" data-add-simple="persona2.pijnpunten" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona2.pijnpunten"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Wensen</h4><button type="button" data-add-simple="persona2.wensen" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona2.wensen"></ul>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2"><h4 class="text-sm font-bold uppercase tracking-wider text-ink-soft">Aandachtspunten</h4><button type="button" data-add-simple="persona2.aandachtspunten" class="text-xs font-medium ag-text-indigo hover:underline">+</button></div>
+              <ul class="space-y-1.5 text-sm" data-simplelist="persona2.aandachtspunten"></ul>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ========== 3. AANDACHTSPUNTEN ========== -->
+      <section id="aandacht">
+        <div class="flex items-baseline gap-3 mb-1">
+          <span class="text-magenta font-display text-3xl leading-none">03</span>
+          <h2 class="font-display text-2xl md:text-3xl text-aubergine">Aandachtspunten</h2>
+        </div>
+        <p class="text-ink-soft mb-8 max-w-[60ch]">Vuistregels en uitgangspunten waarvan we niet afwijken bij de verdere uitwerking.</p>
+
+        <div class="bg-white rounded-card p-6 md:p-8 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-aubergine">Niet-onderhandelbare uitgangspunten</h3>
+            <button type="button" data-add="aandachtspunten" class="text-xs font-medium ag-text-indigo hover:ag-bg-sky px-3 py-1.5 rounded-full">+ Toevoegen</button>
+          </div>
+          <ul class="space-y-3" data-list="aandachtspunten"></ul>
+        </div>
+      </section>
+
+      <!-- ========== 4. VERVOLGSTAPPEN ========== -->
+      <section id="vervolg">
+        <div class="flex items-baseline gap-3 mb-1">
+          <span class="text-magenta font-display text-3xl leading-none">04</span>
+          <h2 class="font-display text-2xl md:text-3xl text-aubergine">Vervolgstappen</h2>
+        </div>
+        <p class="text-ink-soft mb-8 max-w-[60ch]">Wat moet er gebeuren tussen sessie en go-live? Wie levert wat aan?</p>
+
+        <div class="bg-white rounded-card p-6 md:p-8 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-aubergine">Actielijst</h3>
+            <button type="button" data-add-simple="vervolgstappen" class="text-xs font-medium ag-text-indigo hover:ag-bg-sky px-3 py-1.5 rounded-full">+ Toevoegen</button>
+          </div>
+          <ul class="space-y-2 text-sm" data-simplelist="vervolgstappen"></ul>
+        </div>
+      </section>
+
+      <!-- ========== 5. NOTITIES ========== -->
+      <section id="notities">
+        <div class="flex items-baseline gap-3 mb-1">
+          <span class="text-magenta font-display text-3xl leading-none">05</span>
+          <h2 class="font-display text-2xl md:text-3xl text-aubergine">Vrije notities</h2>
+        </div>
+        <p class="text-ink-soft mb-6 max-w-[60ch]">Quotes, opmerkingen, dingen om in de gaten te houden — alles wat niet in een vakje past.</p>
+
+        <textarea data-key="notities" rows="10"
+                  placeholder="Notities tijdens de sessie..."
+                  class="block w-full bg-white border border-ink/10 rounded-card px-5 py-4 text-base leading-relaxed focus:outline-none focus:ring-2 focus:ring-magenta/30 focus:border-magenta resize-y"></textarea>
+      </section>
+
+      <!-- Footer -->
+      <div class="pt-8 border-t border-ink/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-xs text-ink-soft m-0 ag-ui">
+          Wijzigingen blijven lokaal in deze browser. Exporteer als PDF om te delen.
+        </p>
+        <div class="flex items-center gap-2">
+          <img src="/agensea-logo.png" alt="Agensea" width="18" height="18" class="rounded" />
+          <span class="ag-font text-xs font-semibold text-[var(--ag-dark)]">Agensea Hub</span>
+          <span class="text-ink-soft text-xs">×</span>
+          <span class="font-display text-xs text-aubergine">Klarijn</span>
+        </div>
+      </div>
+    </main>
+
+    <script type="application/json" id="defaults" set:html={JSON.stringify(defaults)}></script>
+
+    <style is:global>
+      [contenteditable="true"]:empty::before {
+        content: attr(data-placeholder);
+        color: rgba(94, 31, 92, 0.35);
+        font-style: italic;
+      }
+      [contenteditable="true"] {
+        outline: none;
+      }
+      [contenteditable="true"]:focus {
+        background: rgba(224, 39, 122, 0.04);
+        border-radius: 4px;
+      }
+      .bullet-item:hover .bullet-remove { opacity: 1; }
+      .bullet-remove { opacity: 0; transition: opacity 0.15s; }
+      @media print {
+        body { background: white !important; }
+        .bg-white, .bg-paper-2 { background: white !important; box-shadow: none !important; }
+        button { display: none !important; }
+        input, textarea { border: none !important; padding: 0 !important; }
+        textarea { resize: none !important; }
+        section { page-break-inside: avoid; }
+        h1, h2, h3 { page-break-after: avoid; }
+      }
+    </style>
+
+    <script>
+      const KEY = 'klarijn_strategie_v1';
+      const defaultsEl = document.getElementById('defaults');
+      const DEFAULTS = JSON.parse(defaultsEl.textContent);
+
+      // Deep clone helper
+      const clone = (o) => JSON.parse(JSON.stringify(o));
+
+      // Path helpers: get/set via 'a.b.c' notation
+      function getPath(obj, path) {
+        return path.split('.').reduce((o, k) => (o ? o[k] : undefined), obj);
+      }
+      function setPath(obj, path, value) {
+        const keys = path.split('.');
+        const last = keys.pop();
+        const target = keys.reduce((o, k) => o[k] = o[k] || {}, obj);
+        target[last] = value;
+      }
+
+      // State
+      let state;
+      try {
+        const stored = localStorage.getItem(KEY);
+        state = stored ? JSON.parse(stored) : clone(DEFAULTS);
+      } catch {
+        state = clone(DEFAULTS);
+      }
+
+      const save = () => {
+        try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {}
+      };
+
+      // ----- Rendering -----
+      function renderBulletList(ul, path) {
+        ul.innerHTML = '';
+        const items = getPath(state, path) || [];
+        items.forEach((it, idx) => {
+          const li = document.createElement('li');
+          li.className = 'bullet-item flex gap-3 items-start group';
+          li.innerHTML = `
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-magenta shrink-0"></span>
+            <div class="flex-1 min-w-0">
+              <div contenteditable="true" data-placeholder="Korte titel" class="font-semibold text-ink text-sm leading-snug">${escapeHtml(it.titel || '')}</div>
+              <div contenteditable="true" data-placeholder="Toelichting…" class="text-ink-soft text-sm leading-relaxed mt-0.5">${escapeHtml(it.tekst || '')}</div>
+            </div>
+            <button type="button" class="bullet-remove text-ink-soft hover:text-magenta text-lg leading-none shrink-0 px-1" aria-label="Verwijder">×</button>
+          `;
+          const [titleEl, textEl] = li.querySelectorAll('[contenteditable]');
+          titleEl.addEventListener('input', () => { items[idx].titel = titleEl.textContent; save(); });
+          textEl.addEventListener('input', () => { items[idx].tekst = textEl.textContent; save(); });
+          li.querySelector('.bullet-remove').addEventListener('click', () => {
+            items.splice(idx, 1); save(); renderBulletList(ul, path);
+          });
+          ul.appendChild(li);
+        });
+      }
+
+      function renderSimpleList(ul, path) {
+        ul.innerHTML = '';
+        const items = getPath(state, path) || [];
+        items.forEach((text, idx) => {
+          const li = document.createElement('li');
+          li.className = 'bullet-item flex gap-2.5 items-start group';
+          li.innerHTML = `
+            <span class="mt-2 w-1.5 h-1.5 rounded-full bg-magenta shrink-0"></span>
+            <div contenteditable="true" data-placeholder="Voeg een punt toe…" class="flex-1 text-ink leading-relaxed">${escapeHtml(text || '')}</div>
+            <button type="button" class="bullet-remove text-ink-soft hover:text-magenta text-base leading-none shrink-0 px-1" aria-label="Verwijder">×</button>
+          `;
+          const editable = li.querySelector('[contenteditable]');
+          editable.addEventListener('input', () => { items[idx] = editable.textContent; save(); });
+          li.querySelector('.bullet-remove').addEventListener('click', () => {
+            items.splice(idx, 1); save(); renderSimpleList(ul, path);
+          });
+          ul.appendChild(li);
+        });
+      }
+
+      function escapeHtml(s) {
+        return String(s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      }
+
+      // Bind input/textarea fields by data-key
+      function bindInputs() {
+        document.querySelectorAll('[data-key]').forEach(el => {
+          const path = el.dataset.key;
+          el.value = getPath(state, path) || '';
+          el.addEventListener('input', () => {
+            setPath(state, path, el.value);
+            save();
+          });
+        });
+      }
+
+      // Render all lists
+      function renderAll() {
+        document.querySelectorAll('[data-list]').forEach(ul => renderBulletList(ul, ul.dataset.list));
+        document.querySelectorAll('[data-simplelist]').forEach(ul => renderSimpleList(ul, ul.dataset.simplelist));
+        bindInputs();
+      }
+
+      // Add buttons (rich bullets)
+      document.querySelectorAll('[data-add]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const path = btn.dataset.add;
+          const list = getPath(state, path) || [];
+          list.push({ titel: '', tekst: '' });
+          setPath(state, path, list);
+          save();
+          const ul = document.querySelector(`[data-list="${path}"]`);
+          if (ul) {
+            renderBulletList(ul, path);
+            const newItem = ul.lastElementChild?.querySelector('[contenteditable]');
+            newItem?.focus();
+          }
+        });
+      });
+
+      // Add buttons (simple lists)
+      document.querySelectorAll('[data-add-simple]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const path = btn.dataset.addSimple;
+          const list = getPath(state, path) || [];
+          list.push('');
+          setPath(state, path, list);
+          save();
+          const ul = document.querySelector(`[data-simplelist="${path}"]`);
+          if (ul) {
+            renderSimpleList(ul, path);
+            const newItem = ul.lastElementChild?.querySelector('[contenteditable]');
+            newItem?.focus();
+          }
+        });
+      });
+
+      // Reset
+      document.querySelector('[data-action="reset"]')?.addEventListener('click', () => {
+        if (!confirm('Weet je zeker dat je alle wijzigingen wil weggooien en terug wil naar de pre-fill?')) return;
+        state = clone(DEFAULTS);
+        save();
+        renderAll();
+      });
+
+      // Print
+      document.querySelector('[data-action="print"]')?.addEventListener('click', () => {
+        window.print();
+      });
+
+      // Copy as markdown
+      document.querySelector('[data-action="copy-md"]')?.addEventListener('click', async () => {
+        const md = toMarkdown(state);
+        try {
+          await navigator.clipboard.writeText(md);
+          alert('Gekopieerd naar klembord!');
+        } catch {
+          alert('Kopiëren mislukt — selecteer handmatig:\n\n' + md.slice(0, 500) + '...');
+        }
+      });
+
+      function bullets(items, simple = false) {
+        if (!items || !items.length) return '_(leeg)_\n';
+        return items.map(i => simple ? `- ${i}` : `- **${i.titel}** — ${i.tekst}`).join('\n') + '\n';
+      }
+
+      function toMarkdown(s) {
+        return `# Strategische sessie Klarijn
+
+**Datum:** ${s.meta?.sessieDatum || '—'}
+**Facilitator:** ${s.meta?.facilitator || '—'}
+**Deelnemers:**
+${s.meta?.deelnemers || '—'}
+
+---
+
+## 1. Stip op de horizon
+
+### Doelen van de nieuwe website
+${bullets(s.doelen)}
+### Succesfactoren
+${bullets(s.succesfactoren)}
+### USP's
+${bullets(s.usps)}
+---
+
+## 2. Doelgroepen
+
+### Primaire doelgroepen
+${bullets(s.doelgroepen?.primair, true)}
+### Secundaire doelgroepen
+${bullets(s.doelgroepen?.secundair, true)}
+### Kenmerken bezoekers
+${bullets(s.doelgroepen?.kenmerken, true)}
+
+### Persona 1: ${s.persona1?.naam || ''}
+${s.persona1?.omschrijving || ''}
+
+**Doel op de website**
+${bullets(s.persona1?.doel, true)}
+**Wanneer in aanraking**
+${bullets(s.persona1?.wanneer, true)}
+**Vragen**
+${bullets(s.persona1?.vragen, true)}
+**Pijnpunten**
+${bullets(s.persona1?.pijnpunten, true)}
+**Wensen**
+${bullets(s.persona1?.wensen, true)}
+**Aandachtspunten**
+${bullets(s.persona1?.aandachtspunten, true)}
+
+### Persona 2: ${s.persona2?.naam || ''}
+${s.persona2?.omschrijving || ''}
+
+**Doel op de website**
+${bullets(s.persona2?.doel, true)}
+**Wanneer in aanraking**
+${bullets(s.persona2?.wanneer, true)}
+**Vragen**
+${bullets(s.persona2?.vragen, true)}
+**Pijnpunten**
+${bullets(s.persona2?.pijnpunten, true)}
+**Wensen**
+${bullets(s.persona2?.wensen, true)}
+**Aandachtspunten**
+${bullets(s.persona2?.aandachtspunten, true)}
+
+---
+
+## 3. Aandachtspunten
+${bullets(s.aandachtspunten)}
+---
+
+## 4. Vervolgstappen
+${bullets(s.vervolgstappen, true)}
+---
+
+## 5. Vrije notities
+${s.notities || '—'}
+`;
+      }
+
+      // Init
+      renderAll();
+    </script>
+  </body>
+</html>
