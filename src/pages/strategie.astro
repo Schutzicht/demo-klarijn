@@ -4,6 +4,7 @@
 import '../styles/global.css';
 
 const seed = {
+  v: 6,
   meta: { titel: 'Strategiesessie Klarijn' },
   boards: [
     {
@@ -399,18 +400,26 @@ const seed = {
         } catch {}
       }
 
+      const SEED_V = SEED.v || 1;
       const fromHash = decodeFromHash();
-      if (fromHash && fromHash.boards) {
+      // Alleen URL-state gebruiken als versie matcht. Oude links vallen terug op verse seed.
+      if (fromHash && fromHash.boards && fromHash.v === SEED_V) {
         state = fromHash;
       } else {
+        if (fromHash && fromHash.v !== SEED_V) {
+          // Oude versie in URL gevonden, wis hash zodat we niet opnieuw in deze fallback komen
+          history.replaceState(null, '', location.pathname + location.search);
+        }
         try {
           const stored = localStorage.getItem(LS_KEY);
-          state = stored ? JSON.parse(stored) : clone(SEED);
+          const parsed = stored ? JSON.parse(stored) : null;
+          state = (parsed && parsed.v === SEED_V) ? parsed : clone(SEED);
         } catch {
           state = clone(SEED);
         }
       }
       if (!state.boards) state.boards = clone(SEED.boards);
+      state.v = SEED_V;
 
       let saveTimer = null;
       function save() {
