@@ -4,12 +4,27 @@
 import '../styles/global.css';
 
 const seed = {
-  v: 10,
+  v: 11,
   meta: { titel: 'Strategiesessie Klarijn' },
   boards: [
     {
-      id: 'doelstellingen',
+      id: 'vragen',
       nummer: '01',
+      label: 'Aftrap',
+      vraag: 'Praktische punten om eerst af te tikken.',
+      type: 'qa',
+      questions: [
+        { q: 'Wat is de deadline voor live-gang?', a: '' },
+        { q: 'Wie is verantwoordelijk voor welke content?', a: '' },
+        { q: 'Productstructuur: hoe richten we de offerte-flow in?', a: '' },
+        { q: 'Welke analytics zijn gewenst en wat is er al?', a: '' },
+        { q: 'AI-koppeling: zijn er plannen of ideeen?', a: '' },
+        { q: 'Concurrenten of vergelijkbare platformen om van te leren?', a: '' },
+      ],
+    },
+    {
+      id: 'doelstellingen',
+      nummer: '02',
       label: 'Doelstellingen',
       vraag: 'Wat moet de website concreet bereiken?',
       groups: [
@@ -61,7 +76,7 @@ const seed = {
     },
     {
       id: 'doelgroepen',
-      nummer: '02',
+      nummer: '03',
       label: 'Doelgroepen',
       vraag: 'Wie willen we bereiken?',
       groups: [
@@ -105,7 +120,7 @@ const seed = {
     },
     {
       id: 'demo-vs',
-      nummer: '03',
+      nummer: '04',
       label: 'Demo vs eindresultaat',
       vraag: 'Wat moet anders dan in de huidige demo?',
       groups: [
@@ -145,21 +160,6 @@ const seed = {
             { text: 'Vraag het Klarijn als rode draad', c: 2 },
           ],
         },
-      ],
-    },
-    {
-      id: 'vragen',
-      nummer: '04',
-      label: 'Vragen vanuit ons',
-      vraag: 'Punten waarop we tijdens de sessie antwoord willen.',
-      type: 'qa',
-      questions: [
-        { q: 'Wat is de deadline voor live-gang?', a: '' },
-        { q: 'Wie is verantwoordelijk voor welke content?', a: '' },
-        { q: 'Productstructuur: hoe richten we de offerte-flow in?', a: '' },
-        { q: 'Welke analytics zijn gewenst en wat is er al?', a: '' },
-        { q: 'AI-koppeling: zijn er plannen of ideeen?', a: '' },
-        { q: 'Concurrenten of vergelijkbare platformen om van te leren?', a: '' },
       ],
     },
   ],
