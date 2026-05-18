@@ -1,63 +1,34 @@
 ---
-// Strategische werksessie als post-it bord.
-// Hoofdlijnen, één regel per gedachte. State leeft in URL (deelbaar).
+// Strategiesessie: twee borden (Doelstellingen, Doelgroepen) met vierkante post-its.
+// State leeft in URL hash zodat de link gedeeld kan worden.
 import '../styles/global.css';
 
-// Pre-fill: heel minimaal, alleen om de boel op gang te helpen.
 const seed = {
-  meta: { titel: 'Agensea Plakbord · Klarijn' },
-  zones: [
+  meta: { titel: 'Strategiesessie Klarijn' },
+  boards: [
     {
-      id: 'koppig',
-      vraag: 'Waar zijn we koppig over?',
-      hint: 'De dingen die niet onderhandelbaar zijn. Eén regel per overtuiging.',
+      id: 'doelstellingen',
+      label: 'Doelstellingen',
+      hint: 'Wat moet de website concreet bereiken?',
       notes: [
-        { text: 'Vaste prijs vooraf', c: 0 },
-        { text: 'Eén vaste jurist, geen draaideur', c: 1 },
-        { text: 'Plain Nederlands', c: 2 },
+        { text: 'Direct contact stimuleren', c: 0 },
+        { text: 'Vindbaarheid op juridische vragen', c: 2 },
+        { text: 'Onderscheid van advocatenkantoor', c: 1 },
+        { text: 'Klant en franchise gescheiden', c: 3 },
+        { text: 'Beheer door eigen team', c: 4 },
       ],
     },
     {
-      id: 'binnenwandelt',
-      vraag: 'Wie tikt deze site binnen?',
-      hint: 'Type mens. Wat voor ondernemer of jurist staat er voor de deur?',
+      id: 'doelgroepen',
+      label: 'Doelgroepen',
+      hint: 'Wie willen we bereiken? Type bezoeker of branche.',
       notes: [
-        { text: 'Aannemer met geschil', c: 3 },
-        { text: 'Familiebedrijf voor overdracht', c: 4 },
-        { text: 'Jurist die franchise overweegt', c: 0 },
+        { text: 'MKB met geschil', c: 3 },
+        { text: 'Familiebedrijf in overdracht', c: 1 },
+        { text: 'Cateraar of horeca', c: 4 },
+        { text: 'Webshop met IE-vraag', c: 2 },
+        { text: 'Jurist overweegt franchise', c: 0 },
       ],
-    },
-    {
-      id: 'eerste-klik',
-      vraag: 'Wat is de eerste klik?',
-      hint: 'Eén hoofdactie waar alles op stuurt. Niet meer.',
-      notes: [
-        { text: 'Bellen of WhatsAppen', c: 2 },
-      ],
-    },
-    {
-      id: 'energie',
-      vraag: 'Welke energie ademt de site?',
-      hint: 'Korte woorden. Stoer? Warm? Streetwise? Verzorgd? Allebei?',
-      notes: [
-        { text: 'Niet glad', c: 1 },
-        { text: 'Wel verzorgd', c: 4 },
-      ],
-    },
-    {
-      id: 'stekker',
-      vraag: 'Waar trekken we de stekker uit?',
-      hint: 'Conventies die andere kantoren wel doen, en wij niet.',
-      notes: [
-        { text: 'Geen ivoren toren', c: 3 },
-        { text: 'Geen 14-pagina formulier', c: 0 },
-      ],
-    },
-    {
-      id: 'losse',
-      vraag: 'Losse eindjes',
-      hint: 'Wat blijft hangen, hoort nergens, maar mag niet vergeten.',
-      notes: [],
     },
   ],
 };
@@ -69,7 +40,7 @@ const seed = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>Strategische sessie · Klarijn</title>
+    <title>Strategiesessie Klarijn</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -79,58 +50,88 @@ const seed = {
     <style>
       :root {
         --ag-indigo: #2d3fe0;
-        --ag-indigo-light: #4f5ef7;
         --ag-indigo-sky: #e8eafe;
-        --ag-cream: #faf9f6;
+        --ag-cream: #f4f1ec;
         --ag-dark: #0d0d0d;
+        --board-bg: #efeae0;
       }
       html, body {
         background: var(--ag-cream);
         font-family: 'Inter', system-ui, sans-serif;
         color: #2a2a2a;
       }
-      /* Post-it kleuren (5 stuks, c=0..4) */
-      .pi-0 { background: #FFF38A; }   /* geel */
-      .pi-1 { background: #FFC4D6; }   /* roze */
-      .pi-2 { background: #C4F2DA; }   /* mint */
-      .pi-3 { background: #C4DCFF; }   /* blauw */
-      .pi-4 { background: #FFD9B5; }   /* perzik */
+      /* Board: papier-textuur via subtiele dots */
+      .board {
+        background-color: var(--board-bg);
+        background-image:
+          radial-gradient(rgba(0,0,0,0.04) 1px, transparent 1px);
+        background-size: 22px 22px;
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.04);
+      }
+      /* Vijf post-it kleuren */
+      .pi-0 { background: #FFEC8B; }
+      .pi-1 { background: #FFB8CE; }
+      .pi-2 { background: #B8F2D4; }
+      .pi-3 { background: #B8D4FF; }
+      .pi-4 { background: #FFCFA8; }
       .postit {
         position: relative;
-        padding: 16px 18px 18px;
-        min-width: 130px;
-        max-width: 220px;
-        box-shadow: 0 6px 14px -4px rgba(13,13,13,0.12), 0 2px 4px rgba(13,13,13,0.06);
+        width: 128px;
+        height: 128px;
+        padding: 14px;
+        box-shadow:
+          0 1px 1px rgba(0,0,0,0.05),
+          0 8px 14px -5px rgba(0,0,0,0.18),
+          inset 0 -10px 16px -10px rgba(0,0,0,0.08);
         font-family: 'Caveat', cursive;
-        font-size: 1.25rem;
-        line-height: 1.25;
-        color: #2a2a2a;
+        font-size: 1.1rem;
+        line-height: 1.15;
+        color: #1f1f1f;
         word-break: break-word;
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, z-index 0s 0.18s;
         cursor: text;
+        display: flex;
+        align-items: flex-start;
+      }
+      .postit::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 16px;
+        height: 16px;
+        background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.09) 50%);
       }
       .postit:focus-within, .postit:hover {
-        box-shadow: 0 12px 24px -6px rgba(13,13,13,0.18), 0 4px 8px rgba(13,13,13,0.08);
-        transform: translateY(-2px) rotate(0deg) !important;
-        z-index: 5;
+        box-shadow:
+          0 2px 3px rgba(0,0,0,0.06),
+          0 20px 32px -8px rgba(0,0,0,0.24),
+          inset 0 -10px 16px -10px rgba(0,0,0,0.08);
+        transform: translateY(-4px) rotate(0deg) !important;
+        z-index: 10;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, z-index 0s 0s;
       }
       .postit-text {
         outline: none;
-        min-width: 100px;
+        flex: 1;
+        min-height: 100%;
       }
       .postit-text:empty::before {
         content: attr(data-placeholder);
-        color: rgba(13,13,13,0.32);
+        color: rgba(0,0,0,0.32);
         font-style: italic;
+        font-size: 0.95rem;
+        font-family: 'Inter', sans-serif;
       }
       .postit .x {
         position: absolute;
         top: 4px;
-        right: 6px;
+        right: 4px;
         opacity: 0;
         transition: opacity 0.15s;
-        font-size: 1rem;
-        background: rgba(255,255,255,0.6);
+        font-size: 0.95rem;
+        background: rgba(255,255,255,0.7);
         border-radius: 50%;
         width: 22px;
         height: 22px;
@@ -140,45 +141,83 @@ const seed = {
         font-family: 'Inter', sans-serif;
         color: #555;
         line-height: 1;
+        z-index: 2;
       }
       .postit:hover .x, .postit:focus-within .x { opacity: 1; }
       .postit .x:hover { background: white; color: #c81e6b; }
       .add-postit {
-        min-width: 130px;
-        min-height: 80px;
-        border: 2px dashed rgba(13,13,13,0.18);
-        border-radius: 6px;
+        width: 128px;
+        height: 128px;
+        border: 2px dashed rgba(0,0,0,0.20);
+        border-radius: 4px;
         display: grid;
         place-items: center;
         font-family: 'Inter', sans-serif;
         font-size: 0.8rem;
         font-weight: 500;
-        color: rgba(13,13,13,0.45);
+        color: rgba(0,0,0,0.45);
         cursor: pointer;
-        background: rgba(255,255,255,0.4);
+        background: rgba(255,255,255,0.35);
         transition: all 0.15s;
+        align-self: flex-start;
       }
       .add-postit:hover {
-        background: white;
+        background: rgba(255,255,255,0.7);
         border-color: var(--ag-indigo);
         color: var(--ag-indigo);
         transform: translateY(-2px);
       }
+      /* Tabs */
+      .tab {
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 999px;
+        color: rgba(0,0,0,0.5);
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .tab:hover { background: rgba(255,255,255,0.6); color: #1f1f1f; }
+      .tab[aria-selected="true"] {
+        background: var(--ag-indigo);
+        color: white;
+        box-shadow: 0 6px 14px -4px rgba(45,63,224,0.4);
+      }
+      .tab-count {
+        display: inline-block;
+        margin-left: 8px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 1px 8px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.25);
+      }
+      .tab:not([aria-selected="true"]) .tab-count {
+        background: rgba(0,0,0,0.08);
+        color: rgba(0,0,0,0.55);
+      }
       @media print {
         .no-print { display: none !important; }
         .add-postit { display: none !important; }
-        .postit { box-shadow: none; border: 1px solid #ddd; transform: none !important; }
+        .postit { box-shadow: none; border: 1px solid #ccc; transform: none !important; }
+        .postit::after { display: none; }
         body { background: white; }
+        .board { background: white; border: 1px solid #ddd; }
+        .print-block { display: block !important; break-inside: avoid; page-break-before: always; }
+        .print-block:first-child { page-break-before: auto; }
       }
     </style>
   </head>
   <body class="min-h-screen">
     <!-- Top toolbar -->
     <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-black/8 no-print">
-      <div class="max-w-[1180px] mx-auto px-4 md:px-8 flex items-center justify-between gap-3 h-14">
+      <div class="max-w-[1280px] mx-auto px-4 md:px-8 flex items-center justify-between gap-3 h-14">
         <div class="flex items-center gap-3">
           <img src="/agensea-logo.png" alt="Agensea" width="20" height="20" class="rounded" />
-          <span class="font-semibold text-[15px] text-[#0d0d0d] tracking-tight" style="font-family:'Outfit',sans-serif">Agensea Hub</span>
+          <span class="font-semibold text-[15px] text-[#0d0d0d] tracking-tight" style="font-family:'Outfit',sans-serif">Agensea</span>
           <span class="text-black/30 text-sm">×</span>
           <span class="font-display text-lg text-[#5E1F5C]">Klarijn</span>
         </div>
@@ -202,35 +241,52 @@ const seed = {
     </header>
 
     <!-- Hero -->
-    <section class="max-w-[1180px] mx-auto px-4 md:px-8 pt-10 md:pt-14 pb-4">
+    <section class="max-w-[1280px] mx-auto px-4 md:px-8 pt-10 md:pt-14 pb-6">
       <div class="inline-flex items-center gap-2 mb-3">
         <span class="text-[.65rem] font-bold uppercase tracking-[.2em] text-[var(--ag-indigo)]" style="font-family:'Outfit',sans-serif">
-          Agensea Plakbord · 90 minuten
+          Werksessie · 90 minuten
         </span>
       </div>
-      <h1 class="font-display text-4xl md:text-6xl text-[#5E1F5C] leading-[.95] mb-4">
-        Plak je gedachten<br/>
-        <span style="color: #E0277A">over Klarijn</span>
+      <h1 class="font-display text-4xl md:text-5xl text-[#5E1F5C] leading-[.95] mb-3">
+        Strategiesessie<br/>
+        <span style="color: #E0277A">website Klarijn</span>
       </h1>
-      <p class="text-base md:text-lg text-black/65 max-w-[58ch] leading-relaxed mb-2">
-        Eén regel per post-it. Geen volle zinnen. Klik op een lege plek om er één bij te plakken.
-      </p>
-      <p class="text-sm text-black/45 max-w-[58ch] leading-relaxed">
-        Deel de link met je team — iedereen kan vanuit eigen browser meeplakken. De huidige post-its zitten in de URL.
+      <p class="text-base text-black/65 max-w-[60ch] leading-relaxed">
+        Twee onderdelen, twee borden. Plak per onderwerp uw inzichten op een post-it. Eén regel per post-it volstaat. De link is deelbaar, dus de sessie kan ook na afloop worden aangevuld.
       </p>
     </section>
 
-    <!-- Toast voor copy/share feedback -->
+    <!-- Tabs -->
+    <nav class="max-w-[1280px] mx-auto px-4 md:px-8 mb-5 no-print">
+      <div class="flex flex-wrap gap-2 items-center" role="tablist" id="tabs"></div>
+    </nav>
+
+    <!-- Toast -->
     <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#0d0d0d] text-white text-sm px-4 py-2 rounded-full shadow-2xl pointer-events-none opacity-0 transition-opacity duration-300 z-50 no-print"></div>
 
-    <main class="max-w-[1180px] mx-auto px-4 md:px-8 pb-32 space-y-12" id="board"></main>
+    <!-- Boards -->
+    <main class="max-w-[1280px] mx-auto px-4 md:px-8 pb-20">
+      <div id="boards"></div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
+        <p class="text-xs text-black/50 m-0">
+          Auto-save in browser. Wijzigingen zitten ook in de URL, zodat de link gedeeld kan worden.
+        </p>
+        <div class="flex items-center gap-2">
+          <img src="/agensea-logo.png" alt="Agensea" width="18" height="18" class="rounded" />
+          <span class="text-xs font-semibold" style="font-family:'Outfit',sans-serif">Agensea</span>
+          <span class="text-black/30 text-xs">×</span>
+          <span class="font-display text-xs text-[#5E1F5C]">Klarijn</span>
+        </div>
+      </div>
+    </main>
 
     <!-- Share modal -->
     <div id="share-modal" class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm items-center justify-center p-4 no-print" style="display:none">
       <div class="bg-white rounded-2xl p-7 md:p-9 max-w-md w-full shadow-2xl">
-        <h3 class="font-display text-2xl text-[#5E1F5C] mb-2">Deel deze sessie</h3>
+        <h3 class="font-display text-2xl text-[#5E1F5C] mb-2">Sessie delen</h3>
         <p class="text-sm text-black/65 mb-4 leading-relaxed">
-          Stuur deze link naar je klant of collega. De huidige post-its zitten in de link verwerkt — ze zien bij openen wat jij hebt geplakt.
+          Deze link bevat alle huidige post-its. Stuur naar de klant of een collega, zij zien bij openen exact wat hier staat en kunnen zelf bijplakken.
         </p>
         <div class="flex gap-2 mb-4">
           <input id="share-url" type="text" readonly
@@ -242,7 +298,7 @@ const seed = {
           </button>
         </div>
         <p class="text-xs text-black/50 mb-4 leading-relaxed">
-          Tip: wijzigingen die zij maken zien jij alleen als zij hun bijgewerkte link terugsturen. Geen real-time sync.
+          Wijzigingen aan hun kant zijn pas zichtbaar wanneer zij hun bijgewerkte link terugsturen.
         </p>
         <button type="button" data-close-modal class="text-sm font-medium text-black/55 hover:text-black w-full text-center pt-2 border-t border-black/10">
           Sluiten
@@ -257,9 +313,9 @@ const seed = {
       const SEED = JSON.parse(seedEl.textContent);
       const clone = (o) => JSON.parse(JSON.stringify(o));
 
-      // ----- State init: try URL hash, else localStorage, else seed -----
-      const LS_KEY = 'klarijn_strategie_v2';
+      const LS_KEY = 'klarijn_strategie_v4';
       let state;
+      let activeTab = 0;
 
       function decodeFromHash() {
         const m = location.hash.match(/^#s=(.+)$/);
@@ -278,7 +334,7 @@ const seed = {
       }
 
       const fromHash = decodeFromHash();
-      if (fromHash) {
+      if (fromHash && fromHash.boards) {
         state = fromHash;
       } else {
         try {
@@ -288,8 +344,7 @@ const seed = {
           state = clone(SEED);
         }
       }
-      // Migrate: missing zones from seed
-      if (!state.zones) state.zones = clone(SEED.zones);
+      if (!state.boards) state.boards = clone(SEED.boards);
 
       let saveTimer = null;
       function save() {
@@ -300,15 +355,15 @@ const seed = {
         }, 200);
       }
 
-      // ----- Rendering -----
-      const board = document.getElementById('board');
+      const tabsEl = document.getElementById('tabs');
+      const boardsEl = document.getElementById('boards');
 
       function rndRotation() {
-        return (Math.random() * 6 - 3).toFixed(2);  // -3 tot +3 graden
+        return (Math.random() * 6 - 3).toFixed(2);
       }
 
-      function makePostit(zone, idx) {
-        const note = zone.notes[idx];
+      function makePostit(board, idx) {
+        const note = board.notes[idx];
         const el = document.createElement('div');
         el.className = `postit pi-${note.c ?? 0}`;
         el.style.setProperty('--rot', (note.rot ?? rndRotation()) + 'deg');
@@ -321,32 +376,30 @@ const seed = {
         text.addEventListener('input', () => { note.text = text.textContent; save(); });
         text.addEventListener('blur', () => {
           if (!note.text || !note.text.trim()) {
-            // Verwijder lege post-its bij blur
-            const i = zone.notes.indexOf(note);
-            if (i >= 0) { zone.notes.splice(i, 1); save(); renderAll(); }
+            const i = board.notes.indexOf(note);
+            if (i >= 0) { board.notes.splice(i, 1); save(); renderAll(); }
           }
         });
         el.querySelector('.x').addEventListener('click', (e) => {
           e.stopPropagation();
-          const i = zone.notes.indexOf(note);
-          if (i >= 0) { zone.notes.splice(i, 1); save(); renderAll(); }
+          const i = board.notes.indexOf(note);
+          if (i >= 0) { board.notes.splice(i, 1); save(); renderAll(); }
         });
         return el;
       }
 
-      function makeAddBtn(zone) {
+      function makeAddBtn(board) {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'add-postit';
         btn.innerHTML = `<span>+ post-it</span>`;
         btn.addEventListener('click', () => {
           const c = Math.floor(Math.random() * 5);
-          zone.notes.push({ text: '', c, rot: rndRotation() });
+          board.notes.push({ text: '', c, rot: rndRotation() });
           save();
           renderAll();
-          // Focus de nieuwe post-it
           setTimeout(() => {
-            const allNotes = board.querySelectorAll(`[data-zone="${zone.id}"] .postit-text`);
+            const allNotes = document.querySelectorAll(`[data-board="${board.id}"] .postit-text`);
             const last = allNotes[allNotes.length - 1];
             last?.focus();
           }, 30);
@@ -354,42 +407,64 @@ const seed = {
         return btn;
       }
 
-      function renderZone(zone) {
+      function makeBoard(board, isPrint = false) {
         const section = document.createElement('section');
-        section.dataset.zone = zone.id;
+        section.className = 'board rounded-2xl p-5 md:p-8 print-block';
+        section.dataset.board = board.id;
+        if (!isPrint) section.dataset.tabPanel = board.id;
         section.innerHTML = `
-          <div class="flex items-baseline gap-3 mb-1">
-            <h2 class="font-display text-2xl md:text-3xl text-[#5E1F5C] leading-tight">${escapeHtml(zone.vraag)}</h2>
+          <div class="mb-5">
+            <div class="text-[.65rem] font-bold uppercase tracking-[.2em] text-[var(--ag-indigo)]" style="font-family:'Outfit',sans-serif">${escapeHtml(board.label)}</div>
+            <h2 class="font-display text-2xl md:text-3xl text-[#5E1F5C] leading-tight mt-1">${escapeHtml(board.hint)}</h2>
           </div>
-          <p class="text-sm text-black/50 mb-5 max-w-[55ch]">${escapeHtml(zone.hint || '')}</p>
-          <div class="flex flex-wrap gap-4 items-start postit-wall"></div>
+          <div class="flex flex-wrap gap-4 items-start postit-wall min-h-[200px]"></div>
         `;
         const wall = section.querySelector('.postit-wall');
-        zone.notes.forEach((_, idx) => {
-          wall.appendChild(makePostit(zone, idx));
+        board.notes.forEach((_, idx) => {
+          wall.appendChild(makePostit(board, idx));
         });
-        wall.appendChild(makeAddBtn(zone));
+        wall.appendChild(makeAddBtn(board));
         return section;
       }
 
+      function renderTabs() {
+        tabsEl.innerHTML = '';
+        state.boards.forEach((b, i) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.role = 'tab';
+          btn.className = 'tab';
+          btn.setAttribute('aria-selected', i === activeTab ? 'true' : 'false');
+          btn.innerHTML = `${escapeHtml(b.label)}<span class="tab-count">${b.notes.length}</span>`;
+          btn.addEventListener('click', () => {
+            activeTab = i;
+            renderAll();
+          });
+          tabsEl.appendChild(btn);
+        });
+      }
+
+      function renderBoards() {
+        boardsEl.innerHTML = '';
+        // Show active board normally
+        const active = state.boards[activeTab];
+        if (active) {
+          const section = makeBoard(active);
+          boardsEl.appendChild(section);
+        }
+        // For print: also append all OTHER boards as print-only blocks
+        state.boards.forEach((b, i) => {
+          if (i === activeTab) return;
+          const section = makeBoard(b, true);
+          section.classList.add('hidden', 'print:block');
+          section.style.marginTop = '24px';
+          boardsEl.appendChild(section);
+        });
+      }
+
       function renderAll() {
-        board.innerHTML = '';
-        state.zones.forEach(z => board.appendChild(renderZone(z)));
-        // Footer
-        const footer = document.createElement('div');
-        footer.className = 'pt-8 border-t border-black/10 flex flex-col sm:flex-row items-center justify-between gap-3 no-print';
-        footer.innerHTML = `
-          <p class="text-xs text-black/50 m-0">
-            Auto-save in browser. Wijzigingen ook bewaard in de URL — link delen = sessie delen.
-          </p>
-          <div class="flex items-center gap-2">
-            <img src="/agensea-logo.png" alt="Agensea" width="18" height="18" class="rounded" />
-            <span class="text-xs font-semibold" style="font-family:'Outfit',sans-serif">Agensea Hub</span>
-            <span class="text-black/30 text-xs">×</span>
-            <span class="font-display text-xs text-[#5E1F5C]">Klarijn</span>
-          </div>
-        `;
-        board.appendChild(footer);
+        renderTabs();
+        renderBoards();
       }
 
       function escapeHtml(s) {
@@ -403,9 +478,8 @@ const seed = {
         setTimeout(() => { t.style.opacity = '0'; }, 1800);
       }
 
-      // ----- Actions -----
       document.querySelector('[data-action="reset"]').addEventListener('click', () => {
-        if (!confirm('Alle post-its weg en terug naar de pre-fill. Zeker weten?')) return;
+        if (!confirm('Alle post-its weg en terug naar de pre-fill?')) return;
         state = clone(SEED);
         save();
         renderAll();
@@ -419,7 +493,6 @@ const seed = {
       const shareModal = document.getElementById('share-modal');
       const shareUrl = document.getElementById('share-url');
       document.querySelector('[data-action="share"]').addEventListener('click', () => {
-        // Forceer URL update voor we 'm tonen
         encodeToHash(state);
         shareUrl.value = location.href;
         shareModal.style.display = 'flex';
@@ -442,9 +515,7 @@ const seed = {
         }
       });
 
-      // Initial render
       renderAll();
-      // Ensure hash is set on first paint
       encodeToHash(state);
     </script>
   </body>
