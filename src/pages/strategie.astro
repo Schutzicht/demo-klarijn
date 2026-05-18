@@ -4,7 +4,7 @@
 import '../styles/global.css';
 
 const seed = {
-  v: 9,
+  v: 10,
   meta: { titel: 'Strategiesessie Klarijn' },
   boards: [
     {
@@ -101,6 +101,65 @@ const seed = {
             { text: 'Bestaande klanten', c: 0 },
           ],
         },
+      ],
+    },
+    {
+      id: 'demo-vs',
+      nummer: '03',
+      label: 'Demo vs eindresultaat',
+      vraag: 'Wat moet anders dan in de huidige demo?',
+      groups: [
+        {
+          id: 'visueel',
+          label: 'Visueel en sfeer',
+          hint: 'Kleuren, foto\'s, typografie, algemene uitstraling.',
+          notes: [
+            { text: 'Kleur magenta houden?', c: 1 },
+            { text: 'Echte foto\'s i.p.v. stock', c: 4 },
+          ],
+        },
+        {
+          id: 'inhoud',
+          label: 'Inhoud en teksten',
+          hint: 'Copy, productnamen, voorbeelden, woordkeuze.',
+          notes: [
+            { text: 'Productnamen kloppen?', c: 2 },
+            { text: 'Voorbeeld-quotes herzien', c: 3 },
+          ],
+        },
+        {
+          id: 'functionaliteit',
+          label: 'Functionaliteit',
+          hint: 'Welke onderdelen moeten anders werken of zijn extra nodig.',
+          notes: [
+            { text: 'Offerte-mandje uitbreiden?', c: 0 },
+            { text: 'Match-test goed zo?', c: 1 },
+          ],
+        },
+        {
+          id: 'behouden',
+          label: 'Behouden zoals het is',
+          hint: 'Onderdelen uit de demo waar Klarijn blij mee is.',
+          notes: [
+            { text: 'Twee zijden klant/franchise', c: 3 },
+            { text: 'Vraag het Klarijn als rode draad', c: 2 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'vragen',
+      nummer: '04',
+      label: 'Vragen vanuit ons',
+      vraag: 'Punten waarop we tijdens de sessie antwoord willen.',
+      type: 'qa',
+      questions: [
+        { q: 'Wat is de deadline voor live-gang?', a: '' },
+        { q: 'Wie is verantwoordelijk voor welke content?', a: '' },
+        { q: 'Productstructuur: hoe richten we de offerte-flow in?', a: '' },
+        { q: 'Welke analytics zijn gewenst en wat is er al?', a: '' },
+        { q: 'AI-koppeling: zijn er plannen of ideeen?', a: '' },
+        { q: 'Concurrenten of vergelijkbare platformen om van te leren?', a: '' },
       ],
     },
   ],
@@ -420,6 +479,91 @@ const seed = {
       .postit:hover .x, .postit:focus-within .x { opacity: 1; }
       .postit .x:hover { background: white; color: #c81e6b; }
 
+      /* === Q&A lijst (sessie 4) === */
+      .qa-list {
+        display: grid;
+        gap: 14px;
+      }
+      .qa-item {
+        background: var(--frame-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px 22px;
+        box-shadow: 0 1px 2px rgba(15,15,18,0.04);
+        position: relative;
+      }
+      .qa-question {
+        font-family: 'Outfit', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 0 0 10px;
+        line-height: 1.35;
+        letter-spacing: -0.005em;
+        outline: none;
+        padding-right: 32px;
+      }
+      .qa-question:empty::before {
+        content: 'Nieuwe vraag…';
+        color: rgba(15,15,18,0.3);
+        font-style: italic;
+      }
+      .qa-answer {
+        font-family: 'Caveat', cursive;
+        font-size: 18px;
+        line-height: 1.4;
+        color: #1a1a1d;
+        outline: none;
+        min-height: 32px;
+      }
+      .qa-answer:empty::before {
+        content: 'Antwoord tijdens sessie...';
+        color: rgba(15,15,18,0.3);
+        font-style: italic;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+      }
+      .qa-item .qa-x {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        opacity: 0;
+        transition: opacity 0.15s;
+        font-size: 14px;
+        background: rgba(15,15,18,0.04);
+        border-radius: 999px;
+        width: 22px;
+        height: 22px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        color: var(--ink-soft);
+        line-height: 1;
+        border: 1px solid transparent;
+      }
+      .qa-item:hover .qa-x, .qa-item:focus-within .qa-x { opacity: 1; }
+      .qa-item .qa-x:hover { background: white; color: #c81e6b; border-color: rgba(15,15,18,0.08); }
+      .add-qa {
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink-muted);
+        background: transparent;
+        border: 1.5px dashed rgba(15,15,18,0.18);
+        border-radius: 10px;
+        padding: 14px 20px;
+        cursor: pointer;
+        transition: all 0.15s;
+        width: 100%;
+        text-align: left;
+      }
+      .add-qa:hover {
+        background: white;
+        border-color: var(--ag-indigo);
+        color: var(--ag-indigo);
+      }
+
       .add-postit {
         width: 118px;
         height: 118px;
@@ -727,6 +871,56 @@ const seed = {
         return frame;
       }
 
+      function makeQAItem(board, idx) {
+        const item = board.questions[idx];
+        const el = document.createElement('div');
+        el.className = 'qa-item';
+        el.innerHTML = `
+          <button class="qa-x" type="button" title="Verwijder vraag" tabindex="-1">×</button>
+          <div class="qa-question" contenteditable="true" data-placeholder="Nieuwe vraag…">${escapeHtml(item.q || '')}</div>
+          <div class="qa-answer" contenteditable="true" data-placeholder="Antwoord tijdens sessie...">${escapeHtml(item.a || '')}</div>
+        `;
+        const qEl = el.querySelector('.qa-question');
+        const aEl = el.querySelector('.qa-answer');
+        qEl.addEventListener('input', () => { item.q = qEl.textContent; save(); });
+        aEl.addEventListener('input', () => { item.a = aEl.textContent; save(); });
+        el.querySelector('.qa-x').addEventListener('click', () => {
+          const i = board.questions.indexOf(item);
+          if (i >= 0) { board.questions.splice(i, 1); save(); renderAll(); }
+        });
+        return el;
+      }
+
+      function makeQABoard(board) {
+        const wrap = document.createElement('div');
+        wrap.className = 'session-board';
+        wrap.style.background = 'var(--frame-bg)';
+        wrap.style.borderRadius = '14px';
+        wrap.style.padding = '24px';
+
+        const list = document.createElement('div');
+        list.className = 'qa-list';
+        board.questions.forEach((_, idx) => list.appendChild(makeQAItem(board, idx)));
+
+        const addBtn = document.createElement('button');
+        addBtn.type = 'button';
+        addBtn.className = 'add-qa';
+        addBtn.textContent = '+ Vraag toevoegen';
+        addBtn.addEventListener('click', () => {
+          board.questions.push({ q: '', a: '' });
+          save();
+          renderAll();
+          setTimeout(() => {
+            const items = document.querySelectorAll(`[data-board="${board.id}"] .qa-question`);
+            items[items.length - 1]?.focus();
+          }, 30);
+        });
+
+        wrap.appendChild(list);
+        wrap.appendChild(addBtn);
+        return wrap;
+      }
+
       function makeSession(board) {
         const section = document.createElement('section');
         section.className = 'session';
@@ -737,12 +931,19 @@ const seed = {
             <h2 class="session-title">${escapeHtml(board.label)}</h2>
           </header>
           <p class="session-vraag">${escapeHtml(board.vraag)}</p>
-          <div class="session-board">
-            <div class="frames-grid"></div>
-          </div>
         `;
-        const grid = section.querySelector('.frames-grid');
-        (board.groups || []).forEach(g => grid.appendChild(makeFrame(g)));
+
+        if (board.type === 'qa') {
+          section.appendChild(makeQABoard(board));
+        } else {
+          const boardDiv = document.createElement('div');
+          boardDiv.className = 'session-board';
+          const grid = document.createElement('div');
+          grid.className = 'frames-grid';
+          (board.groups || []).forEach(g => grid.appendChild(makeFrame(g)));
+          boardDiv.appendChild(grid);
+          section.appendChild(boardDiv);
+        }
         return section;
       }
 
