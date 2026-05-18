@@ -1,48 +1,99 @@
 ---
-// Strategiesessie: minimalistische tool waar het board domineert.
+// Strategiesessie: twee onderdelen onder elkaar, elk opgedeeld in categorieen.
 // State alleen in URL hash wanneer expliciet gedeeld.
 import '../styles/global.css';
 
 const seed = {
-  v: 7,
+  v: 8,
   meta: { titel: 'Strategiesessie Klarijn' },
   boards: [
     {
       id: 'doelstellingen',
+      nummer: '01',
       label: 'Doelstellingen',
       vraag: 'Wat moet de website concreet bereiken?',
-      notes: [
-        { text: 'Direct contact', c: 0 },
-        { text: 'Vindbaarheid juridische vragen', c: 2 },
-        { text: 'Onderscheid van advocaten', c: 1 },
-        { text: 'Klant en franchise gescheiden', c: 3 },
-        { text: 'Beheer door eigen team', c: 4 },
-        { text: 'Productcatalogus tonen', c: 2 },
-        { text: 'Abonnement hoofdpropositie', c: 0 },
-        { text: 'Mobiel-eerste presentatie', c: 1 },
-        { text: 'AVG-proof, geen tracking', c: 3 },
-        { text: 'Match-test franchise', c: 4 },
-        { text: 'Live in Q3', c: 2 },
-        { text: 'Snelle laadtijd', c: 0 },
+      groups: [
+        {
+          id: 'conversie',
+          label: 'Conversie & leads',
+          notes: [
+            { text: 'Direct contact', c: 0 },
+            { text: 'Offerte via mandje', c: 1 },
+            { text: 'Abonnement-aanvraag', c: 2 },
+            { text: 'Match-test franchise', c: 3 },
+          ],
+        },
+        {
+          id: 'vindbaarheid',
+          label: 'Vindbaarheid',
+          notes: [
+            { text: 'SEO op juridische vragen', c: 2 },
+            { text: 'Lokale findability', c: 4 },
+            { text: 'Schema.org / JSON-LD', c: 3 },
+            { text: 'AVG-proof', c: 0 },
+          ],
+        },
+        {
+          id: 'positionering',
+          label: 'Positionering & merk',
+          notes: [
+            { text: 'Onderscheid van advocaten', c: 1 },
+            { text: 'Plain Nederlands', c: 0 },
+            { text: 'Voor doeners', c: 4 },
+            { text: 'Klant en franchise gescheiden', c: 3 },
+          ],
+        },
+        {
+          id: 'beheer',
+          label: 'Beheer & techniek',
+          notes: [
+            { text: 'CMS door eigen team', c: 2 },
+            { text: 'Mobiel-eerste', c: 1 },
+            { text: 'Snelle laadtijd', c: 0 },
+            { text: 'Live in Q3', c: 4 },
+          ],
+        },
       ],
     },
     {
       id: 'doelgroepen',
+      nummer: '02',
       label: 'Doelgroepen',
       vraag: 'Wie willen we bereiken?',
-      notes: [
-        { text: 'MKB met geschil', c: 3 },
-        { text: 'Familiebedrijf in overdracht', c: 1 },
-        { text: 'Cateraar of horeca', c: 4 },
-        { text: 'Webshop met IE-vraag', c: 2 },
-        { text: 'Jurist overweegt franchise', c: 0 },
-        { text: 'Aannemer arbeidsconflict', c: 1 },
-        { text: 'Loonwerker', c: 3 },
-        { text: 'Mkb-directeur', c: 2 },
-        { text: 'Bedrijfsjurist', c: 4 },
-        { text: 'Detailhandel huur-issue', c: 0 },
-        { text: 'Schoonheidsspecialist', c: 1 },
-        { text: 'Advocaat overstap', c: 3 },
+      groups: [
+        {
+          id: 'klant',
+          label: 'Klant-zijde (MKB)',
+          notes: [
+            { text: 'Aannemer met geschil', c: 1 },
+            { text: 'Familiebedrijf in overdracht', c: 4 },
+            { text: 'Cateraar of horeca', c: 0 },
+            { text: 'Webshop met IE-vraag', c: 2 },
+            { text: 'Mkb-directeur', c: 3 },
+            { text: 'Loonwerker', c: 1 },
+            { text: 'Detailhandel huur-issue', c: 4 },
+          ],
+        },
+        {
+          id: 'franchise',
+          label: 'Franchise-zijde (juristen)',
+          notes: [
+            { text: 'Bedrijfsjurist carrière-eval', c: 3 },
+            { text: 'Advocaat overweegt overstap', c: 2 },
+            { text: 'Jurist met specialisme', c: 0 },
+            { text: 'Burned-out big-law', c: 1 },
+          ],
+        },
+        {
+          id: 'secundair',
+          label: 'Secundair',
+          notes: [
+            { text: 'Sollicitanten', c: 4 },
+            { text: 'Pers en journalisten', c: 2 },
+            { text: 'Branche-partners', c: 3 },
+            { text: 'Bestaande klanten', c: 0 },
+          ],
+        },
       ],
     },
   ],
@@ -65,15 +116,17 @@ const seed = {
     <style is:global>
       :root {
         --ag-indigo: #2d3fe0;
-        --ag-indigo-hover: #1f2bb8;
         --ag-indigo-sky: #eef0fe;
         --ink: #0f0f12;
         --ink-soft: #56575c;
         --ink-muted: #8b8c93;
         --paper: #fafaf7;
-        --board-bg: #ffffff;
+        --board-bg: #f3efe6;
+        --frame-bg: #ffffff;
         --border: rgba(15,15,18,0.08);
         --border-soft: rgba(15,15,18,0.05);
+        --klarijn-aubergine: #5E1F5C;
+        --klarijn-magenta: #E0277A;
       }
       *, *::before, *::after { box-sizing: border-box; }
       html, body {
@@ -95,7 +148,7 @@ const seed = {
         z-index: 40;
       }
       .topbar-inner {
-        max-width: 1320px;
+        max-width: 1280px;
         margin: 0 auto;
         padding: 0 24px;
         height: 56px;
@@ -116,21 +169,9 @@ const seed = {
         color: var(--ink);
         letter-spacing: -0.01em;
       }
-      .brand-sep {
-        color: var(--ink-muted);
-        font-size: 12px;
-        margin: 0 2px;
-      }
-      .brand-client {
-        font-size: 14px;
-        font-weight: 500;
-        color: var(--ink-soft);
-      }
-      .toolbar-actions {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
+      .brand-sep { color: var(--ink-muted); font-size: 12px; margin: 0 2px; }
+      .brand-client { font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+      .toolbar-actions { display: flex; align-items: center; gap: 4px; }
       .btn {
         font-family: 'Inter', sans-serif;
         font-size: 13px;
@@ -151,111 +192,135 @@ const seed = {
       .btn-primary { background: var(--ink); color: white; font-weight: 600; padding: 7px 14px; }
       .btn-primary:hover { background: #1f2024; }
 
-      /* === Sub-header met tabs === */
-      .subhead {
-        max-width: 1320px;
+      /* === Hero === */
+      .hero {
+        max-width: 1280px;
         margin: 0 auto;
-        padding: 28px 24px 0;
+        padding: 56px 24px 24px;
+      }
+      .hero-eyebrow {
+        font-family: 'Outfit', sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ag-indigo);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+      .hero-eyebrow::before {
+        content: '';
+        display: inline-block;
+        width: 22px;
+        height: 2px;
+        background: var(--ag-indigo);
+      }
+      .hero-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 42px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+        color: var(--ink);
+        margin: 0 0 14px;
+      }
+      .hero-title .accent { color: var(--klarijn-magenta); }
+      .hero-lead {
+        font-size: 16px;
+        color: var(--ink-soft);
+        max-width: 64ch;
+        line-height: 1.55;
+        margin: 0;
+      }
+
+      /* === Sessie sectie === */
+      .session {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 24px 24px 16px;
+      }
+      .session-head {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: 6px;
+      }
+      .session-num {
+        font-family: 'Outfit', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ag-indigo);
+        letter-spacing: 0.04em;
       }
       .session-title {
         font-family: 'Outfit', sans-serif;
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--ink-muted);
-        letter-spacing: 0.01em;
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .tab-bar {
-        display: flex;
-        gap: 32px;
-        border-bottom: 1px solid var(--border);
-      }
-      .tab {
-        font-family: 'Outfit', sans-serif;
-        font-size: 16px;
-        font-weight: 500;
-        color: var(--ink-soft);
-        background: transparent;
-        cursor: pointer;
-        padding: 12px 0 14px;
-        border: none;
-        border-bottom: 2px solid transparent;
-        margin-bottom: -1px;
-        transition: color 0.15s, border-color 0.15s;
-        display: inline-flex;
-        align-items: center;
-      }
-      .tab:hover { color: var(--ink); }
-      .tab[aria-selected="true"] {
+        font-size: 28px;
+        font-weight: 700;
         color: var(--ink);
-        border-bottom-color: var(--ink);
-        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin: 0;
+        line-height: 1.15;
       }
-      .tab-count {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: 10px;
-        min-width: 20px;
-        height: 18px;
-        padding: 0 6px;
-        border-radius: 999px;
-        background: rgba(15,15,18,0.06);
-        color: var(--ink-muted);
-        font-size: 11px;
-        font-weight: 600;
-        font-family: 'Inter', sans-serif;
+      .session-vraag {
+        font-size: 15px;
+        color: var(--ink-soft);
+        margin: 0 0 20px;
+        padding-left: calc(13px + 14px + 4px); /* alligneer onder titel */
       }
-      .tab[aria-selected="true"] .tab-count {
-        background: var(--ink);
-        color: white;
+      .session-board {
+        background: var(--board-bg);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 20px;
+      }
+      .frames-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      @media (min-width: 900px) {
+        .frames-grid { grid-template-columns: 1fr 1fr; }
       }
 
-      /* === Board === */
-      .canvas-wrap {
-        max-width: 1320px;
-        margin: 0 auto;
-        padding: 24px 24px 48px;
+      /* === Sub-frame === */
+      .frame {
+        background: var(--frame-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 18px 18px 20px;
+        box-shadow: 0 1px 2px rgba(15,15,18,0.04);
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
       }
-      .board-context {
+      .frame-head {
         display: flex;
         align-items: baseline;
         justify-content: space-between;
         margin-bottom: 14px;
-        gap: 16px;
-        flex-wrap: wrap;
+        gap: 12px;
       }
-      .board-question {
+      .frame-label {
         font-family: 'Outfit', sans-serif;
-        font-size: 22px;
+        font-size: 13px;
         font-weight: 600;
         color: var(--ink);
-        letter-spacing: -0.01em;
-        line-height: 1.2;
+        letter-spacing: -0.005em;
         margin: 0;
       }
-      .board-hint {
-        font-size: 13px;
+      .frame-count {
+        font-size: 11px;
         color: var(--ink-muted);
-      }
-      .board {
-        background: var(--board-bg);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 28px;
-        min-height: 540px;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 1px 2px rgba(15,15,18,0.04);
+        font-weight: 500;
       }
       .postit-wall {
         display: flex;
         flex-wrap: wrap;
-        gap: 14px;
+        gap: 12px;
         align-items: flex-start;
+        flex: 1;
       }
 
       /* === Post-its === */
@@ -267,15 +332,15 @@ const seed = {
 
       .postit {
         position: relative;
-        width: 112px;
-        height: 112px;
-        padding: 13px;
+        width: 100px;
+        height: 100px;
+        padding: 11px;
         box-shadow:
           0 1px 1px rgba(15,15,18,0.05),
           0 5px 10px -2px rgba(15,15,18,0.12),
-          0 12px 22px -8px rgba(15,15,18,0.12);
+          0 12px 22px -8px rgba(15,15,18,0.10);
         font-family: 'Caveat', cursive;
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1.15;
         color: #1a1a1d;
         word-break: break-word;
@@ -289,7 +354,7 @@ const seed = {
         box-shadow:
           0 2px 4px rgba(15,15,18,0.08),
           0 14px 28px -6px rgba(15,15,18,0.24);
-        transform: scale(1.06) rotate(0deg) !important;
+        transform: scale(1.08) rotate(0deg) !important;
         z-index: 10;
         transition: transform 0.16s ease, box-shadow 0.16s ease, z-index 0s 0s;
       }
@@ -313,7 +378,7 @@ const seed = {
         opacity: 0;
         transition: opacity 0.15s;
         font-size: 12px;
-        background: rgba(255,255,255,0.92);
+        background: rgba(255,255,255,0.95);
         border-radius: 999px;
         width: 18px;
         height: 18px;
@@ -330,14 +395,14 @@ const seed = {
       .postit .x:hover { background: white; color: #c81e6b; }
 
       .add-postit {
-        width: 112px;
-        height: 112px;
+        width: 100px;
+        height: 100px;
         border: 1.5px dashed rgba(15,15,18,0.18);
         border-radius: 4px;
         display: grid;
         place-items: center;
         font-family: 'Inter', sans-serif;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 500;
         color: var(--ink-muted);
         cursor: pointer;
@@ -353,7 +418,7 @@ const seed = {
 
       /* === Footer === */
       .footer {
-        max-width: 1320px;
+        max-width: 1280px;
         margin: 0 auto;
         padding: 20px 24px 32px;
         display: flex;
@@ -362,11 +427,9 @@ const seed = {
         gap: 12px;
         flex-wrap: wrap;
         border-top: 1px solid var(--border);
+        margin-top: 24px;
       }
-      .footer-text {
-        font-size: 12px;
-        color: var(--ink-muted);
-      }
+      .footer-text { font-size: 12px; color: var(--ink-muted); }
 
       /* === Modal === */
       .modal-backdrop {
@@ -453,9 +516,9 @@ const seed = {
         .add-postit { display: none !important; }
         .postit { box-shadow: none; border: 1px solid #ccc; transform: none !important; }
         body { background: white; }
-        .board { background: white; border: 1px solid #ddd; }
-        .print-block { break-inside: avoid; page-break-before: always; }
-        .print-block:first-child { page-break-before: auto; }
+        .session-board { background: white; border: 1px solid #ddd; }
+        .frame { box-shadow: none; }
+        section.session { break-inside: avoid; page-break-inside: avoid; }
       }
     </style>
   </head>
@@ -479,17 +542,17 @@ const seed = {
       </div>
     </header>
 
-    <section class="subhead no-print">
-      <div class="session-title">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
-        Strategiesessie Klarijn website
-      </div>
-      <div class="tab-bar" role="tablist" id="tabs"></div>
+    <section class="hero">
+      <div class="hero-eyebrow">Strategiesessie · 90 minuten</div>
+      <h1 class="hero-title">Klarijn website <span class="accent">2.0</span></h1>
+      <p class="hero-lead">
+        Twee onderdelen, elk opgedeeld in een aantal categorieen. Plak per inzicht een post-it, één regel volstaat. De link is deelbaar zodat de sessie ook na afloop kan worden aangevuld.
+      </p>
     </section>
 
     <div class="toast" id="toast"></div>
 
-    <main class="canvas-wrap" id="boards"></main>
+    <main id="boards"></main>
 
     <footer class="footer no-print">
       <span class="footer-text">Automatisch opgeslagen in deze browser.</span>
@@ -519,10 +582,9 @@ const seed = {
       const SEED = JSON.parse(seedEl.textContent);
       const clone = (o) => JSON.parse(JSON.stringify(o));
 
-      const LS_KEY = 'klarijn_strategie_v7';
+      const LS_KEY = 'klarijn_strategie_v8';
       const SEED_V = SEED.v;
       let state;
-      let activeTab = 0;
 
       function decodeFromHash() {
         const m = location.hash.match(/^#s=(.+)$/);
@@ -548,9 +610,9 @@ const seed = {
       const fromHash = decodeFromHash();
       if (fromHash && fromHash.boards && fromHash.v === SEED_V) {
         state = fromHash;
-        clearHash(); // schoonmaken zodra geladen, URL blijft kort
+        clearHash();
       } else {
-        if (fromHash) clearHash(); // oude versie of corrupt, weg ermee
+        if (fromHash) clearHash();
         try {
           const stored = localStorage.getItem(LS_KEY);
           const parsed = stored ? JSON.parse(stored) : null;
@@ -567,19 +629,17 @@ const seed = {
         clearTimeout(saveTimer);
         saveTimer = setTimeout(() => {
           try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch {}
-          // NIET meer auto-encoderen naar URL. Pas bij Delen-klik.
         }, 200);
       }
 
-      const tabsEl = document.getElementById('tabs');
       const boardsEl = document.getElementById('boards');
 
       function rndRotation() {
         return (Math.random() * 8 - 4).toFixed(2);
       }
 
-      function makePostit(board, idx) {
-        const note = board.notes[idx];
+      function makePostit(group, idx) {
+        const note = group.notes[idx];
         const el = document.createElement('div');
         el.className = `postit pi-${note.c ?? 0}`;
         el.style.setProperty('--rot', (note.rot ?? rndRotation()) + 'deg');
@@ -592,30 +652,30 @@ const seed = {
         text.addEventListener('input', () => { note.text = text.textContent; save(); });
         text.addEventListener('blur', () => {
           if (!note.text || !note.text.trim()) {
-            const i = board.notes.indexOf(note);
-            if (i >= 0) { board.notes.splice(i, 1); save(); renderAll(); }
+            const i = group.notes.indexOf(note);
+            if (i >= 0) { group.notes.splice(i, 1); save(); renderAll(); }
           }
         });
         el.querySelector('.x').addEventListener('click', (e) => {
           e.stopPropagation();
-          const i = board.notes.indexOf(note);
-          if (i >= 0) { board.notes.splice(i, 1); save(); renderAll(); }
+          const i = group.notes.indexOf(note);
+          if (i >= 0) { group.notes.splice(i, 1); save(); renderAll(); }
         });
         return el;
       }
 
-      function makeAddBtn(board) {
+      function makeAddBtn(group) {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'add-postit';
         btn.innerHTML = `<span>+ post-it</span>`;
         btn.addEventListener('click', () => {
           const c = Math.floor(Math.random() * 5);
-          board.notes.push({ text: '', c, rot: rndRotation() });
+          group.notes.push({ text: '', c, rot: rndRotation() });
           save();
           renderAll();
           setTimeout(() => {
-            const allNotes = document.querySelectorAll(`[data-board="${board.id}"] .postit-text`);
+            const allNotes = document.querySelectorAll(`[data-group="${group.id}"] .postit-text`);
             const last = allNotes[allNotes.length - 1];
             last?.focus();
           }, 30);
@@ -623,65 +683,45 @@ const seed = {
         return btn;
       }
 
-      function makeBoard(board, isPrint = false) {
+      function makeFrame(group) {
+        const frame = document.createElement('div');
+        frame.className = 'frame';
+        frame.dataset.group = group.id;
+        frame.innerHTML = `
+          <div class="frame-head">
+            <h3 class="frame-label">${escapeHtml(group.label)}</h3>
+            <span class="frame-count">${group.notes.length}</span>
+          </div>
+          <div class="postit-wall"></div>
+        `;
+        const wall = frame.querySelector('.postit-wall');
+        group.notes.forEach((_, idx) => wall.appendChild(makePostit(group, idx)));
+        wall.appendChild(makeAddBtn(group));
+        return frame;
+      }
+
+      function makeSession(board) {
         const section = document.createElement('section');
-        section.className = 'print-block';
+        section.className = 'session';
         section.dataset.board = board.id;
         section.innerHTML = `
-          <div class="board-context">
-            <h2 class="board-question">${escapeHtml(board.vraag)}</h2>
-            <span class="board-hint">${board.notes.length} ${board.notes.length === 1 ? 'post-it' : 'post-its'}</span>
-          </div>
-          <div class="board">
-            <div class="postit-wall"></div>
+          <header class="session-head">
+            <span class="session-num">${escapeHtml(board.nummer || '')}</span>
+            <h2 class="session-title">${escapeHtml(board.label)}</h2>
+          </header>
+          <p class="session-vraag">${escapeHtml(board.vraag)}</p>
+          <div class="session-board">
+            <div class="frames-grid"></div>
           </div>
         `;
-        const wall = section.querySelector('.postit-wall');
-        board.notes.forEach((_, idx) => {
-          wall.appendChild(makePostit(board, idx));
-        });
-        wall.appendChild(makeAddBtn(board));
+        const grid = section.querySelector('.frames-grid');
+        (board.groups || []).forEach(g => grid.appendChild(makeFrame(g)));
         return section;
       }
 
-      function renderTabs() {
-        tabsEl.innerHTML = '';
-        state.boards.forEach((b, i) => {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.role = 'tab';
-          btn.className = 'tab';
-          btn.setAttribute('aria-selected', i === activeTab ? 'true' : 'false');
-          btn.innerHTML = `<span>${escapeHtml(b.label)}</span><span class="tab-count">${b.notes.length}</span>`;
-          btn.addEventListener('click', () => {
-            activeTab = i;
-            renderAll();
-          });
-          tabsEl.appendChild(btn);
-        });
-      }
-
-      function renderBoards() {
-        boardsEl.innerHTML = '';
-        const active = state.boards[activeTab];
-        if (active) boardsEl.appendChild(makeBoard(active));
-        state.boards.forEach((b, i) => {
-          if (i === activeTab) return;
-          const section = makeBoard(b, true);
-          section.style.display = 'none';
-          section.classList.add('print-only');
-          section.style.marginTop = '32px';
-          boardsEl.appendChild(section);
-        });
-        // print: laat alle prints zien
-        const style = document.createElement('style');
-        style.textContent = '@media print { .print-only { display: block !important; } }';
-        boardsEl.appendChild(style);
-      }
-
       function renderAll() {
-        renderTabs();
-        renderBoards();
+        boardsEl.innerHTML = '';
+        state.boards.forEach(b => boardsEl.appendChild(makeSession(b)));
       }
 
       function escapeHtml(s) {
@@ -703,9 +743,7 @@ const seed = {
         showToast('Sessie gereset');
       });
 
-      document.querySelector('[data-action="print"]').addEventListener('click', () => {
-        window.print();
-      });
+      document.querySelector('[data-action="print"]').addEventListener('click', () => window.print());
 
       const shareModal = document.getElementById('share-modal');
       const shareUrl = document.getElementById('share-url');
