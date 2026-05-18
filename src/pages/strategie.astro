@@ -362,6 +362,7 @@ const seed = {
         display: flex;
         align-items: flex-start;
         border-radius: 2px;
+        overflow: hidden;
       }
       .postit:focus-within, .postit:hover {
         box-shadow:
@@ -374,9 +375,21 @@ const seed = {
       .postit-text {
         outline: none;
         flex: 1;
-        min-height: 100%;
         width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 2px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(15,15,18,0.18) transparent;
       }
+      .postit-text::-webkit-scrollbar { width: 5px; }
+      .postit-text::-webkit-scrollbar-track { background: transparent; }
+      .postit-text::-webkit-scrollbar-thumb {
+        background: rgba(15,15,18,0.15);
+        border-radius: 999px;
+      }
+      .postit-text::-webkit-scrollbar-thumb:hover { background: rgba(15,15,18,0.28); }
       .postit-text:empty::before {
         content: attr(data-placeholder);
         color: rgba(15,15,18,0.3);
