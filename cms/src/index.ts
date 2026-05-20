@@ -239,6 +239,166 @@ async function setAdminLanguageToDutch(strapi: Core.Strapi) {
   }
 }
 
+// Plain-NL labels per content-type veld. Strapi gebruikt deze in de edit-view
+// boven elk veld in plaats van de attribute-naam (heroTitle -> Hoofdtitel).
+const FIELD_LABELS: Record<string, Record<string, string>> = {
+  'api::homepage.homepage': {
+    heroTitle: 'Hoofdtitel',
+    heroLead: 'Subtekst',
+    heroCtaPrimaryLabel: 'Knop 1 — tekst',
+    heroCtaPrimaryHref: 'Knop 1 — link',
+    heroCtaSecondaryLabel: 'Knop 2 — tekst',
+    heroCtaSecondaryHref: 'Knop 2 — link',
+    marqueeItems: 'Marquee (lopende tekstbanner onder de hero)',
+    stats: 'Cijfers-blok',
+  },
+  'api::product.product': {
+    title: 'Naam',
+    tagline: 'Korte omschrijving (sub-titel)',
+    description: 'Volledige beschrijving',
+    tag: 'Categorie',
+    price: 'Prijs',
+    priceLabel: 'Toelichting bij prijs',
+    icon: 'Icoon',
+    featured: 'Op homepage tonen',
+    displayOrder: 'Volgorde',
+    slug: 'URL-deel',
+  },
+  'api::team-member.team-member': {
+    name: 'Naam',
+    role: 'Functie',
+    photo: 'Foto',
+    bio: 'Bio',
+    email: 'E-mail',
+    location: 'Vestiging',
+    type: 'Rolcategorie',
+    displayOrder: 'Volgorde',
+    photoUrl: 'Foto (technische fallback)',
+  },
+  'api::testimonial.testimonial': {
+    quote: 'Quote',
+    author: 'Naam',
+    role: 'Functie + bedrijf',
+    location: 'Plaats',
+    photo: 'Portretfoto',
+    scenePhoto: 'Sfeerfoto (optioneel)',
+    featured: 'Op homepage tonen',
+    displayOrder: 'Volgorde',
+    photoUrl: 'Portret (technische fallback)',
+    scenePhotoUrl: 'Sfeer (technische fallback)',
+  },
+  'api::rayon.rayon': {
+    city: 'Stad',
+    status: 'Status',
+    displayOrder: 'Volgorde',
+  },
+  'api::office.office': {
+    name: 'Naam kantoor',
+    city: 'Stad',
+    address: 'Adres',
+    postalCode: 'Postcode',
+    phone: 'Telefoon',
+    email: 'E-mail',
+    hours: 'Openingstijden',
+    serviceAreas: 'Servicegebied (welke plaatsen)',
+    intro: 'Introductietekst',
+    quote: 'Quote rayonhouder',
+    quoteAuthorName: 'Naam onder de quote',
+    slug: 'URL-deel',
+  },
+  'api::site-setting.site-setting': {
+    abonnementPriceMonthly: 'Abonnementsprijs per maand (€)',
+    contactPhonePrimary: 'Hoofdtelefoonnummer',
+    contactPhoneSecondary: 'Tweede telefoonnummer',
+    contactEmailMain: 'Algemeen e-mailadres',
+    contactEmailBestelling: 'E-mail voor offerte-aanvragen',
+    mijnVoortgangUrl: '"Mijn Voortgang" externe URL',
+    companySlogan: 'Slogan',
+    companyDescription: 'Bedrijfsomschrijving (SEO)',
+  },
+  'api::dirk-vraagt.dirk-vraagt': {
+    who: 'Voornaam vragensteller',
+    role: 'Functie + plaats',
+    question: 'Vraag',
+    answer: 'Antwoord',
+    variant: 'Soort (klant of franchise)',
+    photo: 'Foto',
+    displayOrder: 'Volgorde',
+    photoUrl: 'Foto (technische fallback)',
+  },
+  'api::decision-question.decision-question': {
+    question: 'Vraag',
+    answerOptions: 'Antwoorden (met score)',
+    displayOrder: 'Volgorde',
+  },
+};
+
+// Schrijft per content-type een metadatas-config in de content-manager store
+// zodat de admin UI Nederlandse labels en placeholders toont in plaats van
+// de attribute-namen.
+async function ensureFieldLabels(strapi: Core.Strapi) {
+  try {
+    for (const [uid, labels] of Object.entries(FIELD_LABELS)) {
+      const storeKey = `plugin_content_manager_configuration_content_types::${uid}`;
+      const store = (strapi as any).store({
+        type: 'plugin',
+        name: 'content_manager',
+        key: storeKey,
+      });
+      const current = (await store.get()) || {};
+      const metadatas: any = current.metadatas || {};
+
+      // Begin met de bestaande attribute-namen, vul aan vanuit FIELD_LABELS
+      const ct: any = (strapi as any).contentTypes?.[uid];
+      if (!ct?.attributes) continue;
+      for (const attrName of Object.keys(ct.attributes)) {
+        const niceLabel = labels[attrName] ?? attrName;
+        const existing = metadatas[attrName] || {};
+        const edit = existing.edit || {};
+        const list = existing.list || {};
+        metadatas[attrName] = {
+          edit: {
+            ...edit,
+            label: niceLabel,
+            description: edit.description ?? '',
+            placeholder: edit.placeholder ?? '',
+            visible: edit.visible ?? true,
+            editable: edit.editable ?? true,
+          },
+          list: {
+            ...list,
+            label: niceLabel,
+            searchable: list.searchable ?? true,
+            sortable: list.sortable ?? true,
+          },
+        };
+      }
+
+      await store.set({
+        value: {
+          ...current,
+          metadatas,
+        },
+      });
+    }
+    strapi.log.info('[seed] Veld-labels in NL gezet voor alle content-types');
+  } catch (err) {
+    strapi.log.warn('[seed] ensureFieldLabels faalde:', err);
+  }
+}
+
+// Bouwt de field-list voor een content-type. Strapi v5 vereist dat read/update/create
+// permissies een expliciete velden-whitelist hebben, anders krijgt de redacteur
+// 'Geen rechten om dit veld te bekijken' bij elk attribuut.
+function getFieldsForUid(strapi: Core.Strapi, uid: string): string[] {
+  const ct: any = (strapi as any).contentTypes?.[uid];
+  if (!ct?.attributes) return [];
+  return Object.keys(ct.attributes).filter((name) => {
+    // Skip de standaard timestamps/private fields die Strapi zelf beheert
+    return !['createdAt', 'updatedAt', 'publishedAt', 'createdBy', 'updatedBy', 'locale', 'localizations'].includes(name);
+  });
+}
+
 async function ensureEditorRole(strapi: Core.Strapi) {
   try {
     // 1) Vind of maak de rol
@@ -256,42 +416,51 @@ async function ensureEditorRole(strapi: Core.Strapi) {
       strapi.log.info(`[seed] Rol "${EDITOR_ROLE_NAME}" aangemaakt`);
     }
 
-    // 2) Bouw lijst van gewenste permissies
-    const desired: Array<{ action: string; subject: string }> = [];
-    for (const uid of CRUD_TYPES) {
-      for (const action of CRUD_ACTIONS) desired.push({ action, subject: uid });
-    }
-    for (const uid of READ_ONLY_TYPES) {
-      for (const action of READ_ACTIONS) desired.push({ action, subject: uid });
-    }
-    for (const action of EXTRA_ACTIONS) desired.push({ action, subject: null as any });
-
-    // 3) Vergelijk met bestaande permissies van de rol, voeg ontbrekende toe
-    const existing = await strapi.db.query('admin::permission').findMany({
+    // 2) Verwijder alle bestaande permissies van deze rol zodat we een schone
+    //    state krijgen (voorkomt conflicten met oude permissies zonder velden).
+    await strapi.db.query('admin::permission').deleteMany({
       where: { role: role.id },
     });
-    const existingKey = (p: any) => `${p.action}|${p.subject ?? ''}`;
-    const have = new Set(existing.map(existingKey));
+
+    // 3) Genereer permissies MET velden-whitelist per content-type
+    const NEEDS_FIELDS = new Set([
+      'plugin::content-manager.explorer.read',
+      'plugin::content-manager.explorer.create',
+      'plugin::content-manager.explorer.update',
+    ]);
 
     let added = 0;
-    for (const p of desired) {
-      if (have.has(existingKey(p))) continue;
+    const createPerm = async (action: string, subject: string | null, fields?: string[]) => {
+      const properties: any = {};
+      if (fields && fields.length && NEEDS_FIELDS.has(action)) {
+        properties.fields = fields;
+      }
       await strapi.db.query('admin::permission').create({
-        data: {
-          action: p.action,
-          subject: p.subject,
-          role: role.id,
-          properties: {},
-          conditions: [],
-        },
+        data: { action, subject, role: role.id, properties, conditions: [] },
       });
       added++;
+    };
+
+    // CRUD types: alle acties + alle velden
+    for (const uid of CRUD_TYPES) {
+      const fields = getFieldsForUid(strapi, uid);
+      for (const action of CRUD_ACTIONS) {
+        await createPerm(action, uid, fields);
+      }
     }
-    if (added) {
-      strapi.log.info(`[seed] ${added} permissies toegevoegd aan rol "${EDITOR_ROLE_NAME}"`);
-    } else {
-      strapi.log.info(`[seed] Rol "${EDITOR_ROLE_NAME}" permissies up-to-date`);
+    // Read-only types: alleen lezen
+    for (const uid of READ_ONLY_TYPES) {
+      const fields = getFieldsForUid(strapi, uid);
+      for (const action of READ_ACTIONS) {
+        await createPerm(action, uid, fields);
+      }
     }
+    // Extra (uploads etc): geen subject, geen velden
+    for (const action of EXTRA_ACTIONS) {
+      await createPerm(action, null);
+    }
+
+    strapi.log.info(`[seed] Rol "${EDITOR_ROLE_NAME}" opnieuw opgebouwd met ${added} permissies (incl. velden-whitelist)`);
   } catch (err) {
     strapi.log.warn('[seed] ensureEditorRole faalde:', err);
   }
@@ -314,6 +483,7 @@ export default {
       await setPublicReadPermissions(strapi);
       await ensureVercelWebhook(strapi);
       await ensureEditorRole(strapi);
+      await ensureFieldLabels(strapi);
       await setAdminLanguageToDutch(strapi);
       await ensureRedacteurUser(strapi);
     } catch (err) {
