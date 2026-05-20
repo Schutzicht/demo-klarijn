@@ -5,7 +5,7 @@
     "singularName": "site-setting",
     "pluralName": "site-settings",
     "displayName": "Site instellingen",
-    "description": "Globale instellingen die op meerdere paginas verschijnen. Wijzig hier eenmalig prijzen, contactgegevens of externe links."
+    "description": "Globale instellingen die op meerdere paginas van de site verschijnen. Wijzig hier eenmalig prijzen, contactgegevens of externe links."
   },
   "options": { "draftAndPublish": false },
   "pluginOptions": {},
@@ -37,7 +37,7 @@
     },
     "mijnVoortgangUrl": {
       "type": "string",
-      "description": "Externe URL waar klanten doorverwezen worden voor 'Mijn Voortgang'. Bijv. dossier-portaal of CRM-dashboard."
+      "description": "Externe URL waar klanten heen gaan voor 'Mijn Voortgang'. Bijvoorbeeld het portaal-systeem."
     },
     "companySlogan": {
       "type": "string",
@@ -46,7 +46,7 @@
     },
     "companyDescription": {
       "type": "text",
-      "description": "Eén-zinnige bedrijfsomschrijving voor SEO meta tags en JSON-LD."
+      "description": "Eén-zinnige bedrijfsomschrijving voor SEO meta tags."
     }
   }
 }

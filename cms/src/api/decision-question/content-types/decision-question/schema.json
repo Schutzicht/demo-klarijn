@@ -5,7 +5,7 @@
     "singularName": "decision-question",
     "pluralName": "decision-questions",
     "displayName": "Match-test (franchise)",
-    "description": "Vragen voor de franchise match-test op /franchise/beslisboom."
+    "description": "Vragen voor de franchise match-test op /franchise/beslisboom. Aanpassen vereist voorzichtigheid - de score-logica moet kloppen."
   },
   "options": { "draftAndPublish": true },
   "pluginOptions": {},
@@ -22,12 +22,12 @@
       "required": true,
       "min": 2,
       "max": 5,
-      "description": "De keuzes (2 tot 5). Klik 'Add an entry' om er een toe te voegen. Score bepaalt de match."
+      "description": "De keuzes (2 tot 5). Klik 'Add an entry' om er een toe te voegen. Score bepaalt of het antwoord een match is (positief) of niet (negatief)."
     },
     "displayOrder": {
       "type": "integer",
       "default": 0,
-      "description": "Lager getal = eerder in de match-test."
+      "description": "Volgorde in de match-test. Lager getal = eerder gevraagd."
     }
   }
 }

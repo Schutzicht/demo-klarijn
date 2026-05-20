@@ -4,8 +4,8 @@
   "info": {
     "singularName": "office",
     "pluralName": "offices",
-    "displayName": "Kantoor",
-    "description": "Kantoorpagina-template. Eén item per vestiging. Verschijnt op /kantoor-[slug]."
+    "displayName": "Kantoren",
+    "description": "Kantoorpaginas. Eén item per vestiging. Verschijnt op /kantoor-[plaats]."
   },
   "options": { "draftAndPublish": true },
   "pluginOptions": {},
@@ -14,11 +14,6 @@
       "type": "string",
       "required": true,
       "description": "Naam van het kantoor. Voorbeeld: 'Klarijn Zwolle'."
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "name",
-      "description": "URL-deel. Wordt automatisch gegenereerd uit de naam."
     },
     "city": {
       "type": "string",
@@ -42,7 +37,7 @@
     },
     "hours": {
       "type": "text",
-      "description": "Openingstijden. Eén regel per dag. Voorbeeld: 'Ma-Do · 08.30 - 17.30'."
+      "description": "Openingstijden, een regel per dag. Voorbeeld: 'Ma-Do · 08.30 - 17.30'."
     },
     "serviceAreas": {
       "type": "component",
@@ -61,6 +56,14 @@
     "quoteAuthorName": {
       "type": "string",
       "description": "Naam onder de quote."
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "description": "URL-deel. Wordt automatisch gegenereerd uit de naam.",
+      "pluginOptions": {
+        "content-manager": { "visible": false }
+      }
     }
   }
 }

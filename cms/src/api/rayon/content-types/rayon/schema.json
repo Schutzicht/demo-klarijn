@@ -4,8 +4,8 @@
   "info": {
     "singularName": "rayon",
     "pluralName": "rayons",
-    "displayName": "Rayon",
-    "description": "Geografische rayons waar Klarijn actief is of komt. Verschijnt op /franchise."
+    "displayName": "Rayons",
+    "description": "Geografische rayons waar Klarijn actief is of komt. Verschijnt op de Franchise-pagina."
   },
   "options": { "draftAndPublish": true },
   "pluginOptions": {},
@@ -24,7 +24,7 @@
     "displayOrder": {
       "type": "integer",
       "default": 0,
-      "description": "Lager getal = bovenaan in de rayon-lijst."
+      "description": "Volgorde in de lijst. Lager getal = bovenaan."
     }
   }
 }

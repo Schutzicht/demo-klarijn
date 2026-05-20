@@ -71,10 +71,39 @@ export default {
   bootstrap(app: StrapiApp) {
     if (typeof document !== 'undefined') {
       document.title = 'Agensea Hub - Klarijn';
-      // Forceer NL als interface-taal voor ALLE sessies (overschrijft eerdere keuze).
       try {
         localStorage.setItem('strapi-admin-language', 'nl');
       } catch {}
+
+      // Verberg irrelevante sidebar-items en promo-banners (Marketplace,
+      // Strapi Cloud, AI-features, etc). Strapi Community heeft hier geen
+      // config-toggle voor, dus we doen het via CSS injectie.
+      const css = `
+        /* Marketplace sidebar item */
+        a[href$="/marketplace"],
+        a[href*="/marketplace"] { display: none !important; }
+
+        /* Strapi Cloud / hosting nudges */
+        a[href*="strapi.io/cloud"],
+        a[href*="cloud.strapi.io"] { display: none !important; }
+
+        /* AI feature promo-blokken */
+        [data-strapi-ai-promo],
+        [class*="AiSection"],
+        [class*="ai-promo"] { display: none !important; }
+
+        /* Tutorials/release-notes/get-started karren */
+        [class*="HelperPluginContent"],
+        [data-feature-name="releases"] [class*="upgrade"],
+        [class*="ReleasesPromo"] { display: none !important; }
+
+        /* Documentation link in sidebar (vaak verwarrend voor end-users) */
+        a[href*="docs.strapi.io"] { display: none !important; }
+      `;
+      const style = document.createElement('style');
+      style.setAttribute('data-agensea-hide', '1');
+      style.textContent = css;
+      document.head.appendChild(style);
     }
   },
 };

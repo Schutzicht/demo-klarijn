@@ -5,7 +5,7 @@
     "singularName": "team-member",
     "pluralName": "team-members",
     "displayName": "Team",
-    "description": "Klarijn-juristen, oprichters en support. Verschijnt op /over-ons en kantoorpaginas."
+    "description": "Klarijn-juristen, oprichters en support. Verschijnt op Over ons en de kantoorpagina."
   },
   "options": { "draftAndPublish": true },
   "pluginOptions": {},
@@ -13,7 +13,7 @@
     "name": {
       "type": "string",
       "required": true,
-      "description": "Volledige naam (voornaam + achternaam). Voorbeeld: 'Eibert Lijnbach'."
+      "description": "Volledige naam. Voorbeeld: 'Eibert Lijnbach'."
     },
     "role": {
       "type": "string",
@@ -25,32 +25,35 @@
       "required": false,
       "allowedTypes": ["images"]
     },
-    "photoUrl": {
-      "type": "string",
-      "description": "Fallback-pad als nog geen foto is geupload. Voorbeeld: '/img/eibert.webp'."
-    },
     "bio": {
       "type": "text",
       "description": "Korte introductie. 1-2 zinnen."
     },
     "email": {
       "type": "email",
-      "description": "Klikbaar op de site."
+      "description": "Klikbaar op de site. Mag leeg."
     },
     "location": {
       "type": "string",
-      "description": "Welke vestiging. Voorbeeld: 'Zwolle', 'Rotterdam'."
+      "description": "Vestiging. Voorbeeld: 'Zwolle', 'Rotterdam'."
     },
     "type": {
       "type": "enumeration",
       "enum": ["oprichter", "senior", "jurist", "support", "rayonhouder"],
       "default": "jurist",
-      "description": "Rolcategorie."
+      "description": "Rolcategorie. Bepaalt waar de persoon op de site verschijnt."
     },
     "displayOrder": {
       "type": "integer",
       "default": 0,
-      "description": "Lager getal = eerder in de lijst."
+      "description": "Volgorde in de lijst. Lager getal = bovenaan."
+    },
+    "photoUrl": {
+      "type": "string",
+      "description": "Technisch: fallback-pad naar foto in /img/. Wordt gebruikt als bovenstaande Foto leeg is. Laat staan als er een foto is geupload.",
+      "pluginOptions": {
+        "content-manager": { "visible": false }
+      }
     }
   }
 }

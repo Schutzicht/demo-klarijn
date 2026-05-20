@@ -176,6 +176,47 @@ const EXTRA_ACTIONS = [
   'plugin::upload.assets.copy-link',
 ];
 
+// Maakt een redacteur-user aan op basis van env vars zodat we kunnen inloggen
+// als 'Klarijn-redacteur' om de admin-view vanuit hun perspectief te bekijken.
+// Idempotent: bestaande user wordt niet overschreven.
+async function ensureRedacteurUser(strapi: Core.Strapi) {
+  const email = process.env.REDACTEUR_EMAIL;
+  const password = process.env.REDACTEUR_PASSWORD;
+  const firstname = process.env.REDACTEUR_FIRSTNAME || 'Redacteur';
+  const lastname = process.env.REDACTEUR_LASTNAME || '';
+  if (!email || !password) {
+    strapi.log.info('[seed] REDACTEUR_EMAIL/PASSWORD niet gezet - skip redacteur-user');
+    return;
+  }
+  try {
+    const existing = await strapi.db.query('admin::user').findOne({ where: { email } });
+    if (existing) {
+      strapi.log.info(`[seed] Redacteur-user ${email} bestaat al`);
+      return;
+    }
+    const role = await strapi.db.query('admin::role').findOne({
+      where: { code: EDITOR_ROLE_CODE },
+    });
+    if (!role) {
+      strapi.log.warn('[seed] Klarijn-redacteur rol niet gevonden, skip user');
+      return;
+    }
+    // Strapi v5 admin user service hashed password automatisch
+    await (strapi as any).service('admin::user').create({
+      email,
+      firstname,
+      lastname,
+      password,
+      isActive: true,
+      preferedLanguage: 'nl',
+      roles: [role.id],
+    });
+    strapi.log.info(`[seed] Redacteur-user ${email} aangemaakt met rol Klarijn-redacteur`);
+  } catch (err) {
+    strapi.log.warn('[seed] ensureRedacteurUser faalde:', err);
+  }
+}
+
 // Zet voor alle bestaande admin-users de voorkeurstaal op NL (één keer).
 async function setAdminLanguageToDutch(strapi: Core.Strapi) {
   try {
@@ -274,6 +315,7 @@ export default {
       await ensureVercelWebhook(strapi);
       await ensureEditorRole(strapi);
       await setAdminLanguageToDutch(strapi);
+      await ensureRedacteurUser(strapi);
     } catch (err) {
       strapi.log.error('[seed] Bootstrap seed failed:', err);
     }

@@ -38,13 +38,13 @@
       "type": "component",
       "repeatable": true,
       "component": "page.marquee-item",
-      "description": "De korte slogans die door de roze banner lopen onder de hero. Klik 'Add an entry' per slogan."
+      "description": "De korte slogans die door de roze banner lopen onder de hero. Klik 'Add an entry' voor een nieuwe slogan."
     },
     "stats": {
       "type": "component",
       "repeatable": true,
       "component": "page.stat",
-      "description": "Statistieken-blok (cijfers met labels). Verschijnt in de 'Doelgroepen + getallen' sectie."
+      "description": "Statistieken-blok (cijfers met labels) onder de hero."
     }
   }
 }

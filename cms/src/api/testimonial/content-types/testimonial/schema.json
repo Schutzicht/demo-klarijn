@@ -4,8 +4,8 @@
   "info": {
     "singularName": "testimonial",
     "pluralName": "testimonials",
-    "displayName": "Testimonial",
-    "description": "Klant-quotes die verschijnen op homepage, abonnement, kantoorpaginas."
+    "displayName": "Klant-quotes",
+    "description": "Quotes die op homepage, abonnement en kantoorpaginas verschijnen."
   },
   "options": { "draftAndPublish": true },
   "pluginOptions": {},
@@ -13,7 +13,7 @@
     "quote": {
       "type": "text",
       "required": true,
-      "description": "De uitspraak. Eerste persoon. Geen aanhalingstekens nodig - die plaatst de site zelf."
+      "description": "De uitspraak in eerste persoon. Geen aanhalingstekens nodig, die plaatst de site zelf."
     },
     "author": {
       "type": "string",
@@ -34,19 +34,11 @@
       "required": false,
       "allowedTypes": ["images"]
     },
-    "photoUrl": {
-      "type": "string",
-      "description": "Fallback-pad als nog geen foto is geupload."
-    },
     "scenePhoto": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": ["images"]
-    },
-    "scenePhotoUrl": {
-      "type": "string",
-      "description": "Optionele tweede sfeerfoto (handen schudden, samenwerken etc) die naast het portret verschijnt."
     },
     "featured": {
       "type": "boolean",
@@ -56,7 +48,21 @@
     "displayOrder": {
       "type": "integer",
       "default": 0,
-      "description": "Lager getal = eerder in de lijst."
+      "description": "Volgorde in de lijst. Lager getal = eerder getoond."
+    },
+    "photoUrl": {
+      "type": "string",
+      "description": "Technisch: fallback voor portret-foto.",
+      "pluginOptions": {
+        "content-manager": { "visible": false }
+      }
+    },
+    "scenePhotoUrl": {
+      "type": "string",
+      "description": "Technisch: fallback voor sfeer-foto.",
+      "pluginOptions": {
+        "content-manager": { "visible": false }
+      }
     }
   }
 }

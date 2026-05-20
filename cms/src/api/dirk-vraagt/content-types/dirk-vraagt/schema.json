@@ -19,16 +19,6 @@
       "type": "string",
       "description": "Beroep + plaats. Voorbeeld: 'Aannemer · Apeldoorn'."
     },
-    "photo": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": ["images"]
-    },
-    "photoUrl": {
-      "type": "string",
-      "description": "Fallback-pad als nog geen foto is geupload."
-    },
     "question": {
       "type": "text",
       "required": true,
@@ -44,12 +34,25 @@
       "enum": ["klant", "franchise"],
       "default": "klant",
       "required": true,
-      "description": "Klant = voor de gewone bezoeker. Franchise = voor juristen die overwegen mee te doen."
+      "description": "Klant = voor de bezoeker van de website. Franchise = voor juristen die overwegen mee te doen."
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
     },
     "displayOrder": {
       "type": "integer",
       "default": 0,
-      "description": "Lager getal = eerder in de lijst."
+      "description": "Volgorde in de lijst. Lager getal = eerder."
+    },
+    "photoUrl": {
+      "type": "string",
+      "description": "Technisch: fallback voor de foto.",
+      "pluginOptions": {
+        "content-manager": { "visible": false }
+      }
     }
   }
 }
