@@ -4,7 +4,7 @@
   "info": {
     "singularName": "dirk-vraagt",
     "pluralName": "dirk-vraagts",
-    "displayName": "Vraag het Klarijn (Q&A)",
+    "displayName": "Vraag-het-Klarijn",
     "description": "Vraag-en-antwoord paren voor de Vraag-het-Klarijn sectie op de site."
   },
   "options": { "draftAndPublish": true },

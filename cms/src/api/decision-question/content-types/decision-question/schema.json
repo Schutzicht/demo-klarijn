@@ -4,7 +4,7 @@
   "info": {
     "singularName": "decision-question",
     "pluralName": "decision-questions",
-    "displayName": "Match-test vraag",
+    "displayName": "Match-test (franchise)",
     "description": "Vragen voor de franchise match-test op /franchise/beslisboom."
   },
   "options": { "draftAndPublish": true },

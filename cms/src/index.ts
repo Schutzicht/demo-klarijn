@@ -129,6 +129,111 @@ async function ensureVercelWebhook(strapi: Core.Strapi) {
   }
 }
 
+// === Klarijn-redacteur rol + permissies ===
+// Beheert dagelijkse content (homepage, producten, team, testimonials, rayons,
+// site-settings, kantoorpaginas). Mag publiceren. Mag NIET: webhooks, users,
+// roles, API tokens, plugins-config zien.
+//
+// CRUD = lezen, aanmaken, wijzigen, verwijderen, publiceren
+// READ_ONLY = alleen lezen (hier nuttig voor Q&A's en match-test, om
+// referentie te kunnen checken zonder dat ze de site-logica breken)
+const EDITOR_ROLE_NAME = 'Klarijn-redacteur';
+const EDITOR_ROLE_CODE = 'strapi-klarijn-editor';
+
+const CRUD_TYPES = [
+  'api::homepage.homepage',
+  'api::product.product',
+  'api::team-member.team-member',
+  'api::testimonial.testimonial',
+  'api::rayon.rayon',
+  'api::site-setting.site-setting',
+  'api::office.office',
+];
+
+const READ_ONLY_TYPES = [
+  'api::dirk-vraagt.dirk-vraagt',
+  'api::decision-question.decision-question',
+];
+
+const CRUD_ACTIONS = [
+  'plugin::content-manager.explorer.create',
+  'plugin::content-manager.explorer.read',
+  'plugin::content-manager.explorer.update',
+  'plugin::content-manager.explorer.delete',
+  'plugin::content-manager.explorer.publish',
+];
+
+const READ_ACTIONS = [
+  'plugin::content-manager.explorer.read',
+];
+
+// Plus toegang tot uploads (foto's beheren) en single-types/collection-types UI
+const EXTRA_ACTIONS = [
+  'plugin::upload.read',
+  'plugin::upload.assets.create',
+  'plugin::upload.assets.update',
+  'plugin::upload.assets.download',
+  'plugin::upload.assets.copy-link',
+];
+
+async function ensureEditorRole(strapi: Core.Strapi) {
+  try {
+    // 1) Vind of maak de rol
+    let role: any = await strapi.db.query('admin::role').findOne({
+      where: { code: EDITOR_ROLE_CODE },
+    });
+    if (!role) {
+      role = await strapi.db.query('admin::role').create({
+        data: {
+          name: EDITOR_ROLE_NAME,
+          code: EDITOR_ROLE_CODE,
+          description: 'Beheert dagelijkse content: homepage, producten, team, testimonials, rayons, site-settings en kantoorpaginas.',
+        },
+      });
+      strapi.log.info(`[seed] Rol "${EDITOR_ROLE_NAME}" aangemaakt`);
+    }
+
+    // 2) Bouw lijst van gewenste permissies
+    const desired: Array<{ action: string; subject: string }> = [];
+    for (const uid of CRUD_TYPES) {
+      for (const action of CRUD_ACTIONS) desired.push({ action, subject: uid });
+    }
+    for (const uid of READ_ONLY_TYPES) {
+      for (const action of READ_ACTIONS) desired.push({ action, subject: uid });
+    }
+    for (const action of EXTRA_ACTIONS) desired.push({ action, subject: null as any });
+
+    // 3) Vergelijk met bestaande permissies van de rol, voeg ontbrekende toe
+    const existing = await strapi.db.query('admin::permission').findMany({
+      where: { role: role.id },
+    });
+    const existingKey = (p: any) => `${p.action}|${p.subject ?? ''}`;
+    const have = new Set(existing.map(existingKey));
+
+    let added = 0;
+    for (const p of desired) {
+      if (have.has(existingKey(p))) continue;
+      await strapi.db.query('admin::permission').create({
+        data: {
+          action: p.action,
+          subject: p.subject,
+          role: role.id,
+          properties: {},
+          conditions: [],
+        },
+      });
+      added++;
+    }
+    if (added) {
+      strapi.log.info(`[seed] ${added} permissies toegevoegd aan rol "${EDITOR_ROLE_NAME}"`);
+    } else {
+      strapi.log.info(`[seed] Rol "${EDITOR_ROLE_NAME}" permissies up-to-date`);
+    }
+  } catch (err) {
+    strapi.log.warn('[seed] ensureEditorRole faalde:', err);
+  }
+}
+
 export default {
   register(/* { strapi }: { strapi: Core.Strapi } */) {},
 
@@ -145,6 +250,7 @@ export default {
       await seedSingle(strapi, 'api::homepage.homepage', homepageContent);
       await setPublicReadPermissions(strapi);
       await ensureVercelWebhook(strapi);
+      await ensureEditorRole(strapi);
     } catch (err) {
       strapi.log.error('[seed] Bootstrap seed failed:', err);
     }

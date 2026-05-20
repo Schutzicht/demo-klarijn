@@ -6,16 +6,11 @@ import favicon from './favicon.png';
 // Klarijn is een hosting-klant; de admin draagt onze branding (indigo + cream).
 export default {
   config: {
+    // Alleen NL beschikbaar in de language-switcher.
     locales: ['nl'],
-    auth: {
-      logo,
-    },
-    head: {
-      favicon,
-    },
-    menu: {
-      logo,
-    },
+    auth: { logo },
+    head: { favicon },
+    menu: { logo },
     notifications: {
       releases: false,
     },
@@ -27,6 +22,11 @@ export default {
         'Auth.form.welcome.title': 'Welkom bij Agensea Hub',
         'Auth.form.welcome.subtitle': 'Beheer de Klarijn-website.',
         'Settings.application.title': 'Hub-instellingen',
+        'HomePage.helloWorld': 'Welkom terug',
+        'HomePage.welcome': 'Welkom bij Agensea Hub',
+        'HomePage.welcome.again': 'Welkom terug bij Agensea Hub',
+        'HomePage.welcomeBlock.content.again': 'Beheer hier de content van de Klarijn-website. Wijzigingen zijn binnen 5 seconden zichtbaar op klarijn.nl na publiceren.',
+        'HomePage.welcomeBlock.content': 'Hier beheer je alle content van de Klarijn-website. Wijzigingen zijn binnen 5 seconden live op klarijn.nl na publiceren.',
       },
       en: {
         'app.components.LeftMenu.navbrand.title': 'Agensea Hub',
@@ -68,10 +68,17 @@ export default {
       },
     },
   },
-  bootstrap() {
-    // White-label aanpassingen die niet via config kunnen
+  bootstrap(app: StrapiApp) {
     if (typeof document !== 'undefined') {
       document.title = 'Agensea Hub - Klarijn';
+
+      // Zet NL als default interface taal voor nieuwe sessies.
+      // localStorage key die Strapi v5 gebruikt is `strapi-admin-language`.
+      try {
+        if (!localStorage.getItem('strapi-admin-language')) {
+          localStorage.setItem('strapi-admin-language', 'nl');
+        }
+      } catch {}
     }
   },
 };
