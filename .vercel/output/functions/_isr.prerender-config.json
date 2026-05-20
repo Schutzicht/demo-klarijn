@@ -1,8 +1,0 @@
-{
-	"expiration": 86400,
-	"bypassToken": "local-dev-test",
-	"allowQuery": [
-		"x_astro_path"
-	],
-	"passQuery": true
-}

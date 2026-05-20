@@ -29,3 +29,6 @@ cms/build/
 cms/dist/
 cms/.strapi/
 cms/public/uploads/
+
+# Vercel adapter output
+.vercel/
