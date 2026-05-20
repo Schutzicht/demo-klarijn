@@ -71,13 +71,9 @@ export default {
   bootstrap(app: StrapiApp) {
     if (typeof document !== 'undefined') {
       document.title = 'Agensea Hub - Klarijn';
-
-      // Zet NL als default interface taal voor nieuwe sessies.
-      // localStorage key die Strapi v5 gebruikt is `strapi-admin-language`.
+      // Forceer NL als interface-taal voor ALLE sessies (overschrijft eerdere keuze).
       try {
-        if (!localStorage.getItem('strapi-admin-language')) {
-          localStorage.setItem('strapi-admin-language', 'nl');
-        }
+        localStorage.setItem('strapi-admin-language', 'nl');
       } catch {}
     }
   },

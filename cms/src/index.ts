@@ -176,6 +176,28 @@ const EXTRA_ACTIONS = [
   'plugin::upload.assets.copy-link',
 ];
 
+// Zet voor alle bestaande admin-users de voorkeurstaal op NL (één keer).
+async function setAdminLanguageToDutch(strapi: Core.Strapi) {
+  try {
+    const users = await strapi.db.query('admin::user').findMany({});
+    let updated = 0;
+    for (const user of users) {
+      if (user.preferedLanguage !== 'nl') {
+        await strapi.db.query('admin::user').update({
+          where: { id: user.id },
+          data: { preferedLanguage: 'nl' },
+        });
+        updated++;
+      }
+    }
+    if (updated > 0) {
+      strapi.log.info(`[seed] ${updated} admin-user(s) voorkeurstaal op NL gezet`);
+    }
+  } catch (err) {
+    strapi.log.warn('[seed] setAdminLanguageToDutch faalde:', err);
+  }
+}
+
 async function ensureEditorRole(strapi: Core.Strapi) {
   try {
     // 1) Vind of maak de rol
@@ -251,6 +273,7 @@ export default {
       await setPublicReadPermissions(strapi);
       await ensureVercelWebhook(strapi);
       await ensureEditorRole(strapi);
+      await setAdminLanguageToDutch(strapi);
     } catch (err) {
       strapi.log.error('[seed] Bootstrap seed failed:', err);
     }
