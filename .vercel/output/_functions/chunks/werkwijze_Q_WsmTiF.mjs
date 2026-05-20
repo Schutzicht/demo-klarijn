@@ -1,0 +1,67 @@
+import { c as createComponent } from './astro-component_D9APovc3.mjs';
+import 'piccolore';
+import { l as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute, u as unescapeHTML } from './entrypoint_Dgli_rsY.mjs';
+import { $ as $$Layout } from './Layout_B3OnaIBi.mjs';
+import { $ as $$PageHero } from './PageHero_DyUF12K1.mjs';
+import { $ as $$SectionDivider } from './SectionDivider_eVuRMp4h.mjs';
+
+const $$Werkwijze = createComponent(($$result, $$props, $$slots) => {
+  const stappen = [
+    { n: "01", t: "Vraag", d: 'Bel, mail, klik op "Vraag het Klarijn" of voeg een product toe aan je lijst. Geen account, geen formulier-bureaucratie.' },
+    { n: "02", t: "Antwoord", d: "Een vaste jurist uit jouw rayon belt of mailt binnen 1 werkdag terug. Een korte duiding van wat er aan de hand is." },
+    { n: "03", t: "Aanpak", d: "Samen bepalen we hoe we het oplossen. Past het in een standaardproduct? Vaste prijs vooraf. Maatwerk? Heldere offerte zonder open einde." },
+    { n: "04", t: "Afgehandeld", d: "Wij regelen het. Updates die je begrijpt, op de momenten dat het nodig is. Klaar is klaar." }
+  ];
+  const verwachten = [
+    { t: "Snelle reactie", d: "Bel of mail ons gerust. Voor een korte vraag krijg je dezelfde dag antwoord. Op uitgebreide vragen reageren we binnen 1 werkdag.", icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>' },
+    { t: "Eenvoud boven alles", d: "In alles wat we doen is het belangrijk dat de opdrachtgever weet hoe het zit. We spreken jouw taal, niet de onze.", icon: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>' },
+    { t: "Zakelijke blik", d: "We snappen de juridische issues van jou als ondernemer. We houden je een eerlijke spiegel voor.", icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' },
+    { t: "Duidelijke route", d: "In onze samenwerking zorgen we ervoor dat je altijd begrijpt waar we naartoe gaan en welke stappen we daarbij nemen.", icon: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>' },
+    { t: "Oplossing", d: "Hoe lastig de situatie ook lijkt, er is altijd een oplossing. We nemen je mee in de mogelijkheden, risico's en kansen.", icon: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>' },
+    { t: "Netwerk van specialisten", d: "We weten wanneer aanvullende specialisten nodig zijn - IE, fiscaal, AVG. Jij merkt niets van de inzet, je hebt contact met Klarijn.", icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' }
+  ];
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Werkwijze - Klarijn", "active": "Werkwijze" }, { "default": ($$result2) => renderTemplate` ${renderComponent($$result2, "PageHero", $$PageHero, { "title": "Hoe wij werken.<br/>Vakmanschap, geen toneel.", "lead": "Geen lege beloftes en geen 14-pagina-tellende intakefase. We werken zoals onze klanten werken: handen uit de mouwen, helder, en op resultaat.", "crumbs": [{ label: "Home", href: "/home" }, { label: "Werkwijze" }], "stamps": [{ text: "Vakmanschap", variant: "gold", rotate: -10 }] })}  ${maybeRenderHead()}<section class="section-y bg-paper"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="text-center mb-14" data-reveal> <span class="eyebrow justify-center">Hoe het werkt</span> <h2 class="display-2 mt-3">Vier stappen.<br><span class="brush--soft">Geen drempels.</span></h2> </div> <!-- Timeline with connecting line --> <div class="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6"> <!-- Connecting line (desktop) --> <div class="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-0.5 z-0" style="background: repeating-linear-gradient(to right, var(--color-magenta) 0 6px, transparent 6px 14px);"></div> ${stappen.map((s, i) => renderTemplate`<article class="relative bg-white rounded-card p-7 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all z-10" data-reveal${addAttribute(i + 1, "data-reveal-delay")}> <div class="w-16 h-16 rounded-full bg-magenta text-white grid place-items-center font-display text-2xl mb-4 border-4 border-paper shadow-md"> ${s.n} </div> <h3 class="text-xl font-semibold text-aubergine mb-2">${s.t}</h3> <p class="text-ink-soft text-sm leading-relaxed mb-0">${s.d}</p> </article>`)} </div> </div> </section>  <section class="pb-14 md:pb-20 bg-paper"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="relative rounded-jumbo overflow-hidden aspect-[16/8] md:aspect-[16/6]" data-reveal> <img src="/img/stock/scene-discussion.jpg" alt="Jurist legt situatie uit aan ondernemer met document op tafel" loading="lazy" class="absolute inset-0 w-full h-full object-cover"> <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(20,8,15,0.78) 0%, rgba(20,8,15,0.45) 50%, transparent 90%);"></div> <div class="relative z-10 h-full flex items-center p-7 md:p-12 lg:p-16"> <div class="max-w-[28ch] text-white"> <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-magenta-soft">Vraag het Klarijn</span> <p class="font-display text-3xl md:text-4xl lg:text-5xl leading-tight mt-2 mb-0">"Wat zou jij doen als jij mij was?"</p> </div> </div> </div> </div> </section> ${renderComponent($$result2, "SectionDivider", $$SectionDivider, { "variant": "curve-down", "from": "var(--color-paper)", "to": "var(--color-paper-2)" })}  <section class="section-y bg-paper-2"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="text-center mb-12" data-reveal> <span class="eyebrow justify-center">Wat mag je verwachten</span> <h2 class="display-2 mt-3">Zes beloftes.</h2> </div> <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"> ${verwachten.map((f, i) => renderTemplate`<article class="bg-white rounded-card p-7 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all" data-reveal${addAttribute(i % 3 + 1, "data-reveal-delay")}> <div class="w-12 h-12 rounded-xl text-magenta grid place-items-center mb-4" style="background-color: rgba(224, 39, 122, 0.12);"> <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${unescapeHTML(f.icon)}</svg> </div> <h3 class="text-xl font-semibold text-ink mb-2">${f.t}</h3> <p class="text-ink-soft text-sm leading-relaxed mb-0">${f.d}</p> </article>`)} </div> </div> </section> ${renderComponent($$result2, "SectionDivider", $$SectionDivider, { "variant": "curve", "from": "var(--color-paper-2)", "to": "var(--color-paper)" })}  <section class="section-y bg-paper"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="text-center mb-12 max-w-2xl mx-auto" data-reveal> <span class="eyebrow justify-center">Drie modellen</span> <h2 class="display-2 mt-3 mb-4">Drie manieren waarop<br>je met ons werkt.</h2> <p class="text-lg text-ink-soft">Niet iedereen heeft dezelfde behoefte. Daarom werken wij met drie heldere modellen - kies wat past.</p> </div> <div class="grid grid-cols-1 lg:grid-cols-3 gap-6"> ${[
+    {
+      t: "Losse opdracht",
+      sub: "Voor een specifieke vraag",
+      d: "Eén vraag, één product, één keer. Bijvoorbeeld: een arbeidscontract laten opstellen of je algemene voorwaarden updaten. Vaste prijs vooraf, doorlooptijd helder, geen verplichtingen daarna.",
+      cta: "Bekijk producten",
+      href: "/oplossingen",
+      dark: false
+    },
+    {
+      t: "Abonnement",
+      sub: "Eén vaste jurist · €145/mnd",
+      d: "Voor wie regelmatig juridische vragen heeft. Een vaste jurist die onbeperkt korte vragen beantwoordt. Plus 30% korting op alle standaardproducten. Maandelijks opzegbaar.",
+      cta: "Lees over het abonnement",
+      href: "/abonnement",
+      dark: true
+    },
+    {
+      t: "Maatwerktraject",
+      sub: "Voor de grotere kwesties",
+      d: "Voor de grotere kwesties: een bedrijfsoverdracht, een ingewikkelde geschilprocedure, of een complete contractenstructuur. Heldere offerte met fasering, geen open einde.",
+      cta: "Plan een gesprek",
+      href: "/contact",
+      dark: false
+    }
+  ].map((m, i) => renderTemplate`<article${addAttribute(`relative rounded-jumbo p-8 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all ${m.dark ? "bg-aubergine text-white ring-2 ring-magenta/30" : "bg-white"}`, "class")} data-reveal${addAttribute(i + 1, "data-reveal-delay")}> ${m.dark && renderTemplate`<span class="absolute -top-3 left-6 inline-flex items-center gap-1.5 bg-magenta text-white text-[.65rem] font-bold uppercase tracking-[.16em] px-3 py-1 rounded-full"> <span class="inline-block w-1 h-1 rounded-full bg-white"></span>
+Meest gekozen
+</span>`} <span${addAttribute(`inline-block text-xs font-semibold uppercase tracking-[.14em] mb-2 ${m.dark ? "text-magenta-soft" : "text-magenta"}`, "class")}>${m.sub}</span> <h3${addAttribute(`text-3xl font-bold mb-4 ${m.dark ? "text-white" : "text-aubergine"}`, "class")}>${m.t}</h3> <p${addAttribute(`mb-6 leading-relaxed ${m.dark ? "text-white/85" : "text-ink-soft"}`, "class")}>${m.d}</p> <a${addAttribute(m.href, "href")}${addAttribute(`btn ${m.dark ? "btn-primary" : "btn-purple"} w-full justify-center`, "class")}>${m.cta} <span class="arrow">→</span></a> </article>`)} </div> <div class="max-w-[70ch] mx-auto mt-16 text-center" data-reveal> <blockquote class="font-display text-3xl md:text-4xl text-aubergine leading-tight italic">
+"Goede advisering komt niet uit een uurtje-factuurtje model.<br>Komt uit kennis van jouw situatie, branche en plannen."
+</blockquote> </div> </div> </section> ` })}`;
+}, "/Users/jorikschut/Documents/Projecten-sites/Demo Klarijn/src/pages/werkwijze.astro", void 0);
+
+const $$file = "/Users/jorikschut/Documents/Projecten-sites/Demo Klarijn/src/pages/werkwijze.astro";
+const $$url = "/werkwijze";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$Werkwijze,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

@@ -1,0 +1,24 @@
+import { c as createComponent } from './astro-component_D9APovc3.mjs';
+import 'piccolore';
+import { l as renderComponent, r as renderTemplate, n as Fragment, m as maybeRenderHead } from './entrypoint_Dgli_rsY.mjs';
+import { $ as $$Layout } from './Layout_B3OnaIBi.mjs';
+import { $ as $$PageHero } from './PageHero_DyUF12K1.mjs';
+
+const $$Mandje = createComponent(($$result, $$props, $$slots) => {
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Mijn lijst - Klarijn", "description": "Bekijk je geselecteerde producten en vraag een offerte aan.", "showBasket": false }, { "default": ($$result2) => renderTemplate`  ${renderComponent($$result2, "PageHero", $$PageHero, { "title": "Mijn lijst.", "lead": "Hier staan jouw geselecteerde producten. Vul je gegevens in en wij maken er een passende offerte van. Geen verplichtingen - wel binnen 1 werkdag een reactie.", "crumbs": [{ label: "Home", href: "/home" }, { label: "Mijn lijst" }] })} ${maybeRenderHead()}<section class="section-y"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="grid lg:grid-cols-[1.4fr_.9fr] gap-8 items-start"> <div> <h2 class="text-2xl font-semibold text-aubergine mb-5">Geselecteerde producten</h2> <div class="grid gap-4" data-basket-list></div> <div class="hidden text-center bg-white rounded-card shadow-sm p-12" data-basket-empty> <h3 class="text-2xl font-semibold text-aubergine mb-3">Je lijst is nog leeg</h3> <p class="text-ink-soft mb-5">Bekijk onze oplossingen en voeg toe wat je nodig denkt te hebben. Geen zorgen - we kijken er samen nog naar.</p> <a href="/oplossingen" class="btn btn-primary">Bekijk oplossingen <span class="arrow">→</span></a> </div> <div class="mt-8 bg-paper-2 rounded-card p-6 border-l-4 border-magenta"> <strong class="block text-lg font-semibold text-aubergine mb-1">Twijfel je nog?</strong> <p class="text-ink-soft m-0">Niet alles wat in je lijst staat hoeft een verplichting te worden. We kijken samen wat past - en wat misschien beter wacht.</p> </div> </div> <div class="bg-white rounded-card p-6 md:p-8 shadow-lg lg:sticky lg:top-28" data-basket-form> <h3 class="text-aubergine font-semibold text-2xl mt-0 mb-2">Jouw gegevens</h3> <p class="text-sm text-ink-soft mb-5">We sturen je aanvraag direct naar onze rayonhouders. Je ontvangt binnen 1 werkdag een reactie.</p> <form class="grid gap-4" novalidate> <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"> <label class="form-label">Voornaam<input class="form-input" required name="voornaam" autocomplete="given-name"></label> <label class="form-label">Achternaam<input class="form-input" required name="achternaam" autocomplete="family-name"></label> </div> <label class="form-label">Bedrijfsnaam<input class="form-input" name="bedrijf" autocomplete="organization"></label> <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"> <label class="form-label">E-mail<input class="form-input" required type="email" name="email" autocomplete="email"></label> <label class="form-label">Telefoon<input class="form-input" type="tel" name="telefoon" autocomplete="tel"></label> </div> <label class="form-label">Vestigingsplaats<input class="form-input" name="plaats" placeholder="Voor doorverwijzing naar het juiste rayon"></label> <label class="form-label">Korte toelichting (optioneel)
+<textarea class="form-input min-h-32 resize-y" name="toelichting" placeholder="Vertel kort wat de aanleiding is - handig om vooraf te weten."></textarea> </label> <input type="hidden" name="selectie_xml" value=""> <label class="flex items-start gap-2.5 text-sm font-normal text-ink normal-case tracking-normal"> <input required type="checkbox" name="akkoord" class="w-4 h-4 mt-0.5 accent-magenta"> <span>Ik ga akkoord met het verwerken van mijn gegevens conform de <a href="#" class="text-magenta hover:text-magenta-deep">privacyverklaring</a>. Mijn aanvraag mag tot 12 maanden bewaard worden.</span> </label> <button type="submit" class="btn btn-primary w-full justify-center">Verzend aanvraag <span class="arrow">→</span></button> <p class="text-center text-xs text-ink-soft m-0">Verzonden naar bestelling@klarijn.nl. Je ontvangt direct een bevestiging.</p> </form> </div> </div> </div> </section> `, "head": ($$result2) => renderTemplate`${renderComponent($$result2, "Fragment", Fragment, { "slot": "head" }, { "default": ($$result3) => renderTemplate` <meta name="robots" content="noindex"> ` })}` })}`;
+}, "/Users/jorikschut/Documents/Projecten-sites/Demo Klarijn/src/pages/mandje.astro", void 0);
+
+const $$file = "/Users/jorikschut/Documents/Projecten-sites/Demo Klarijn/src/pages/mandje.astro";
+const $$url = "/mandje";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$Mandje,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

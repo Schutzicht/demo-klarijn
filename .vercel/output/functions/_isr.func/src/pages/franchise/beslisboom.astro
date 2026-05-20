@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import DecisionTree from '../../components/DecisionTree.astro';
+---
+
+<Layout
+  title="Match-test - Klarijn Franchise"
+  description="In 10 vragen weten of het Klarijn-franchisemodel bij jou past."
+  variant="franchise"
+  active="Match-test"
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+  </Fragment>
+
+  <PageHero
+    title="Past Klarijn bij jou?"
+    lead="10 vragen, 3 minuten. Aan het eind weet je - en wij ook - of het zinvol is om verder te praten."
+    crumbs={[{ label: 'Franchise', href: '/franchise' }, { label: 'Match-test' }]}
+  />
+
+  <section class="section-y">
+    <div class="max-w-[780px] mx-auto px-4 md:px-8">
+      <DecisionTree />
+      <p class="text-center mt-8 text-xs font-semibold tracking-wider text-ink-soft">
+        Geen gegevens worden bewaard. We slaan pas iets op als je daadwerkelijk je gegevens invult na een match.
+      </p>
+    </div>
+  </section>
+</Layout>

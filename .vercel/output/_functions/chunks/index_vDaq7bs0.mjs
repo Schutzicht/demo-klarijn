@@ -1,0 +1,55 @@
+import { c as createComponent } from './astro-component_D9APovc3.mjs';
+import 'piccolore';
+import { l as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from './entrypoint_Dgli_rsY.mjs';
+import { $ as $$Layout } from './Layout_B3OnaIBi.mjs';
+import { $ as $$AnimatedNumber, a as $$DirkVraagtPanel } from './AnimatedNumber_BzPbCnXl.mjs';
+
+const $$Index = createComponent(($$result, $$props, $$slots) => {
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Klarijn Franchise - Eigen praktijk, sterke ploeg", "description": "Word Klarijn-franchisenemer. Eigen rayon, sterke backoffice, samen sterk. In 2026 starten we landelijk.", "variant": "franchise", "active": "Franchise", "showVraagHet": false }, { "default": ($$result2) => renderTemplate`  ${maybeRenderHead()}<section class="relative pt-12 md:pt-20 lg:pt-24 pb-20 md:pb-28 overflow-hidden"> <div class="max-w-[1240px] mx-auto px-4 md:px-8 relative z-10"> <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-12 lg:gap-20 items-center"> <div> <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft before:content-[''] before:w-6 before:h-0.5 before:bg-magenta" data-reveal>Klarijn Franchise · landelijk vanaf 2026</span> <h1 class="font-display uppercase leading-[0.95] tracking-tight font-normal text-balance text-white mt-5 mb-6" style="font-size: clamp(2rem, 5.5vw, 4.6rem);" data-reveal data-reveal-delay="1">
+Eigen praktijk.<br> <span class="brush">Sterke ploeg</span> achter je.
+</h1> <p class="text-lg md:text-xl text-white/80 max-w-[48ch] mb-10 leading-relaxed" data-reveal data-reveal-delay="2">
+Voor juristen die willen ondernemen - met de voeten in de klei, in een eigen rayon, en met een backoffice die marketing, automatisering en ondersteuning regelt.
+</p> <div class="flex gap-3 flex-wrap" data-reveal data-reveal-delay="3"> <a class="btn btn-primary" href="/franchise/beslisboom">Doe de match-test <span class="arrow">→</span></a> <a class="btn btn-ghost-light" href="/franchise/aanpak">Lees over de aanpak</a> </div> </div> <!-- Clean typografische rayon-lijst i.p.v. abstracte map --> <div class="relative" data-reveal data-reveal-delay="2"> <div class="bg-white rounded-jumbo p-6 md:p-8 shadow-2xl max-w-[420px] mx-auto"> <div class="flex items-baseline justify-between mb-5"> <h3 class="font-display text-2xl text-aubergine m-0 leading-none">Onze rayons</h3> <span class="text-xs font-semibold uppercase tracking-wider text-ink-soft">Landelijk</span> </div> <ul class="space-y-1"> <li class="flex items-center justify-between rounded-xl bg-magenta/8 border border-magenta/25 px-4 py-3"> <span class="font-semibold text-aubergine">Zwolle</span> <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-magenta"> <span class="relative flex w-2 h-2"> <span class="animate-ping absolute inset-0 rounded-full bg-magenta opacity-60"></span> <span class="relative w-2 h-2 rounded-full bg-magenta"></span> </span>
+Pilot - Actief
+</span> </li> ${[
+    "Rotterdam",
+    "Eindhoven",
+    "Amsterdam",
+    "Groningen",
+    "Maastricht",
+    "Breda",
+    "Utrecht",
+    "Den Haag",
+    "Arnhem",
+    "Tilburg"
+  ].map((city) => renderTemplate`<li class="flex items-center justify-between px-4 py-2 text-sm border-b border-ink/5 last:border-0"> <span class="text-ink">${city}</span> <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-ink-soft"> <span class="w-1.5 h-1.5 rounded-full bg-magenta"></span>
+Beschikbaar
+</span> </li>`)} </ul> <p class="mt-5 text-xs text-ink-soft m-0">+ 3 rayons in voorbereiding · update Q2 2026</p> </div> </div> </div> </div> </section>  <section class="bg-paper py-16 md:py-20"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center"> ${[
+    { v: 14, l: "Rayons landelijk" },
+    { v: 145, prefix: "€ ", l: "Abonnement / klant / mnd" },
+    { v: 100, suffix: "+", l: "Klanten gemiddeld per rayon" },
+    { v: 30, suffix: "%", l: "Lagere overhead" }
+  ].map((item, i) => renderTemplate`<div data-reveal${addAttribute(i + 1, "data-reveal-delay")}> <span class="block font-display text-5xl md:text-7xl text-aubergine leading-none"> ${renderComponent($$result2, "AnimatedNumber", $$AnimatedNumber, { "value": item.v, "prefix": item.prefix || "", "suffix": item.suffix || "" })} </span> <span class="block text-xs md:text-sm font-semibold uppercase tracking-wider text-ink-soft mt-3">${item.l}</span> </div>`)} </div> </div> </section>  <section class="section-y bg-paper-2"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="text-center mb-12" data-reveal> <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-magenta">Drie redenen</span> <h2 class="display-2 mt-3">Eigen praktijk.<br>Backoffice die regelt.<br><span class="brush">Sterk merk.</span></h2> </div> <div class="grid grid-cols-1 lg:grid-cols-3 gap-6"> ${[
+    { n: 1, t: "Eigen rayon", d: "Je krijgt een vast geografisch werkgebied. Zo kun je klantrelaties opbouwen zonder concurrentie van collega's binnen Klarijn." },
+    { n: 2, t: "Backoffice, niet jouw zorg", d: "Marketing, leadgeneratie, automatisering, IT, boekhouding, branding. Wij regelen het centraal, zodat jij doet waar je goed in bent: juridisch werk." },
+    { n: 3, t: "Specialismen elkaar aanvullen", d: "Een collega in Limburg heeft expertise IE? Mooi, dan kun jij die ook aanbieden in jouw rayon. Extra omzet zonder zelf om te scholen." }
+  ].map((p, i) => renderTemplate`<div class="relative bg-white rounded-card p-7 md:p-8 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all" data-reveal${addAttribute(i + 1, "data-reveal-delay")}> <span class="absolute -top-4 left-6 bg-magenta text-aubergine-deep w-10 h-10 rounded-full grid place-items-center font-bold text-base border-[3px] border-paper-2">${p.n}</span> <h3 class="text-xl font-semibold text-aubergine mt-3 mb-3">${p.t}</h3> <p class="text-ink-soft mb-0 leading-relaxed">${p.d}</p> </div>`)} </div> </div> </section>  <section class="py-12 md:py-16"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="relative rounded-jumbo overflow-hidden aspect-[16/8] md:aspect-[16/6]" data-reveal> <img src="/img/stock/scene-talking.jpg" alt="Twee juristen werken samen aan een dossier" loading="lazy" class="absolute inset-0 w-full h-full object-cover"> <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(20,8,15,0.85) 0%, rgba(20,8,15,0.55) 45%, rgba(20,8,15,0.20) 90%);"></div> <div class="relative z-10 h-full flex items-center p-7 md:p-12 lg:p-16"> <div class="max-w-[32ch] text-white"> <span class="text-[.7rem] font-bold uppercase tracking-[.18em] text-magenta">Samen sterk</span> <p class="font-display text-3xl md:text-4xl lg:text-5xl leading-tight mt-2 mb-3">Niet meer in je eentje uitzoeken hoe iets zit.</p> <p class="text-white/80 text-base md:text-lg leading-relaxed mb-0">Bij Klarijn deel je een rugdekking met juristen door heel Nederland. Specialismen vullen elkaar aan. Een vraag in jouw rayon krijgt vaak in tien minuten een antwoord uit een ander rayon.</p> </div> </div> </div> </div> </section>  <section class="section-y bg-paper"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="grid lg:grid-cols-[.8fr_1.2fr] gap-10 items-start"> <div data-reveal> <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-magenta">Franchisenemer vraagt Klarijn</span> <h2 class="display-2 mt-3 mb-4">Wat juristen ons vroegen<br>tijdens de pilot.</h2> <p class="text-lg text-ink-soft leading-relaxed">
+Tijdens de pilot in 2025 in regio IJsselland vroegen geïnteresseerde juristen ons van alles. Zelfde formaat als bij de klanten - handen uit de mouwen, recht voor z'n raap.
+</p> </div> <div data-reveal data-reveal-delay="2"> ${renderComponent($$result2, "DirkVraagtPanel", $$DirkVraagtPanel, { "variant": "franchise" })} </div> </div> </div> </section>  <section class="section-y bg-paper-2"> <div class="max-w-[1240px] mx-auto px-4 md:px-8 text-center" data-reveal> <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-magenta">Past het bij jou?</span> <h2 class="display-2 mt-3 mb-4">Doe de match-test.<br><span class="brush">10 vragen, 3 minuten.</span></h2> <p class="text-lg text-ink-soft max-w-prose mx-auto mb-8 leading-relaxed">
+Voordat je een gesprek inplant, kun je zelf checken of Klarijn bij jou past. Eerlijk advies: soms zien we al na 10 vragen dat het geen match is. Scheelt jou en ons tijd.
+</p> <a class="btn btn-primary" href="/franchise/beslisboom">Start de match-test <span class="arrow">→</span></a> </div> </section> ` })}`;
+}, "/Users/jorikschut/Documents/Projecten-sites/Demo Klarijn/src/pages/franchise/index.astro", void 0);
+
+const $$file = "/Users/jorikschut/Documents/Projecten-sites/Demo Klarijn/src/pages/franchise/index.astro";
+const $$url = "/franchise";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$Index,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

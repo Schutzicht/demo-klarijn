@@ -1,0 +1,39 @@
+import { c as createComponent } from './astro-component_D9APovc3.mjs';
+import 'piccolore';
+import { l as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from './entrypoint_Dgli_rsY.mjs';
+import { $ as $$Layout } from './Layout_B3OnaIBi.mjs';
+import { $ as $$PageHero } from './PageHero_DyUF12K1.mjs';
+
+const $$OverOns = createComponent(($$result, $$props, $$slots) => {
+  const team = [
+    { src: "/img/eibert.webp", name: "Eibert Lijnbach", role: "Mede-oprichter · Arbeidsrecht", bio: "Ex-bedrijfsjurist in de bouw. Bouwt liever een goed contract dan dat hij er een procedeert." },
+    { src: "/img/william.jpg", name: "William Beurskens", role: "Mede-oprichter · Ondernemingsrecht", bio: "Werkte 12 jaar als bedrijfsjurist bij familiebedrijven. Specialist in opvolging." },
+    { src: "/img/stock/p2.jpg", name: "Eline Munnik", role: "Senior · Contracten / IE", bio: "Heeft een verleden bij een groot advocatenkantoor en is daar weggegaan om dezelfde reden als jij dit leest." },
+    { src: "/img/stock/p5.jpg", name: "Joost de Bruijn", role: "Senior · AVG / IT", bio: "Vertaalt Europese regelgeving naar checklists die zelfs jouw boekhouder begrijpt." }
+  ];
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Over Klarijn", "active": "Over ons", "description": "Klarijn is opgericht door juristen die genoeg hadden van de ivoren toren." }, { "default": ($$result2) => renderTemplate` ${renderComponent($$result2, "PageHero", $$PageHero, { "title": "Voor doeners.<br/>Door doeners.", "lead": "Klarijn is opgericht door juristen die genoeg hadden van de standaard juridische uitstraling: glanzende kantoren, dure suits, uurtjes-factuurtjes. Wij doen het anders.", "crumbs": [{ label: "Home", href: "/home" }, { label: "Over ons" }] })} ${maybeRenderHead()}<section class="section-y"> <div class="max-w-[70ch] mx-auto px-4 md:px-8"> <h2 class="display-2 mb-5">Onze oorsprong</h2> <p class="text-lg text-ink-soft leading-relaxed mb-5">
+We werkten allemaal in de juridische advieswereld toen we steeds vaker dezelfde gesprekken hadden. Een ondernemer met een vraag. Een advocaat met een offerte voor een uitgebreid traject. Geen match. Veel ondernemers gingen daarna gewoon op Google zoeken - en hoopten op het beste.
+</p> <p class="text-lg text-ink-soft leading-relaxed mb-8">
+Dat kan beter, dachten we. Dat is wat we hier hebben gebouwd: <mark class="bg-magenta-soft/60 px-1">een werkplaats voor juridisch advies</mark>. Geen ivoren toren, maar een plek waar je gewoon je vraag stelt en een eerlijk antwoord krijgt. Met heldere prijzen, vaste producten, en een vast aanspreekpunt.
+</p> <h2 class="display-2 mt-12 mb-5">Onze waarden</h2> <p class="text-lg text-ink-soft leading-relaxed">Drie dingen die we niet doen - die andere kantoren wel doen.</p> <h3 class="text-2xl font-semibold text-aubergine mt-8 mb-2">1. Geen jargon</h3> <p class="text-ink-soft leading-relaxed">Als we het je niet in plain Nederlands kunnen uitleggen, hebben we het zelf nog niet goed begrepen. Punt.</p> <h3 class="text-2xl font-semibold text-aubergine mt-6 mb-2">2. Geen open einde</h3> <p class="text-ink-soft leading-relaxed">Een advies waar we niet vooraf een prijs op kunnen plakken, doen we niet zonder afspraken. Geen verrassingen op de factuur - ooit.</p> <h3 class="text-2xl font-semibold text-aubergine mt-6 mb-2">3. Geen draaideur</h3> <p class="text-ink-soft leading-relaxed">Bij ons hou je je vaste jurist. Iemand die je kent, je zaak kent, en met je meegroeit. Geen wisseltrucs, geen "mijn collega zit erin".</p> <blockquote class="border-l-4 border-magenta pl-6 my-10 font-semibold italic text-xl text-aubergine">
+"Een goede jurist is als een goede aannemer: kijkt rond, denkt mee, lost op. En komt op de afgesproken datum klaar."
+</blockquote> </div> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-[800px] mx-auto mt-12"> ${[
+    { v: "14", l: "Vaste juristen" },
+    { v: "847", l: "Klanten" },
+    { v: "12", l: "Specialismen" }
+  ].map((s) => renderTemplate`<div class="bg-white rounded-card p-6 text-center shadow-sm"> <strong class="block font-display text-5xl text-aubergine leading-none mb-2">${s.v}</strong> <span class="text-xs font-semibold uppercase tracking-wider text-ink-soft">${s.l}</span> </div>`)} </div> </div> </section>  <section class="py-12 md:py-16 bg-paper"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" data-reveal> <figure class="relative aspect-[4/5] md:aspect-square rounded-card overflow-hidden col-span-2 md:col-span-2 md:row-span-2 md:aspect-auto md:h-full"> <img src="/img/stock/scene-handshake.jpg" alt="Twee mensen schudden elkaar de hand na een advies" loading="lazy" class="absolute inset-0 w-full h-full object-cover"> <figcaption class="absolute bottom-0 left-0 right-0 p-5 md:p-7 bg-gradient-to-t from-black/70 via-black/30 to-transparent text-white"> <span class="text-[.65rem] font-bold uppercase tracking-[.18em] text-magenta-soft">Afspraak gemaakt</span> <p class="font-display text-2xl md:text-3xl leading-tight mt-1 mb-0">Geen uitstel. Wel het juiste antwoord.</p> </figcaption> </figure> <figure class="relative aspect-square rounded-card overflow-hidden"> <img src="/img/stock/scene-laughing.jpg" alt="Tevreden klant lacht na een gesprek" loading="lazy" class="w-full h-full object-cover"> </figure> <figure class="relative aspect-square rounded-card overflow-hidden"> <img src="/img/stock/scene-discussion.jpg" alt="Jurist legt iets uit aan de hand van een document" loading="lazy" class="w-full h-full object-cover"> </figure> <figure class="relative aspect-square rounded-card overflow-hidden"> <img src="/img/stock/scene-coffee.jpg" alt="Open gesprek bij een kop koffie" loading="lazy" class="w-full h-full object-cover"> </figure> <figure class="relative aspect-square rounded-card overflow-hidden"> <img src="/img/stock/scene-meeting.jpg" alt="Klein team in overleg" loading="lazy" class="w-full h-full object-cover"> </figure> </div> </div> </section> <section class="section-y bg-paper-2"> <div class="max-w-[1240px] mx-auto px-4 md:px-8"> <div class="text-center mb-12"> <span class="eyebrow justify-center">Het team</span> <h2 class="display-2 mt-3">Mensen, geen profielen.</h2> <p class="text-lg text-ink-soft max-w-prose mx-auto">Een greep uit het Klarijn-team. Allemaal juristen met praktijkervaring buiten de juridische sector.</p> </div> <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"> ${team.map((m) => renderTemplate`<article class="bg-white rounded-card p-6 text-center shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all"> <div class="photo-blob w-28 aspect-square mx-auto mb-4"> <img${addAttribute(m.src, "src")}${addAttribute(`Portret ${m.name}`, "alt")} loading="lazy" class="w-full h-full object-cover"> </div> <h3 class="text-base font-semibold text-ink mb-1">${m.name}</h3> <p class="text-xs font-semibold uppercase tracking-wider text-magenta mb-3">${m.role}</p> <p class="text-sm text-ink-soft leading-relaxed mb-0">${m.bio}</p> </article>`)} </div> </div> </section> ` })}`;
+}, "/Users/jorikschut/Documents/Projecten-sites/Demo Klarijn/src/pages/over-ons.astro", void 0);
+
+const $$file = "/Users/jorikschut/Documents/Projecten-sites/Demo Klarijn/src/pages/over-ons.astro";
+const $$url = "/over-ons";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$OverOns,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };

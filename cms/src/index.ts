@@ -68,14 +68,28 @@ async function seedSingle(strapi: Core.Strapi, uid: any, data: Record<string, an
   return true;
 }
 
-// Zorgt dat de Vercel-rebuild webhook altijd bestaat (idempotent).
-// Triggert op alle content-events zodat publish/update/delete -> Astro rebuild.
+// Zorgt dat de Vercel revalidate-webhook altijd bestaat en up-to-date is.
+// Triggert op alle content-events zodat publish/update/delete -> Vercel
+// cache wordt geinvalideerd (ISR + bypassToken).
 async function ensureVercelWebhook(strapi: Core.Strapi) {
-  const url = process.env.VERCEL_DEPLOY_HOOK;
+  // Voorkeur: nieuwe REVALIDATE_WEBHOOK_URL. Fallback: oude VERCEL_DEPLOY_HOOK
+  // (voor backward compat, mocht die nog ergens staan).
+  const url = process.env.REVALIDATE_WEBHOOK_URL || process.env.VERCEL_DEPLOY_HOOK;
   if (!url) {
-    strapi.log.info('[seed] VERCEL_DEPLOY_HOOK niet gezet - skip webhook');
+    strapi.log.info('[seed] REVALIDATE_WEBHOOK_URL niet gezet - skip webhook');
     return;
   }
+  const desiredName = 'Vercel revalidate';
+  const events = [
+    'entry.create',
+    'entry.update',
+    'entry.delete',
+    'entry.publish',
+    'entry.unpublish',
+    'media.create',
+    'media.update',
+    'media.delete',
+  ];
   try {
     const store = (strapi as any).get?.('webhookStore') ?? (strapi as any).webhookStore;
     if (!store) {
@@ -83,27 +97,33 @@ async function ensureVercelWebhook(strapi: Core.Strapi) {
       return;
     }
     const all = await store.findWebhooks();
-    if (all.some((w: any) => w.name === 'Vercel rebuild')) {
-      strapi.log.info('[seed] Vercel webhook bestaat al');
+    // Vind bestaande met oude OF nieuwe naam
+    const existing = all.find((w: any) => w.name === desiredName || w.name === 'Vercel rebuild');
+    if (existing) {
+      // Update als URL of naam afwijkt
+      if (existing.url !== url || existing.name !== desiredName) {
+        await store.updateWebhook({
+          ...existing,
+          name: desiredName,
+          url,
+          headers: {},
+          events,
+          enabled: true,
+        });
+        strapi.log.info('[seed] Vercel webhook ge-update naar nieuwe revalidate-URL');
+      } else {
+        strapi.log.info('[seed] Vercel webhook bestaat al en is up-to-date');
+      }
       return;
     }
     await store.createWebhook({
-      name: 'Vercel rebuild',
+      name: desiredName,
       url,
       headers: {},
-      events: [
-        'entry.create',
-        'entry.update',
-        'entry.delete',
-        'entry.publish',
-        'entry.unpublish',
-        'media.create',
-        'media.update',
-        'media.delete',
-      ],
+      events,
       enabled: true,
     });
-    strapi.log.info('[seed] Vercel webhook aangemaakt');
+    strapi.log.info('[seed] Vercel revalidate-webhook aangemaakt');
   } catch (err) {
     strapi.log.warn('[seed] Vercel webhook setup faalde:', err);
   }

@@ -1,0 +1,1012 @@
+---
+// Strategiesessie: twee onderdelen onder elkaar, elk opgedeeld in categorieen.
+// State alleen in URL hash wanneer expliciet gedeeld.
+import '../styles/global.css';
+
+const seed = {
+  v: 11,
+  meta: { titel: 'Strategiesessie Klarijn' },
+  boards: [
+    {
+      id: 'vragen',
+      nummer: '01',
+      label: 'Aftrap',
+      vraag: 'Praktische punten om eerst af te tikken.',
+      type: 'qa',
+      questions: [
+        { q: 'Wat is de deadline voor live-gang?', a: '' },
+        { q: 'Wie is verantwoordelijk voor welke content?', a: '' },
+        { q: 'Productstructuur: hoe richten we de offerte-flow in?', a: '' },
+        { q: 'Welke analytics zijn gewenst en wat is er al?', a: '' },
+        { q: 'AI-koppeling: zijn er plannen of ideeen?', a: '' },
+        { q: 'Concurrenten of vergelijkbare platformen om van te leren?', a: '' },
+      ],
+    },
+    {
+      id: 'doelstellingen',
+      nummer: '02',
+      label: 'Doelstellingen',
+      vraag: 'Wat moet de website concreet bereiken?',
+      groups: [
+        {
+          id: 'conversie',
+          label: 'Klant in beweging krijgen',
+          hint: 'Acties die we willen dat een bezoeker doet.',
+          notes: [
+            { text: 'Bellen of mailen', c: 0 },
+            { text: 'Offerte aanvragen', c: 1 },
+            { text: 'Abonnement nemen', c: 2 },
+            { text: 'Franchise-test invullen', c: 3 },
+          ],
+        },
+        {
+          id: 'vindbaarheid',
+          label: 'Gevonden worden in Google',
+          hint: 'Zoekvragen waarop Klarijn moet verschijnen.',
+          notes: [
+            { text: 'Vindbaar op concrete vragen', c: 2 },
+            { text: 'Vindbaar per regio', c: 4 },
+            { text: 'Resultaten met rijke previews', c: 3 },
+            { text: 'Geen tracking-cookies', c: 0 },
+          ],
+        },
+        {
+          id: 'positionering',
+          label: 'Anders dan andere kantoren',
+          hint: 'Hoe Klarijn zich onderscheidt op de site.',
+          notes: [
+            { text: 'Niet als advocatenkantoor', c: 1 },
+            { text: 'Begrijpelijk Nederlands', c: 0 },
+            { text: 'Voor ondernemers met de voeten in de klei', c: 4 },
+            { text: 'Klant en jurist apart', c: 3 },
+          ],
+        },
+        {
+          id: 'beheer',
+          label: 'Praktisch en toekomstbestendig',
+          hint: 'Beheerbaarheid en techniek achter de schermen.',
+          notes: [
+            { text: 'Beheer door eigen team', c: 2 },
+            { text: 'Werkt goed op mobiel', c: 1 },
+            { text: 'Snel laden', c: 0 },
+            { text: 'Live voor de zomer', c: 4 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'doelgroepen',
+      nummer: '03',
+      label: 'Doelgroepen',
+      vraag: 'Wie willen we bereiken?',
+      groups: [
+        {
+          id: 'klant',
+          label: 'Ondernemers met een vraag',
+          hint: 'MKB en familiebedrijven die juridische hulp nodig hebben.',
+          notes: [
+            { text: 'Aannemer met geschil', c: 1 },
+            { text: 'Familiebedrijf in overdracht', c: 4 },
+            { text: 'Cateraar of horeca', c: 0 },
+            { text: 'Webshop met merken-vraag', c: 2 },
+            { text: 'Directeur middelgroot bedrijf', c: 3 },
+            { text: 'Loonwerker', c: 1 },
+            { text: 'Winkel met huurprobleem', c: 4 },
+          ],
+        },
+        {
+          id: 'franchise',
+          label: 'Juristen die overwegen mee te doen',
+          hint: 'Mensen die nadenken over een Klarijn-praktijk.',
+          notes: [
+            { text: 'Bedrijfsjurist op zoek naar verandering', c: 3 },
+            { text: 'Advocaat overweegt overstap', c: 2 },
+            { text: 'Jurist met specialisme', c: 0 },
+            { text: 'Jurist klaar met groot kantoor', c: 1 },
+          ],
+        },
+        {
+          id: 'secundair',
+          label: 'Goed om mee te nemen',
+          hint: 'Doelgroepen die de site ook bezoeken, maar niet de hoofdfocus.',
+          notes: [
+            { text: 'Sollicitanten', c: 4 },
+            { text: 'Pers en journalisten', c: 2 },
+            { text: 'Accountants en makelaars', c: 3 },
+            { text: 'Bestaande klanten', c: 0 },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'demo-vs',
+      nummer: '04',
+      label: 'Demo vs eindresultaat',
+      vraag: 'Wat moet anders dan in de huidige demo?',
+      groups: [
+        {
+          id: 'visueel',
+          label: 'Visueel en sfeer',
+          hint: 'Kleuren, foto\'s, typografie, algemene uitstraling.',
+          notes: [
+            { text: 'Kleur magenta houden?', c: 1 },
+            { text: 'Echte foto\'s i.p.v. stock', c: 4 },
+          ],
+        },
+        {
+          id: 'inhoud',
+          label: 'Inhoud en teksten',
+          hint: 'Copy, productnamen, voorbeelden, woordkeuze.',
+          notes: [
+            { text: 'Productnamen kloppen?', c: 2 },
+            { text: 'Voorbeeld-quotes herzien', c: 3 },
+          ],
+        },
+        {
+          id: 'functionaliteit',
+          label: 'Functionaliteit',
+          hint: 'Welke onderdelen moeten anders werken of zijn extra nodig.',
+          notes: [
+            { text: 'Offerte-mandje uitbreiden?', c: 0 },
+            { text: 'Match-test goed zo?', c: 1 },
+          ],
+        },
+        {
+          id: 'behouden',
+          label: 'Behouden zoals het is',
+          hint: 'Onderdelen uit de demo waar Klarijn blij mee is.',
+          notes: [
+            { text: 'Twee zijden klant/franchise', c: 3 },
+            { text: 'Vraag het Klarijn als rode draad', c: 2 },
+          ],
+        },
+      ],
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Strategiesessie Klarijn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      :root {
+        --ag-indigo: #2d3fe0;
+        --ag-indigo-sky: #eef0fe;
+        --ink: #0f0f12;
+        --ink-soft: #56575c;
+        --ink-muted: #8b8c93;
+        --paper: #fafaf7;
+        --board-bg: #f3efe6;
+        --frame-bg: #ffffff;
+        --border: rgba(15,15,18,0.08);
+        --border-soft: rgba(15,15,18,0.05);
+        --klarijn-aubergine: #5E1F5C;
+        --klarijn-magenta: #E0277A;
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body {
+        background: var(--paper);
+        font-family: 'Inter', system-ui, sans-serif;
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        margin: 0;
+      }
+
+      /* === Top bar === */
+      .topbar {
+        background: rgba(250,250,247,0.92);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 40;
+      }
+      .topbar-inner {
+        max-width: 1480px;
+        margin: 0 auto;
+        padding: 0 24px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: 'Outfit', sans-serif;
+      }
+      .brand-text {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+      }
+      .brand-sep { color: var(--ink-muted); font-size: 12px; margin: 0 2px; }
+      .brand-client { font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+      .toolbar-actions { display: flex; align-items: center; gap: 4px; }
+      .btn {
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 7px 12px;
+        border-radius: 8px;
+        transition: all 0.15s;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+      }
+      .btn-ghost { color: var(--ink-soft); }
+      .btn-ghost:hover { background: rgba(15,15,18,0.04); color: var(--ink); }
+      .btn-primary { background: var(--ink); color: white; font-weight: 600; padding: 7px 14px; }
+      .btn-primary:hover { background: #1f2024; }
+
+      /* === Hero === */
+      .hero {
+        max-width: 1480px;
+        margin: 0 auto;
+        padding: 64px 32px 32px;
+      }
+      .hero-eyebrow {
+        font-family: 'Outfit', sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ag-indigo);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+      .hero-eyebrow::before {
+        content: '';
+        display: inline-block;
+        width: 26px;
+        height: 2px;
+        background: var(--ag-indigo);
+      }
+      .hero-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 56px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.02;
+        color: var(--ink);
+        margin: 0 0 18px;
+      }
+      .hero-title .accent { color: var(--klarijn-magenta); }
+      .hero-lead {
+        font-size: 17px;
+        color: var(--ink-soft);
+        max-width: 64ch;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      /* === Sessie sectie === */
+      .session {
+        max-width: 1480px;
+        margin: 0 auto;
+        padding: 32px 32px 20px;
+      }
+      .session-head {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        margin-bottom: 8px;
+      }
+      .session-num {
+        font-family: 'Outfit', sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--ag-indigo);
+        letter-spacing: 0.04em;
+      }
+      .session-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 36px;
+        font-weight: 700;
+        color: var(--ink);
+        letter-spacing: -0.015em;
+        margin: 0;
+        line-height: 1.1;
+      }
+      .session-vraag {
+        font-size: 17px;
+        color: var(--ink-soft);
+        margin: 0 0 26px;
+        padding-left: calc(15px + 18px + 4px);
+      }
+      .session-board {
+        background: var(--board-bg);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px;
+      }
+      .frames-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      @media (min-width: 900px) {
+        .frames-grid { grid-template-columns: 1fr 1fr; }
+      }
+
+      /* === Sub-frame === */
+      .frame {
+        background: var(--frame-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 22px 22px 24px;
+        box-shadow: 0 1px 2px rgba(15,15,18,0.04);
+        min-height: 240px;
+        display: flex;
+        flex-direction: column;
+      }
+      .frame-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 4px;
+        gap: 12px;
+      }
+      .frame-label {
+        font-family: 'Outfit', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+        margin: 0;
+      }
+      .frame-count {
+        font-size: 12px;
+        color: var(--ink-muted);
+        font-weight: 500;
+      }
+      .frame-hint {
+        font-size: 12.5px;
+        color: var(--ink-muted);
+        margin: 0 0 16px;
+        line-height: 1.45;
+      }
+      .postit-wall {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: flex-start;
+        flex: 1;
+      }
+
+      /* === Post-its === */
+      .pi-0 { background: #FEEB8E; }
+      .pi-1 { background: #FFB9C8; }
+      .pi-2 { background: #B5E3C3; }
+      .pi-3 { background: #BCD3F2; }
+      .pi-4 { background: #FFC9A6; }
+
+      .postit {
+        position: relative;
+        width: 118px;
+        height: 118px;
+        padding: 13px;
+        box-shadow:
+          0 1px 1px rgba(15,15,18,0.05),
+          0 5px 10px -2px rgba(15,15,18,0.12),
+          0 12px 22px -8px rgba(15,15,18,0.10);
+        font-family: 'Caveat', cursive;
+        font-size: 17.5px;
+        line-height: 1.18;
+        color: #1a1a1d;
+        word-break: break-word;
+        transition: transform 0.16s ease, box-shadow 0.16s ease, z-index 0s 0.16s;
+        cursor: text;
+        display: flex;
+        align-items: flex-start;
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .postit:focus-within, .postit:hover {
+        box-shadow:
+          0 2px 4px rgba(15,15,18,0.08),
+          0 14px 28px -6px rgba(15,15,18,0.24);
+        transform: scale(1.08) rotate(0deg) !important;
+        z-index: 10;
+        transition: transform 0.16s ease, box-shadow 0.16s ease, z-index 0s 0s;
+      }
+      .postit-text {
+        outline: none;
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 2px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(15,15,18,0.18) transparent;
+      }
+      .postit-text::-webkit-scrollbar { width: 5px; }
+      .postit-text::-webkit-scrollbar-track { background: transparent; }
+      .postit-text::-webkit-scrollbar-thumb {
+        background: rgba(15,15,18,0.15);
+        border-radius: 999px;
+      }
+      .postit-text::-webkit-scrollbar-thumb:hover { background: rgba(15,15,18,0.28); }
+      .postit-text:empty::before {
+        content: attr(data-placeholder);
+        color: rgba(15,15,18,0.3);
+        font-style: italic;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+      }
+      .postit .x {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        opacity: 0;
+        transition: opacity 0.15s;
+        font-size: 12px;
+        background: rgba(255,255,255,0.95);
+        border-radius: 999px;
+        width: 18px;
+        height: 18px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        color: var(--ink-soft);
+        line-height: 1;
+        z-index: 2;
+        border: 1px solid rgba(15,15,18,0.08);
+      }
+      .postit:hover .x, .postit:focus-within .x { opacity: 1; }
+      .postit .x:hover { background: white; color: #c81e6b; }
+
+      /* === Q&A lijst (sessie 4) === */
+      .qa-list {
+        display: grid;
+        gap: 14px;
+      }
+      .qa-item {
+        background: var(--frame-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px 22px;
+        box-shadow: 0 1px 2px rgba(15,15,18,0.04);
+        position: relative;
+      }
+      .qa-question {
+        font-family: 'Outfit', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 0 0 10px;
+        line-height: 1.35;
+        letter-spacing: -0.005em;
+        outline: none;
+        padding-right: 32px;
+      }
+      .qa-question:empty::before {
+        content: 'Nieuwe vraag…';
+        color: rgba(15,15,18,0.3);
+        font-style: italic;
+      }
+      .qa-answer {
+        font-family: 'Caveat', cursive;
+        font-size: 18px;
+        line-height: 1.4;
+        color: #1a1a1d;
+        outline: none;
+        min-height: 32px;
+      }
+      .qa-answer:empty::before {
+        content: 'Antwoord tijdens sessie...';
+        color: rgba(15,15,18,0.3);
+        font-style: italic;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+      }
+      .qa-item .qa-x {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        opacity: 0;
+        transition: opacity 0.15s;
+        font-size: 14px;
+        background: rgba(15,15,18,0.04);
+        border-radius: 999px;
+        width: 22px;
+        height: 22px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        color: var(--ink-soft);
+        line-height: 1;
+        border: 1px solid transparent;
+      }
+      .qa-item:hover .qa-x, .qa-item:focus-within .qa-x { opacity: 1; }
+      .qa-item .qa-x:hover { background: white; color: #c81e6b; border-color: rgba(15,15,18,0.08); }
+      .add-qa {
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink-muted);
+        background: transparent;
+        border: 1.5px dashed rgba(15,15,18,0.18);
+        border-radius: 10px;
+        padding: 14px 20px;
+        cursor: pointer;
+        transition: all 0.15s;
+        width: 100%;
+        text-align: left;
+      }
+      .add-qa:hover {
+        background: white;
+        border-color: var(--ag-indigo);
+        color: var(--ag-indigo);
+      }
+
+      .add-postit {
+        width: 118px;
+        height: 118px;
+        border: 1.5px dashed rgba(15,15,18,0.18);
+        border-radius: 4px;
+        display: grid;
+        place-items: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--ink-muted);
+        cursor: pointer;
+        background: rgba(15,15,18,0.015);
+        transition: all 0.15s;
+        align-self: flex-start;
+      }
+      .add-postit:hover {
+        background: white;
+        border-color: var(--ag-indigo);
+        color: var(--ag-indigo);
+      }
+
+      /* === Footer === */
+      .footer {
+        max-width: 1480px;
+        margin: 0 auto;
+        padding: 20px 24px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        border-top: 1px solid var(--border);
+        margin-top: 24px;
+      }
+      .footer-text { font-size: 12px; color: var(--ink-muted); }
+
+      /* === Modal === */
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: rgba(15,15,18,0.4);
+        backdrop-filter: blur(4px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+      .modal-backdrop[data-open] { display: flex; }
+      .modal {
+        background: white;
+        border-radius: 14px;
+        padding: 28px;
+        max-width: 460px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(15,15,18,0.25);
+        border: 1px solid var(--border);
+      }
+      .modal h3 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 0 0 6px;
+      }
+      .modal p {
+        font-size: 13px;
+        color: var(--ink-soft);
+        line-height: 1.5;
+        margin: 0 0 16px;
+      }
+      .modal-input {
+        flex: 1;
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 12px;
+        font-size: 12px;
+        font-family: 'Menlo', monospace;
+        color: var(--ink-soft);
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .modal-input:focus { outline: none; border-color: var(--ag-indigo); }
+      .modal-close {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink-soft);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+        padding: 12px 0 0;
+        border-top: 1px solid var(--border);
+        margin-top: 12px;
+      }
+      .modal-close:hover { color: var(--ink); }
+
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--ink);
+        color: white;
+        font-size: 13px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        box-shadow: 0 8px 24px rgba(15,15,18,0.3);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 60;
+      }
+
+      @media print {
+        .no-print { display: none !important; }
+        .add-postit { display: none !important; }
+        .postit { box-shadow: none; border: 1px solid #ccc; transform: none !important; }
+        body { background: white; }
+        .session-board { background: white; border: 1px solid #ddd; }
+        .frame { box-shadow: none; }
+        section.session { break-inside: avoid; page-break-inside: avoid; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar no-print">
+      <div class="topbar-inner">
+        <div class="brand">
+          <img src="/agensea-logo.png" alt="" width="20" height="20" style="border-radius: 4px" />
+          <span class="brand-text">Agensea</span>
+          <span class="brand-sep">/</span>
+          <span class="brand-client">Klarijn</span>
+        </div>
+        <div class="toolbar-actions">
+          <button type="button" data-action="reset" class="btn btn-ghost">Reset</button>
+          <button type="button" data-action="share" class="btn btn-ghost">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Deel sessie
+          </button>
+          <button type="button" data-action="print" class="btn btn-primary">Export PDF</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-eyebrow">Strategiesessie · 90 minuten</div>
+      <h1 class="hero-title">Klarijn website <span class="accent">2.0</span></h1>
+      <p class="hero-lead">
+        Twee onderdelen, elk opgedeeld in een aantal categorieen. Plak per inzicht een post-it, één regel volstaat. De link is deelbaar zodat de sessie ook na afloop kan worden aangevuld.
+      </p>
+    </section>
+
+    <div class="toast" id="toast"></div>
+
+    <main id="boards"></main>
+
+    <footer class="footer no-print">
+      <span class="footer-text">Automatisch opgeslagen in deze browser.</span>
+      <div style="display:flex; align-items:center; gap:6px; font-size:12px; color: var(--ink-muted);">
+        <img src="/agensea-logo.png" alt="" width="14" height="14" style="border-radius: 3px" />
+        <span>Agensea sessietool</span>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop no-print" id="share-modal">
+      <div class="modal">
+        <h3>Sessie delen</h3>
+        <p>Deze link bevat alle huidige post-its. Stuur naar de klant of collega, zij zien bij openen exact wat hier staat en kunnen zelf bijplakken.</p>
+        <div style="display:flex; gap:8px; margin-bottom:12px">
+          <input id="share-url" class="modal-input" type="text" readonly />
+          <button id="share-copy" type="button" class="btn btn-primary">Kopieer</button>
+        </div>
+        <p style="margin-bottom:0">Wijzigingen aan hun kant zijn pas zichtbaar wanneer zij hun bijgewerkte link terugsturen.</p>
+        <button type="button" data-close-modal class="modal-close">Sluiten</button>
+      </div>
+    </div>
+
+    <script type="application/json" id="seed" set:html={JSON.stringify(seed)}></script>
+
+    <script>
+      const seedEl = document.getElementById('seed');
+      const SEED = JSON.parse(seedEl.textContent);
+      const clone = (o) => JSON.parse(JSON.stringify(o));
+
+      const LS_KEY = 'klarijn_strategie_v8';
+      const SEED_V = SEED.v;
+      let state;
+
+      function decodeFromHash() {
+        const m = location.hash.match(/^#s=(.+)$/);
+        if (!m) return null;
+        try {
+          const json = decodeURIComponent(escape(atob(decodeURIComponent(m[1]))));
+          return JSON.parse(json);
+        } catch { return null; }
+      }
+      function encodeToHash(s) {
+        try {
+          const json = JSON.stringify(s);
+          const b64 = btoa(unescape(encodeURIComponent(json)));
+          history.replaceState(null, '', '#s=' + encodeURIComponent(b64));
+        } catch {}
+      }
+      function clearHash() {
+        if (location.hash) {
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      }
+
+      const fromHash = decodeFromHash();
+      if (fromHash && fromHash.boards && fromHash.v === SEED_V) {
+        state = fromHash;
+        clearHash();
+      } else {
+        if (fromHash) clearHash();
+        try {
+          const stored = localStorage.getItem(LS_KEY);
+          const parsed = stored ? JSON.parse(stored) : null;
+          state = (parsed && parsed.v === SEED_V) ? parsed : clone(SEED);
+        } catch {
+          state = clone(SEED);
+        }
+      }
+      if (!state.boards) state.boards = clone(SEED.boards);
+      state.v = SEED_V;
+
+      let saveTimer = null;
+      function save() {
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => {
+          try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch {}
+        }, 200);
+      }
+
+      const boardsEl = document.getElementById('boards');
+
+      function rndRotation() {
+        return (Math.random() * 8 - 4).toFixed(2);
+      }
+
+      function makePostit(group, idx) {
+        const note = group.notes[idx];
+        const el = document.createElement('div');
+        el.className = `postit pi-${note.c ?? 0}`;
+        el.style.setProperty('--rot', (note.rot ?? rndRotation()) + 'deg');
+        el.style.transform = `rotate(var(--rot))`;
+        el.innerHTML = `
+          <button class="x" type="button" title="Verwijder" tabindex="-1">×</button>
+          <div class="postit-text" contenteditable="true" data-placeholder="schrijf...">${escapeHtml(note.text || '')}</div>
+        `;
+        const text = el.querySelector('.postit-text');
+        text.addEventListener('input', () => { note.text = text.textContent; save(); });
+        text.addEventListener('blur', () => {
+          if (!note.text || !note.text.trim()) {
+            const i = group.notes.indexOf(note);
+            if (i >= 0) { group.notes.splice(i, 1); save(); renderAll(); }
+          }
+        });
+        el.querySelector('.x').addEventListener('click', (e) => {
+          e.stopPropagation();
+          const i = group.notes.indexOf(note);
+          if (i >= 0) { group.notes.splice(i, 1); save(); renderAll(); }
+        });
+        return el;
+      }
+
+      function makeAddBtn(group) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'add-postit';
+        btn.innerHTML = `<span>+ post-it</span>`;
+        btn.addEventListener('click', () => {
+          const c = Math.floor(Math.random() * 5);
+          group.notes.push({ text: '', c, rot: rndRotation() });
+          save();
+          renderAll();
+          setTimeout(() => {
+            const allNotes = document.querySelectorAll(`[data-group="${group.id}"] .postit-text`);
+            const last = allNotes[allNotes.length - 1];
+            last?.focus();
+          }, 30);
+        });
+        return btn;
+      }
+
+      function makeFrame(group) {
+        const frame = document.createElement('div');
+        frame.className = 'frame';
+        frame.dataset.group = group.id;
+        frame.innerHTML = `
+          <div class="frame-head">
+            <h3 class="frame-label">${escapeHtml(group.label)}</h3>
+            <span class="frame-count">${group.notes.length}</span>
+          </div>
+          ${group.hint ? `<p class="frame-hint">${escapeHtml(group.hint)}</p>` : ''}
+          <div class="postit-wall"></div>
+        `;
+        const wall = frame.querySelector('.postit-wall');
+        group.notes.forEach((_, idx) => wall.appendChild(makePostit(group, idx)));
+        wall.appendChild(makeAddBtn(group));
+        return frame;
+      }
+
+      function makeQAItem(board, idx) {
+        const item = board.questions[idx];
+        const el = document.createElement('div');
+        el.className = 'qa-item';
+        el.innerHTML = `
+          <button class="qa-x" type="button" title="Verwijder vraag" tabindex="-1">×</button>
+          <div class="qa-question" contenteditable="true" data-placeholder="Nieuwe vraag…">${escapeHtml(item.q || '')}</div>
+          <div class="qa-answer" contenteditable="true" data-placeholder="Antwoord tijdens sessie...">${escapeHtml(item.a || '')}</div>
+        `;
+        const qEl = el.querySelector('.qa-question');
+        const aEl = el.querySelector('.qa-answer');
+        qEl.addEventListener('input', () => { item.q = qEl.textContent; save(); });
+        aEl.addEventListener('input', () => { item.a = aEl.textContent; save(); });
+        el.querySelector('.qa-x').addEventListener('click', () => {
+          const i = board.questions.indexOf(item);
+          if (i >= 0) { board.questions.splice(i, 1); save(); renderAll(); }
+        });
+        return el;
+      }
+
+      function makeQABoard(board) {
+        const wrap = document.createElement('div');
+        wrap.className = 'session-board';
+        wrap.style.background = 'var(--frame-bg)';
+        wrap.style.borderRadius = '14px';
+        wrap.style.padding = '24px';
+
+        const list = document.createElement('div');
+        list.className = 'qa-list';
+        board.questions.forEach((_, idx) => list.appendChild(makeQAItem(board, idx)));
+
+        const addBtn = document.createElement('button');
+        addBtn.type = 'button';
+        addBtn.className = 'add-qa';
+        addBtn.textContent = '+ Vraag toevoegen';
+        addBtn.addEventListener('click', () => {
+          board.questions.push({ q: '', a: '' });
+          save();
+          renderAll();
+          setTimeout(() => {
+            const items = document.querySelectorAll(`[data-board="${board.id}"] .qa-question`);
+            items[items.length - 1]?.focus();
+          }, 30);
+        });
+
+        wrap.appendChild(list);
+        wrap.appendChild(addBtn);
+        return wrap;
+      }
+
+      function makeSession(board) {
+        const section = document.createElement('section');
+        section.className = 'session';
+        section.dataset.board = board.id;
+        section.innerHTML = `
+          <header class="session-head">
+            <span class="session-num">${escapeHtml(board.nummer || '')}</span>
+            <h2 class="session-title">${escapeHtml(board.label)}</h2>
+          </header>
+          <p class="session-vraag">${escapeHtml(board.vraag)}</p>
+        `;
+
+        if (board.type === 'qa') {
+          section.appendChild(makeQABoard(board));
+        } else {
+          const boardDiv = document.createElement('div');
+          boardDiv.className = 'session-board';
+          const grid = document.createElement('div');
+          grid.className = 'frames-grid';
+          (board.groups || []).forEach(g => grid.appendChild(makeFrame(g)));
+          boardDiv.appendChild(grid);
+          section.appendChild(boardDiv);
+        }
+        return section;
+      }
+
+      function renderAll() {
+        boardsEl.innerHTML = '';
+        state.boards.forEach(b => boardsEl.appendChild(makeSession(b)));
+      }
+
+      function escapeHtml(s) {
+        return String(s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      }
+
+      function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.style.opacity = '1';
+        setTimeout(() => { t.style.opacity = '0'; }, 1800);
+      }
+
+      document.querySelector('[data-action="reset"]').addEventListener('click', () => {
+        if (!confirm('Alle post-its weg en terug naar de pre-fill?')) return;
+        state = clone(SEED);
+        save();
+        renderAll();
+        showToast('Sessie gereset');
+      });
+
+      document.querySelector('[data-action="print"]').addEventListener('click', () => window.print());
+
+      const shareModal = document.getElementById('share-modal');
+      const shareUrl = document.getElementById('share-url');
+      document.querySelector('[data-action="share"]').addEventListener('click', () => {
+        encodeToHash(state);
+        shareUrl.value = location.href;
+        shareModal.setAttribute('data-open', '');
+        setTimeout(() => { shareUrl.select(); }, 50);
+      });
+      document.querySelectorAll('[data-close-modal]').forEach(b => {
+        b.addEventListener('click', () => {
+          shareModal.removeAttribute('data-open');
+          clearHash();
+        });
+      });
+      shareModal.addEventListener('click', (e) => {
+        if (e.target === shareModal) {
+          shareModal.removeAttribute('data-open');
+          clearHash();
+        }
+      });
+      document.getElementById('share-copy').addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(location.href);
+          showToast('Link gekopieerd');
+          shareModal.removeAttribute('data-open');
+          clearHash();
+        } catch {
+          shareUrl.select();
+          document.execCommand('copy');
+          showToast('Link gekopieerd');
+        }
+      });
+
+      renderAll();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { getProducts } from '../lib/content';
+
+const products = await getProducts();
+
+const ldList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Standaardproducten Klarijn',
+  itemListElement: products.map((p, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: { '@type': 'Service', name: p.title, description: p.description },
+  })),
+};
+
+const tags = Array.from(new Set(products.map((p) => p.tag)));
+---
+
+<Layout title="Oplossingen - Klarijn" active="Oplossingen" description="Vaste juridische producten met heldere prijzen.">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(ldList)} />
+  </Fragment>
+
+  <PageHero
+    title="Standaardproducten<br/>met vaste prijzen."
+    lead="Tien praktische producten die de meest gestelde juridische vragen van ondernemers oplossen. Voeg toe aan je lijst en wij maken er een passende offerte van. Geen webshop - wel een gesprek."
+    crumbs={[{ label: 'Home', href: '/home' }, { label: 'Oplossingen' }]}
+  />
+
+  <section class="section-y">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
+      <div class="flex gap-2 flex-wrap mb-10">
+        {tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {products.map((p) => <ProductCard product={p} href={p.slug === 'arbeidscontract' ? '/product' : '#'} />)}
+      </div>
+
+      <div class="text-center mt-14">
+        <p class="text-ink-soft mb-5">Niet helemaal je vraag? Stel hem direct.</p>
+        <a href="/contact" class="btn btn-primary">Vraag het Klarijn <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+</Layout>

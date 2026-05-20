@@ -1,0 +1,104 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"src": "^/_server-islands/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/_image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/abonnement/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/api/revalidate/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/contact/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/franchise/aanpak/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/franchise/beslisboom/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/franchise/contact/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/franchise/vergoedingen/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/franchise/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/home/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/kantoor-zwolle/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/mandje/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/mijn-voortgang/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/oplossingen/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/over-ons/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/product/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/strategie/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/werkwijze/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/404/?$",
+			"dest": "/_isr?x_astro_path=$0"
+		},
+		{
+			"src": "^/.*$",
+			"dest": "_render",
+			"status": 404
+		}
+	]
+}

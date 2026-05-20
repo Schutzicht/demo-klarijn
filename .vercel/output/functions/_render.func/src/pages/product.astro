@@ -1,0 +1,181 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ProductIcon from '../components/ProductIcon.astro';
+import DirkVraagtInline from '../components/DirkVraagtInline.astro';
+import Stamp from '../components/Stamp.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import { getProducts, getProductBySlug } from '../lib/content';
+
+const product = (await getProductBySlug('arbeidscontract'))!;
+const products = await getProducts();
+const related = products.filter((p) => ['handboek-fake','avg-scan','uwv'].includes(p.slug) || p.slug === 'avg-scan' || p.slug === 'uwv').slice(0, 3);
+const samen = products.filter((p) => ['avg-scan','uwv','algemene-voorwaarden'].includes(p.slug));
+
+const ldService = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: product.title,
+  description: 'Volledig en houdbaar arbeidscontract, helder geschreven, cao-conform en geënt op jouw werkwijze.',
+  provider: { '@type': 'LegalService', name: 'Klarijn' },
+  serviceType: 'Arbeidsrecht - Contract opstellen',
+  areaServed: 'NL',
+  offers: { '@type': 'Offer', price: '595', priceCurrency: 'EUR' },
+};
+const ldFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Hoe lang duurt het voor we een contract hebben?', acceptedAnswer: { '@type': 'Answer', text: 'Standaard binnen 5 werkdagen na aanleveren van de gegevens.' } },
+    { '@type': 'Question', name: 'Wat als de cao verandert?', acceptedAnswer: { '@type': 'Answer', text: "Voor abonnementsklanten: gratis update. Voor losse klanten: tegen meerprijs." } },
+    { '@type': 'Question', name: "Werkt dit voor zzp'ers ook?", acceptedAnswer: { '@type': 'Answer', text: "Voor zzp'ers maken we juist een opdracht-overeenkomst." } },
+  ],
+};
+
+const dvPairs = [
+  { who: 'Sander', role: 'eigenaar metaalbedrijf · Tilburg', q: 'Mijn vorige contracten waren van een uitzendbureau. Nu groei ik en wil ik mensen vast in dienst. Werkt dat hetzelfde?', a: 'Nee, een uitzendcontract is een driepartijen-contract - die kun je niet zomaar omzetten. We maken voor jouw vaste mensen een nieuw contract op maat. Belangrijk: cao Metalektro is van toepassing, dus we nemen die mee. Als ze al langer voor je werken, telt die historie mee voor de ketenregeling.' },
+  { who: 'Esther', role: 'manager familiebedrijf · Veenendaal', q: 'Ik wil een concurrentiebeding voor mijn nieuwe verkoper. Mag dat eigenlijk wel?', a: 'Mag, maar de regels zijn per 2025 strenger. In een contract voor onbepaalde tijd kan het, in een tijdelijk contract alleen met zwaarwegende motivatie. We kijken samen wat realistisch standhoudt - een te breed beding houdt later voor de rechter geen stand. Liever iets duidelijks dat wél werkt.' },
+];
+---
+
+<Layout title={`${product.title} - Klarijn`} active="Oplossingen">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(ldService)} />
+    <script type="application/ld+json" set:html={JSON.stringify(ldFaq)} />
+  </Fragment>
+
+  <PageHero
+    title={`${product.title}.`}
+    lead="Een volledig arbeidscontract, helder geschreven, cao-conform en geënt op jouw werkwijze. Geen template van internet - eentje die houdbaar is en die je begrijpt."
+    crumbs={[{ label: 'Home', href: '/home' }, { label: 'Oplossingen', href: '/oplossingen' }, { label: product.title }]}
+    eyebrow="Standaardproduct · Arbeid"
+    stamps={[{ text: 'Vaste prijs · € 595', variant: 'gold', rotate: 6 }]}
+  />
+
+  <section class="section-y">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
+      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-12 lg:gap-16 items-start">
+        <!-- Sticky visual + video -->
+        <div class="lg:sticky lg:top-28" data-reveal>
+          <div class="relative">
+            <div class="aspect-[4/5] bg-aubergine rounded-jumbo overflow-hidden shadow-2xl">
+              <ProductIcon icon={product.icon} />
+            </div>
+            <div class="absolute -top-4 -right-3 z-10">
+              <Stamp text="In 5 dagen" rotate={10} variant="magenta" />
+            </div>
+          </div>
+
+          <div class="mt-5 bg-white rounded-card p-5 flex items-center gap-4 cursor-pointer transition-all hover:bg-aubergine hover:text-white group shadow-sm" tabindex="0" role="button">
+            <div class="w-14 h-14 rounded-full bg-magenta grid place-items-center shrink-0 text-white">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>
+            </div>
+            <div>
+              <strong class="block text-base font-semibold">Bekijk: hoe maken we een contract?</strong>
+              <span class="text-sm opacity-70 group-hover:opacity-90">2:14 - Eline legt uit</span>
+            </div>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="1">
+          <span class="eyebrow">Wat krijg je?</span>
+          <h2 class="display-2 mt-3 mb-5">Een contract dat past<br/>bij <span class="brush--soft">hoe jij werkt</span>.</h2>
+
+          <p class="text-ink-soft text-lg leading-relaxed mb-6">
+            De meeste arbeidscontracten zijn óf zo'n template van internet (en dus juridisch wankel), óf zo'n monster van 14 pagina's geschreven door een advocaat (en dus onleesbaar voor de mensen die hem moeten ondertekenen). Wij doen het anders.
+          </p>
+
+          <ul class="list-none p-0 my-6 space-y-3">
+            {[
+              'Volledig arbeidscontract - onbepaalde tijd, bepaalde tijd of oproepbasis',
+              'Cao-conform: we checken voor jouw branche',
+              'Concurrentie- en relatiebeding (waar dat juridisch standhoudt)',
+              'Geheimhouding & intellectueel eigendom',
+              'Beoordeeld in plain Nederlands - geen advocatenjargon',
+              'Inclusief begeleidende infosheet voor je medewerker',
+            ].map((li) => (
+              <li class="flex items-start gap-3 pb-3 border-b border-ink/10">
+                <span class="mt-1 w-5 h-5 rounded-full bg-magenta shrink-0 grid place-items-center">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="text-base">{li}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="grid grid-cols-3 gap-2 sm:gap-3 my-8">
+            {[
+              { v: '5 dagen', l: 'Doorlooptijd' },
+              { v: '€ 595', l: 'Vaste prijs' },
+              { v: '1 jaar', l: 'Update-recht' },
+            ].map((s) => (
+              <div class="bg-paper-2 rounded-2xl p-4 text-center">
+                <strong class="block font-display text-3xl text-aubergine leading-none mb-1">{s.v}</strong>
+                <span class="text-xs font-semibold uppercase tracking-wider text-ink-soft">{s.l}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="flex gap-3 flex-wrap mt-6 mb-12">
+            <button class="btn btn-primary add-btn"
+                    data-slug={product.slug}
+                    data-title={product.title}
+                    data-tagline={product.tagline}
+                    data-stamp="Genoteerd!">
+              <span class="add-btn__label">Voeg toe aan mijn lijst</span> <span class="arrow">→</span>
+            </button>
+            <a href="/contact" class="btn btn-ghost">Heb je nog vragen?</a>
+          </div>
+
+          <DirkVraagtInline
+            title="Wat ondernemers ons vroegen over arbeidscontracten"
+            pairs={dvPairs}
+          />
+
+          <h3 class="text-2xl font-semibold text-aubergine mt-12 mb-4">Hoe het werkt</h3>
+          <ol class="list-none p-0 space-y-3">
+            {[
+              'Je voegt het product toe aan je lijst en stuurt je gegevens.',
+              'Een vaste jurist uit jouw rayon plant een korte intake (telefoon of video).',
+              'We sturen een eerste concept binnen 5 werkdagen.',
+              'Eén feedbackronde inbegrepen, dan jouw definitieve contract.',
+            ].map((step, i) => (
+              <li class="flex items-start gap-4 pb-3 border-b border-ink/10">
+                <span class="font-display text-3xl text-magenta leading-none shrink-0 w-10">{String(i + 1).padStart(2, '0')}</span>
+                <span class="text-base mt-1">{step}</span>
+              </li>
+            ))}
+          </ol>
+
+          <h3 class="text-2xl font-semibold text-aubergine mt-12 mb-4">Veelgestelde vragen</h3>
+          <div class="grid gap-2.5">
+            {[
+              { q: 'Hoe lang duurt het voor we een contract hebben?', a: 'Standaard binnen 5 werkdagen na aanleveren van de gegevens. Spoed kan, dan binnen 48 uur tegen een spoedtoeslag.' },
+              { q: 'Wat als de cao verandert?', a: 'Voor abonnementsklanten: gratis update. Voor losse klanten: tegen meerprijs. We monitoren actief de relevante cao\'s.' },
+              { q: "Werkt dit voor zzp'ers ook?", a: 'Voor zzp\'ers maken we juist een opdracht-overeenkomst - vergelijkbaar product, vermijdt schijnzelfstandigheid. Vraag het ons als je twijfelt.' },
+              { q: 'Kan ik dit contract zelf nog aanpassen?', a: 'Ja. Je krijgt het in Word én PDF. Voor grote wijzigingen kun je altijd opnieuw bij ons aankloppen - als abonnementsklant gratis voor kleine aanpassingen.' },
+            ].map((f) => (
+              <details class="faq-item">
+                <summary>{f.q}</summary>
+                <div class="px-6 pb-5 text-ink-soft leading-relaxed">{f.a}</div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-paper-2">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
+      <div class="mb-10">
+        <span class="eyebrow">Combineer & Bespaar</span>
+        <h2 class="display-2 mt-3">Vaak samen gevraagd.</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {samen.map((p) => <ProductCard product={p} href="#" />)}
+      </div>
+    </div>
+  </section>
+</Layout>
