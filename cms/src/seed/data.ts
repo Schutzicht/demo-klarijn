@@ -88,6 +88,31 @@ export const siteSettings = {
   companyDescription: 'Helderheid in juridische oplossingen. Voor mkb, familiebedrijven en de maakindustrie.',
 };
 
+export const pageWerkwijze = {
+  heroTitle: 'Hoe wij werken.<br/>Vakmanschap, geen toneel.',
+  heroLead: 'Geen lege beloftes en geen 14-pagina-tellende intakefase. We werken zoals onze klanten werken: handen uit de mouwen, helder, en op resultaat.',
+  introCopy: 'Vier stappen, geen drempels. Bij Klarijn weet je altijd waar je staat.',
+};
+
+export const pageOverOns = {
+  heroTitle: 'Voor doeners.<br/>Door doeners.',
+  heroLead: 'Klarijn is opgericht door juristen die genoeg hadden van de standaard juridische uitstraling: glanzende kantoren, dure suits, uurtjes-factuurtjes. Wij doen het anders.',
+  originStory: 'We werkten allemaal in de juridische advieswereld toen we steeds vaker dezelfde gesprekken hadden. Een ondernemer met een vraag. Een advocaat met een offerte voor een uitgebreid traject. Geen match. Veel ondernemers gingen daarna gewoon op Google zoeken en hoopten op het beste.',
+  valuesIntro: 'Drie dingen die we niet doen, die andere kantoren wel doen.',
+};
+
+export const pageAbonnement = {
+  heroTitle: 'Eén vaste jurist.<br/>Bereikbaar als een huisarts.',
+  heroLead: 'Het Klarijn-abonnement is wat de huisarts is voor je gezondheid: één aanspreekpunt, zonder dat je voor elke vraag een dossier opent. Voor €145 per maand.',
+  perksIntro: 'Wat het abonnement je oplevert.',
+};
+
+export const pageFranchise = {
+  heroTitle: 'Een eigen praktijk.<br/>Met een sterke ploeg achter je.',
+  heroLead: 'In 2026 rolt Klarijn de franchiseformule landelijk uit. Voor juristen die ondernemend zijn, met de voeten in de klei willen staan, en samen sterk willen werken.',
+  pillarsIntro: 'Drie redenen om je aan te sluiten.',
+};
+
 export const homepageContent = {
   heroTitle: 'Vraag het\nKlarijn',
   heroLead: 'Praktisch juridisch advies voor ondernemers met de voeten in de klei. Geen ivoren toren, wel heldere antwoorden van een vaste jurist die jouw zaak kent.',

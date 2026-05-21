@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionDivider from '../components/SectionDivider.astro';
+import { getPageWerkwijze } from '../lib/content';
+
+const page = await getPageWerkwijze();
 
 const stappen = [
   { n: '01', t: 'Vraag', d: 'Bel, mail, klik op "Vraag het Klarijn" of voeg een product toe aan je lijst. Geen account, geen formulier-bureaucratie.' },
@@ -22,8 +25,8 @@ const verwachten = [
 
 <Layout title="Werkwijze - Klarijn" active="Werkwijze">
   <PageHero
-    title="Hoe wij werken.<br/>Vakmanschap, geen toneel."
-    lead="Geen lege beloftes en geen 14-pagina-tellende intakefase. We werken zoals onze klanten werken: handen uit de mouwen, helder, en op resultaat."
+    title={page.heroTitle}
+    lead={page.heroLead}
     crumbs={[{ label: 'Home', href: '/home' }, { label: 'Werkwijze' }]}
     stamps={[{ text: 'Vakmanschap', variant: 'gold', rotate: -10 }]}
   />

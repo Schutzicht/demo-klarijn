@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "page_over_onss",
+  "info": {
+    "singularName": "page-over-ons",
+    "pluralName": "page-over-onss",
+    "displayName": "Pagina: Over ons",
+    "description": "Tekst-content op de pagina /over-ons."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heroTitle": {
+      "type": "string"
+    },
+    "heroLead": {
+      "type": "text"
+    },
+    "originStory": {
+      "type": "text"
+    },
+    "valuesIntro": {
+      "type": "text"
+    }
+  }
+}

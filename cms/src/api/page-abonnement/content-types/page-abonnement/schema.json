@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "page_abonnements",
+  "info": {
+    "singularName": "page-abonnement",
+    "pluralName": "page-abonnements",
+    "displayName": "Pagina: Abonnement",
+    "description": "Tekst-content op de pagina /abonnement."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heroTitle": {
+      "type": "string"
+    },
+    "heroLead": {
+      "type": "text"
+    },
+    "perksIntro": {
+      "type": "text"
+    }
+  }
+}

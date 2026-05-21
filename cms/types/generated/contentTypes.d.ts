@@ -444,8 +444,8 @@ export interface ApiDecisionQuestionDecisionQuestion
   extends Struct.CollectionTypeSchema {
   collectionName: 'decision_questions';
   info: {
-    description: 'Vragen voor de franchise match-test op /franchise/beslisboom.';
-    displayName: 'Match-test vraag';
+    description: 'Vragen voor de franchise match-test op /franchise/beslisboom. Aanpassen vereist voorzichtigheid - de score-logica moet kloppen.';
+    displayName: 'Match-test (franchise)';
     pluralName: 'decision-questions';
     singularName: 'decision-question';
   };
@@ -484,7 +484,7 @@ export interface ApiDirkVraagtDirkVraagt extends Struct.CollectionTypeSchema {
   collectionName: 'dirk_vraagts';
   info: {
     description: 'Vraag-en-antwoord paren voor de Vraag-het-Klarijn sectie op de site.';
-    displayName: 'Vraag het Klarijn (Q&A)';
+    displayName: 'Vraag-het-Klarijn';
     pluralName: 'dirk-vraagts';
     singularName: 'dirk-vraagt';
   };
@@ -504,7 +504,12 @@ export interface ApiDirkVraagtDirkVraagt extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     photo: Schema.Attribute.Media<'images'>;
-    photoUrl: Schema.Attribute.String;
+    photoUrl: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     question: Schema.Attribute.Text & Schema.Attribute.Required;
     role: Schema.Attribute.String;
@@ -557,8 +562,8 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
 export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
   collectionName: 'offices';
   info: {
-    description: 'Kantoorpagina-template. E\u00E9n item per vestiging. Verschijnt op /kantoor-[slug].';
-    displayName: 'Kantoor';
+    description: 'Kantoorpaginas. E\u00E9n item per vestiging. Verschijnt op /kantoor-[plaats].';
+    displayName: 'Kantoren';
     pluralName: 'offices';
     singularName: 'office';
   };
@@ -587,7 +592,138 @@ export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
     quote: Schema.Attribute.Text;
     quoteAuthorName: Schema.Attribute.String;
     serviceAreas: Schema.Attribute.Component<'office.service-area', true>;
-    slug: Schema.Attribute.UID<'name'>;
+    slug: Schema.Attribute.UID<'name'> &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPageAbonnementPageAbonnement
+  extends Struct.SingleTypeSchema {
+  collectionName: 'page_abonnements';
+  info: {
+    description: 'Tekst-content op de pagina /abonnement.';
+    displayName: 'Pagina: Abonnement';
+    pluralName: 'page-abonnements';
+    singularName: 'page-abonnement';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    heroLead: Schema.Attribute.Text;
+    heroTitle: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::page-abonnement.page-abonnement'
+    > &
+      Schema.Attribute.Private;
+    perksIntro: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPageFranchisePageFranchise extends Struct.SingleTypeSchema {
+  collectionName: 'page_franchises';
+  info: {
+    description: 'Tekst-content op de pagina /franchise (homepage van de juristen-zijde).';
+    displayName: 'Pagina: Franchise';
+    pluralName: 'page-franchises';
+    singularName: 'page-franchise';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    heroLead: Schema.Attribute.Text;
+    heroTitle: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::page-franchise.page-franchise'
+    > &
+      Schema.Attribute.Private;
+    pillarsIntro: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPageOverOnsPageOverOns extends Struct.SingleTypeSchema {
+  collectionName: 'page_over_onss';
+  info: {
+    description: 'Tekst-content op de pagina /over-ons.';
+    displayName: 'Pagina: Over ons';
+    pluralName: 'page-over-onss';
+    singularName: 'page-over-ons';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    heroLead: Schema.Attribute.Text;
+    heroTitle: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::page-over-ons.page-over-ons'
+    > &
+      Schema.Attribute.Private;
+    originStory: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    valuesIntro: Schema.Attribute.Text;
+  };
+}
+
+export interface ApiPageWerkwijzePageWerkwijze extends Struct.SingleTypeSchema {
+  collectionName: 'page_werkwijzes';
+  info: {
+    description: 'Tekst-content op de pagina /werkwijze. Layout en stappen blijven in de site, alleen de teksten zijn hier aanpasbaar.';
+    displayName: 'Pagina: Werkwijze';
+    pluralName: 'page-werkwijzes';
+    singularName: 'page-werkwijze';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    heroLead: Schema.Attribute.Text;
+    heroTitle: Schema.Attribute.String;
+    introCopy: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::page-werkwijze.page-werkwijze'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -597,8 +733,8 @@ export interface ApiOfficeOffice extends Struct.CollectionTypeSchema {
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
-    description: 'Standaardproducten in de catalogus. Verschijnt op /oplossingen.';
-    displayName: 'Product';
+    description: 'De standaardproducten in de catalogus. Verschijnt op de pagina Oplossingen.';
+    displayName: 'Producten';
     pluralName: 'products';
     singularName: 'product';
   };
@@ -610,7 +746,13 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
-    displayOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    displayOrder: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: true;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<0>;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     icon: Schema.Attribute.Enumeration<
       [
@@ -649,8 +791,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
 export interface ApiRayonRayon extends Struct.CollectionTypeSchema {
   collectionName: 'rayons';
   info: {
-    description: 'Geografische rayons waar Klarijn actief is of komt. Verschijnt op /franchise.';
-    displayName: 'Rayon';
+    description: 'Geografische rayons waar Klarijn actief is of komt. Verschijnt op de Franchise-pagina.';
+    displayName: 'Rayons';
     pluralName: 'rayons';
     singularName: 'rayon';
   };
@@ -680,7 +822,7 @@ export interface ApiRayonRayon extends Struct.CollectionTypeSchema {
 export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
   collectionName: 'site_settings';
   info: {
-    description: 'Globale instellingen die op meerdere paginas verschijnen. Wijzig hier eenmalig prijzen, contactgegevens of externe links.';
+    description: 'Globale instellingen die op meerdere paginas van de site verschijnen. Wijzig hier eenmalig prijzen, contactgegevens of externe links.';
     displayName: 'Site instellingen';
     pluralName: 'site-settings';
     singularName: 'site-setting';
@@ -722,7 +864,7 @@ export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
 export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
   collectionName: 'team_members';
   info: {
-    description: 'Klarijn-juristen, oprichters en support. Verschijnt op /over-ons en kantoorpaginas.';
+    description: 'Klarijn-juristen, oprichters en support. Verschijnt op Over ons en de kantoorpagina.';
     displayName: 'Team';
     pluralName: 'team-members';
     singularName: 'team-member';
@@ -746,7 +888,12 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
     location: Schema.Attribute.String;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     photo: Schema.Attribute.Media<'images'>;
-    photoUrl: Schema.Attribute.String;
+    photoUrl: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     role: Schema.Attribute.String;
     type: Schema.Attribute.Enumeration<
@@ -762,8 +909,8 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
 export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
   collectionName: 'testimonials';
   info: {
-    description: 'Klant-quotes die verschijnen op homepage, abonnement, kantoorpaginas.';
-    displayName: 'Testimonial';
+    description: 'Quotes die op homepage, abonnement en kantoorpaginas verschijnen.';
+    displayName: 'Klant-quotes';
     pluralName: 'testimonials';
     singularName: 'testimonial';
   };
@@ -785,12 +932,22 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     location: Schema.Attribute.String;
     photo: Schema.Attribute.Media<'images'>;
-    photoUrl: Schema.Attribute.String;
+    photoUrl: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     quote: Schema.Attribute.Text & Schema.Attribute.Required;
     role: Schema.Attribute.String;
     scenePhoto: Schema.Attribute.Media<'images'>;
-    scenePhotoUrl: Schema.Attribute.String;
+    scenePhotoUrl: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1312,6 +1469,10 @@ declare module '@strapi/strapi' {
       'api::dirk-vraagt.dirk-vraagt': ApiDirkVraagtDirkVraagt;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::office.office': ApiOfficeOffice;
+      'api::page-abonnement.page-abonnement': ApiPageAbonnementPageAbonnement;
+      'api::page-franchise.page-franchise': ApiPageFranchisePageFranchise;
+      'api::page-over-ons.page-over-ons': ApiPageOverOnsPageOverOns;
+      'api::page-werkwijze.page-werkwijze': ApiPageWerkwijzePageWerkwijze;
       'api::product.product': ApiProductProduct;
       'api::rayon.rayon': ApiRayonRayon;
       'api::site-setting.site-setting': ApiSiteSettingSiteSetting;

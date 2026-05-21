@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "page_werkwijzes",
+  "info": {
+    "singularName": "page-werkwijze",
+    "pluralName": "page-werkwijzes",
+    "displayName": "Pagina: Werkwijze",
+    "description": "Tekst-content op de pagina /werkwijze. Layout en stappen blijven in de site, alleen de teksten zijn hier aanpasbaar."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heroTitle": {
+      "type": "string"
+    },
+    "heroLead": {
+      "type": "text"
+    },
+    "introCopy": {
+      "type": "text"
+    }
+  }
+}

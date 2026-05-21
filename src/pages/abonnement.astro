@@ -1,12 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import { getPageAbonnement } from '../lib/content';
+
+const page = await getPageAbonnement();
 ---
 
 <Layout title="Het Abonnement - Klarijn" active="Abonnement" description="Eén vaste jurist, de hele werkweek bereikbaar. Voor €145 per maand. Maandelijks opzegbaar.">
   <PageHero
-    title="Eén vaste jurist.<br/>Bereikbaar als een huisarts."
-    lead="Het Klarijn-abonnement is wat de huisarts is voor je gezondheid: één aanspreekpunt, zonder dat je voor elke vraag een dossier opent. Voor €145 per maand."
+    title={page.heroTitle}
+    lead={page.heroLead}
     crumbs={[{ label: 'Home', href: '/home' }, { label: 'Abonnement' }]}
   />
 

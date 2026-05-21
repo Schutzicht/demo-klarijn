@@ -259,5 +259,62 @@ export async function getHomepageContent(): Promise<HomepageContent> {
   };
 }
 
+// ---------- Pagina-content (Werkwijze, Over ons, Abonnement, Franchise) ----------
+// Per pagina alleen de teksten die de redacteur kan wijzigen. Layout en
+// structurele blokken blijven in de Astro-template.
+type PageHeroFields = {
+  heroTitle?: string;
+  heroLead?: string;
+};
+
+export type PageWerkwijze = PageHeroFields & { introCopy?: string };
+export type PageOverOns = PageHeroFields & { originStory?: string; valuesIntro?: string };
+export type PageAbonnement = PageHeroFields & { perksIntro?: string };
+export type PageFranchise = PageHeroFields & { pillarsIntro?: string };
+
+const LOCAL_PAGE_WERKWIJZE: PageWerkwijze = {
+  heroTitle: 'Hoe wij werken.<br/>Vakmanschap, geen toneel.',
+  heroLead: 'Geen lege beloftes en geen 14-pagina-tellende intakefase. We werken zoals onze klanten werken: handen uit de mouwen, helder, en op resultaat.',
+  introCopy: 'Vier stappen, geen drempels. Bij Klarijn weet je altijd waar je staat.',
+};
+const LOCAL_PAGE_OVER_ONS: PageOverOns = {
+  heroTitle: 'Voor doeners.<br/>Door doeners.',
+  heroLead: 'Klarijn is opgericht door juristen die genoeg hadden van de standaard juridische uitstraling: glanzende kantoren, dure suits, uurtjes-factuurtjes. Wij doen het anders.',
+  originStory: 'We werkten allemaal in de juridische advieswereld toen we steeds vaker dezelfde gesprekken hadden. Een ondernemer met een vraag. Een advocaat met een offerte voor een uitgebreid traject. Geen match. Veel ondernemers gingen daarna gewoon op Google zoeken en hoopten op het beste.',
+  valuesIntro: 'Drie dingen die we niet doen, die andere kantoren wel doen.',
+};
+const LOCAL_PAGE_ABONNEMENT: PageAbonnement = {
+  heroTitle: 'Eén vaste jurist.<br/>Bereikbaar als een huisarts.',
+  heroLead: 'Het Klarijn-abonnement is wat de huisarts is voor je gezondheid: één aanspreekpunt, zonder dat je voor elke vraag een dossier opent. Voor €145 per maand.',
+  perksIntro: 'Wat het abonnement je oplevert.',
+};
+const LOCAL_PAGE_FRANCHISE: PageFranchise = {
+  heroTitle: 'Een eigen praktijk.<br/>Met een sterke ploeg achter je.',
+  heroLead: 'In 2026 rolt Klarijn de franchiseformule landelijk uit. Voor juristen die ondernemend zijn, met de voeten in de klei willen staan, en samen sterk willen werken.',
+  pillarsIntro: 'Drie redenen om je aan te sluiten.',
+};
+
+function mapPage<T extends PageHeroFields>(d: any, fallback: T): T {
+  if (!d) return fallback;
+  const out: any = { ...fallback };
+  for (const key of Object.keys(fallback)) {
+    if (d[key] !== undefined && d[key] !== null && d[key] !== '') out[key] = d[key];
+  }
+  return out;
+}
+
+export async function getPageWerkwijze(): Promise<PageWerkwijze> {
+  return mapPage(await fetchSingle<any>('page-werkwijze'), LOCAL_PAGE_WERKWIJZE);
+}
+export async function getPageOverOns(): Promise<PageOverOns> {
+  return mapPage(await fetchSingle<any>('page-over-ons'), LOCAL_PAGE_OVER_ONS);
+}
+export async function getPageAbonnement(): Promise<PageAbonnement> {
+  return mapPage(await fetchSingle<any>('page-abonnement'), LOCAL_PAGE_ABONNEMENT);
+}
+export async function getPageFranchise(): Promise<PageFranchise> {
+  return mapPage(await fetchSingle<any>('page-franchise'), LOCAL_PAGE_FRANCHISE);
+}
+
 // Re-export for callers who want to check
 export { isStrapiEnabled };

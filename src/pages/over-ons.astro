@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import { getPageOverOns } from '../lib/content';
+
+const page = await getPageOverOns();
 
 const team = [
   { src: '/img/eibert.webp', name: 'Eibert Lijnbach', role: 'Mede-oprichter · Arbeidsrecht', bio: 'Ex-bedrijfsjurist in de bouw. Bouwt liever een goed contract dan dat hij er een procedeert.' },
@@ -12,8 +15,8 @@ const team = [
 
 <Layout title="Over Klarijn" active="Over ons" description="Klarijn is opgericht door juristen die genoeg hadden van de ivoren toren.">
   <PageHero
-    title="Voor doeners.<br/>Door doeners."
-    lead="Klarijn is opgericht door juristen die genoeg hadden van de standaard juridische uitstraling: glanzende kantoren, dure suits, uurtjes-factuurtjes. Wij doen het anders."
+    title={page.heroTitle}
+    lead={page.heroLead}
     crumbs={[{ label: 'Home', href: '/home' }, { label: 'Over ons' }]}
   />
 

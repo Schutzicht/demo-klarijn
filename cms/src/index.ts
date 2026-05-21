@@ -9,6 +9,10 @@ import {
   offices,
   siteSettings,
   homepageContent,
+  pageWerkwijze,
+  pageOverOns,
+  pageAbonnement,
+  pageFranchise,
 } from './seed/data';
 
 // Lijst van content-types die publiek leesbaar moeten zijn (vanuit Astro).
@@ -22,6 +26,10 @@ const PUBLIC_READ_TYPES = [
   'api::office.office',
   'api::site-setting.site-setting',
   'api::homepage.homepage',
+  'api::page-werkwijze.page-werkwijze',
+  'api::page-over-ons.page-over-ons',
+  'api::page-abonnement.page-abonnement',
+  'api::page-franchise.page-franchise',
 ];
 
 async function setPublicReadPermissions(strapi: Core.Strapi) {
@@ -142,6 +150,10 @@ const EDITOR_ROLE_CODE = 'strapi-klarijn-editor';
 
 const CRUD_TYPES = [
   'api::homepage.homepage',
+  'api::page-werkwijze.page-werkwijze',
+  'api::page-over-ons.page-over-ons',
+  'api::page-abonnement.page-abonnement',
+  'api::page-franchise.page-franchise',
   'api::product.product',
   'api::team-member.team-member',
   'api::testimonial.testimonial',
@@ -331,6 +343,27 @@ const FIELD_LABELS: Record<string, Record<string, string>> = {
     answerOptions: 'Antwoorden (met score)',
     displayOrder: 'Volgorde',
   },
+  'api::page-werkwijze.page-werkwijze': {
+    heroTitle: 'Hoofdtitel',
+    heroLead: 'Subtekst',
+    introCopy: 'Inleidende tekst boven de stappen',
+  },
+  'api::page-over-ons.page-over-ons': {
+    heroTitle: 'Hoofdtitel',
+    heroLead: 'Subtekst',
+    originStory: 'Ontstaansverhaal',
+    valuesIntro: 'Tekst boven de waarden',
+  },
+  'api::page-abonnement.page-abonnement': {
+    heroTitle: 'Hoofdtitel',
+    heroLead: 'Subtekst',
+    perksIntro: 'Tekst boven de voordelen',
+  },
+  'api::page-franchise.page-franchise': {
+    heroTitle: 'Hoofdtitel',
+    heroLead: 'Subtekst',
+    pillarsIntro: 'Tekst boven de drie pijlers',
+  },
 };
 
 // Schrijft per content-type een metadatas-config in de content-manager store
@@ -480,6 +513,10 @@ export default {
       await seedCollection(strapi, 'api::office.office', offices);
       await seedSingle(strapi, 'api::site-setting.site-setting', siteSettings);
       await seedSingle(strapi, 'api::homepage.homepage', homepageContent);
+      await seedSingle(strapi, 'api::page-werkwijze.page-werkwijze', pageWerkwijze);
+      await seedSingle(strapi, 'api::page-over-ons.page-over-ons', pageOverOns);
+      await seedSingle(strapi, 'api::page-abonnement.page-abonnement', pageAbonnement);
+      await seedSingle(strapi, 'api::page-franchise.page-franchise', pageFranchise);
       await setPublicReadPermissions(strapi);
       await ensureVercelWebhook(strapi);
       await ensureEditorRole(strapi);

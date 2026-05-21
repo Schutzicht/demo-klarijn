@@ -2,6 +2,9 @@
 import Layout from '../../layouts/Layout.astro';
 import DirkVraagtPanel from '../../components/DirkVraagtPanel.astro';
 import AnimatedNumber from '../../components/AnimatedNumber.astro';
+import { getPageFranchise } from '../../lib/content';
+
+const page = await getPageFranchise();
 ---
 
 <Layout
@@ -17,12 +20,9 @@ import AnimatedNumber from '../../components/AnimatedNumber.astro';
       <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-12 lg:gap-20 items-center">
         <div>
           <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft before:content-[''] before:w-6 before:h-0.5 before:bg-magenta" data-reveal>Klarijn Franchise · landelijk vanaf 2026</span>
-          <h1 class="font-display uppercase leading-[0.95] tracking-tight font-normal text-balance text-white mt-5 mb-6" style="font-size: clamp(2rem, 5.5vw, 4.6rem);" data-reveal data-reveal-delay="1">
-            Eigen praktijk.<br/>
-            <span class="brush">Sterke ploeg</span> achter je.
-          </h1>
+          <h1 class="font-display uppercase leading-[0.95] tracking-tight font-normal text-balance text-white mt-5 mb-6" style="font-size: clamp(2rem, 5.5vw, 4.6rem);" data-reveal data-reveal-delay="1" set:html={page.heroTitle}></h1>
           <p class="text-lg md:text-xl text-white/80 max-w-[48ch] mb-10 leading-relaxed" data-reveal data-reveal-delay="2">
-            Voor juristen die willen ondernemen - met de voeten in de klei, in een eigen rayon, en met een backoffice die marketing, automatisering en ondersteuning regelt.
+            {page.heroLead}
           </p>
           <div class="flex gap-3 flex-wrap" data-reveal data-reveal-delay="3">
             <a class="btn btn-primary" href="/franchise/beslisboom">Doe de match-test <span class="arrow">→</span></a>

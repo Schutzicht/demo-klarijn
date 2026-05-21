@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "page_franchises",
+  "info": {
+    "singularName": "page-franchise",
+    "pluralName": "page-franchises",
+    "displayName": "Pagina: Franchise",
+    "description": "Tekst-content op de pagina /franchise (homepage van de juristen-zijde)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heroTitle": {
+      "type": "string"
+    },
+    "heroLead": {
+      "type": "text"
+    },
+    "pillarsIntro": {
+      "type": "text"
+    }
+  }
+}
