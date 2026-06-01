@@ -2,6 +2,8 @@
 
 Concept-website voor Klarijn — juridisch advies voor mkb, familiebedrijven en maakindustrie. Gemaakt op basis van [`Offerteaanvraag Klarijn website.pdf`](./Offerteaanvraag%20Klarijn%20website.pdf).
 
+> Werk je verder aan deze demo na de strategiesessie? Lees eerst [`SESSIE-STATUS.md`](./SESSIE-STATUS.md): wat is aangepast, wat staat nog open, en wat we nog van Klarijn nodig hebben.
+
 ## Stack
 
 - **[Astro 6](https://astro.build/)** — static site generator met view transitions
