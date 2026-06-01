@@ -70,7 +70,7 @@ export const products: Product[] = [
   },
   {
     slug: 'avg-scan',
-    title: 'AVG Compliance Scan',
+    title: 'AVG-Scan',
     tag: 'Privacy',
     tagline: 'Praktische scan + actieplan',
     price: '€ 875',
@@ -99,7 +99,7 @@ export const products: Product[] = [
   {
     slug: 'merk',
     title: 'Merkregistratie Benelux/EU',
-    tag: 'IE / Merken',
+    tag: 'Merken & ideeën',
     tagline: 'Vooronderzoek + registratie + bewaking',
     price: '€ 1.295',
     priceLabel: 'incl. depotkosten',

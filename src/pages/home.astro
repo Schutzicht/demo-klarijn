@@ -260,6 +260,22 @@ const ldFaq = {
     </div>
   </section>
 
+  <!-- ========== GREEP UIT ONZE KLANTEN ========== -->
+  <section class="pb-14 md:pb-16 bg-paper-2">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8 text-center" data-reveal>
+      <span class="eyebrow justify-center">Een greep uit onze klanten</span>
+      <p class="text-ink-soft max-w-prose mx-auto mt-3 mb-7">Ondernemers met de voeten in de klei weten ons te vinden. Een dwarsdoorsnede van de werelden waarvoor we werken:</p>
+      <div class="flex flex-wrap justify-center gap-2.5 md:gap-3">
+        {['Bouw','Maakindustrie','Familiebedrijven','Horeca','Transport & loonwerk','Retail & webshop'].map((sector) => (
+          <span class="inline-flex items-center gap-2 bg-white rounded-full px-5 py-2.5 text-sm font-semibold text-aubergine shadow-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-magenta"></span>{sector}
+          </span>
+        ))}
+      </div>
+      <p class="text-xs text-ink-soft mt-6 mb-0">Met toestemming van onze klanten plaatsen we hier hun logo, geen verzonnen referenties.</p>
+    </div>
+  </section>
+
   <SectionDivider variant="curve-down" from="var(--color-paper-2)" to="var(--color-paper)" />
 
   <!-- ========== FRANCHISE TEASER ========== -->
@@ -278,6 +294,7 @@ const ldFaq = {
             <a href="/franchise" class="btn btn-primary">Ontdek de franchise <span class="arrow">→</span></a>
             <a href="/franchise/beslisboom" class="btn btn-ghost-light">Doe de match-test</a>
           </div>
+          <p class="text-white/55 text-sm mt-5 mb-0">Ook als klant nieuwsgierig? Een kijkje aan de juristenkant laat zien wie er achter Klarijn staat.</p>
         </div>
         <!-- Compact rayon mini-card: clean typography ipv abstracte map -->
         <div class="relative z-10 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-card p-5 md:p-6 max-w-[340px] mx-auto">
