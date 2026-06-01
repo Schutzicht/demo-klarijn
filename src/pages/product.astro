@@ -174,7 +174,7 @@ const dvPairs = [
         <h2 class="display-2 mt-3">Vaak samen gevraagd.</h2>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {samen.map((p) => <ProductCard product={p} href="#" />)}
+        {samen.map((p) => <ProductCard product={p} href={`/oplossing/${p.slug}`} />)}
       </div>
     </div>
   </section>

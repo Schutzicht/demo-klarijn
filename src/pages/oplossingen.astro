@@ -38,7 +38,7 @@ const tags = Array.from(new Set(products.map((p) => p.tag)));
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((p) => <ProductCard product={p} href={p.slug === 'arbeidscontract' ? '/product' : '#'} />)}
+        {products.map((p) => <ProductCard product={p} href={p.slug === 'arbeidscontract' ? '/product' : `/oplossing/${p.slug}`} />)}
       </div>
 
       <div class="text-center mt-14">

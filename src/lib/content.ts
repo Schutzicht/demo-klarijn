@@ -23,6 +23,8 @@ export async function getProducts(): Promise<Product[]> {
     description: d.description,
     icon: d.icon,
     vraag: d.vraag,
+    lead: d.lead,
+    includes: d.includes,
   })) as Product[];
 }
 

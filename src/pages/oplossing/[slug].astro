@@ -1,0 +1,161 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import ProductIcon from '../../components/ProductIcon.astro';
+import Stamp from '../../components/Stamp.astro';
+import { getProducts } from '../../lib/content';
+
+// SEO-landingspagina per oplossing. Geprerenderd: elke oplossing krijgt een
+// eigen statische pagina met diepgang (wat krijg je, praktijkvraag, hoe het werkt),
+// vindbaar in Google op concrete zoekvragen.
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const products = await getProducts();
+  return products.map((p) => ({ params: { slug: p.slug }, props: { product: p, products } }));
+}
+
+const { product, products } = Astro.props;
+const lead = product.lead || product.description;
+const includes = product.includes && product.includes.length
+  ? product.includes
+  : [product.description];
+const related = products.filter((p) => p.slug !== product.slug && p.tag === product.tag).slice(0, 3);
+const fallback = products.filter((p) => p.slug !== product.slug).slice(0, 3);
+const samen = related.length ? related : fallback;
+
+const ldService = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: product.title,
+  description: lead,
+  provider: { '@type': 'LegalService', name: 'Klarijn', areaServed: 'NL' },
+  serviceType: product.tag,
+  areaServed: 'NL',
+};
+const ldFaq = product.vraag
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: product.vraag.q, acceptedAnswer: { '@type': 'Answer', text: product.vraag.a } },
+      ],
+    }
+  : null;
+
+const steps = [
+  'Je voegt deze oplossing toe aan je lijst en stuurt je gegevens.',
+  'Een vaste jurist uit jouw rayon belt je voor een korte intake.',
+  'We bespreken wat past en wat het kost, vooraf en helder.',
+  'We leveren, met ruimte voor je vragen onderweg.',
+];
+---
+
+<Layout title={`${product.title} - Klarijn`} active="Oplossingen" description={lead}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(ldService)} />
+    {ldFaq && <script type="application/ld+json" set:html={JSON.stringify(ldFaq)} />}
+  </Fragment>
+
+  <PageHero
+    title={`${product.title}.`}
+    lead={lead}
+    crumbs={[{ label: 'Home', href: '/home' }, { label: 'Oplossingen', href: '/oplossingen' }, { label: product.title }]}
+    eyebrow={`Oplossing · ${product.tag}`}
+    stamps={[{ text: `${product.price}`, variant: 'gold', rotate: 6 }]}
+  />
+
+  <section class="section-y">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
+      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-12 lg:gap-16 items-start">
+        <!-- Sticky visual -->
+        <div class="lg:sticky lg:top-28" data-reveal>
+          <div class="relative">
+            <div class="aspect-[4/5] bg-aubergine rounded-jumbo overflow-hidden shadow-2xl">
+              <ProductIcon icon={product.icon} />
+            </div>
+            <div class="absolute -top-4 -right-3 z-10">
+              <Stamp text={product.priceLabel} rotate={10} variant="magenta" />
+            </div>
+          </div>
+          <div class="mt-5 bg-paper-2 rounded-card p-6">
+            <span class="text-xs font-semibold uppercase tracking-wider text-ink-soft">Vanaf</span>
+            <strong class="block font-display text-4xl text-aubergine leading-none mt-1">{product.price}</strong>
+            <span class="text-sm text-ink-soft">{product.priceLabel}</span>
+            <button
+              class="btn btn-primary w-full justify-center mt-5 add-btn"
+              data-slug={product.slug}
+              data-title={product.title}
+              data-tagline={product.tagline}
+              data-stamp="Genoteerd!"
+            >
+              <span class="add-btn__label">Voeg toe aan mijn lijst</span> <span class="arrow">→</span>
+            </button>
+            <a href="/contact" class="btn btn-ghost w-full justify-center mt-2">Liever even bellen?</a>
+          </div>
+        </div>
+
+        <div data-reveal data-reveal-delay="1">
+          <span class="eyebrow">Wat krijg je?</span>
+          <h2 class="display-2 mt-3 mb-5">Helder geregeld,<br/><span class="brush--soft">vaste prijs</span>.</h2>
+          <p class="text-ink-soft text-lg leading-relaxed mb-6">{product.description}</p>
+
+          <ul class="list-none p-0 my-6 space-y-3">
+            {includes.map((li) => (
+              <li class="flex items-start gap-3 pb-3 border-b border-ink/10">
+                <span class="mt-1 w-5 h-5 rounded-full bg-magenta shrink-0 grid place-items-center">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="text-base">{li}</span>
+              </li>
+            ))}
+          </ul>
+
+          {product.vraag && (
+            <div class="bg-paper-2 rounded-card p-6 md:p-7 my-8 border-l-4 border-magenta">
+              <span class="inline-flex items-center gap-2 text-[.7rem] font-bold uppercase tracking-[.14em] text-magenta mb-2 before:content-[''] before:w-5 before:h-0.5 before:bg-magenta">Vraag het Klarijn</span>
+              <p class="font-semibold text-aubergine text-lg mb-2">{product.vraag.q}</p>
+              <p class="text-ink-soft leading-relaxed mb-0">{product.vraag.a}</p>
+            </div>
+          )}
+
+          <h3 class="text-2xl font-semibold text-aubergine mt-12 mb-4">Hoe het werkt</h3>
+          <ol class="list-none p-0 space-y-3">
+            {steps.map((step, i) => (
+              <li class="flex items-start gap-4 pb-3 border-b border-ink/10">
+                <span class="font-display text-3xl text-magenta leading-none shrink-0 w-10">{String(i + 1).padStart(2, '0')}</span>
+                <span class="text-base mt-1">{step}</span>
+              </li>
+            ))}
+          </ol>
+
+          <div class="flex gap-3 flex-wrap mt-10">
+            <button
+              class="btn btn-primary add-btn"
+              data-slug={product.slug}
+              data-title={product.title}
+              data-tagline={product.tagline}
+              data-stamp="Genoteerd!"
+            >
+              <span class="add-btn__label">Voeg toe aan mijn lijst</span> <span class="arrow">→</span>
+            </button>
+            <a href="/oplossingen" class="btn btn-ghost">Alle oplossingen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-y bg-paper-2">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
+      <div class="mb-10">
+        <span class="eyebrow">Vaak samen gevraagd</span>
+        <h2 class="display-2 mt-3">Past hier mooi bij.</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {samen.map((p) => <ProductCard product={p} href={`/oplossing/${p.slug}`} />)}
+      </div>
+    </div>
+  </section>
+</Layout>

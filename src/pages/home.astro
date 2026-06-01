@@ -184,7 +184,7 @@ const ldFaq = {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {featured.map((p, i) => (
           <div data-reveal data-reveal-delay={(i % 3) + 1}>
-            <ProductCard product={p} href={p.slug === 'arbeidscontract' ? '/product' : '#'} />
+            <ProductCard product={p} href={p.slug === 'arbeidscontract' ? '/product' : `/oplossing/${p.slug}`} />
           </div>
         ))}
       </div>
