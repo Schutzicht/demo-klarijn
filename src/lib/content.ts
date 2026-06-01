@@ -22,6 +22,7 @@ export async function getProducts(): Promise<Product[]> {
     priceLabel: d.priceLabel,
     description: d.description,
     icon: d.icon,
+    vraag: d.vraag,
   })) as Product[];
 }
 
@@ -284,9 +285,9 @@ const LOCAL_PAGE_OVER_ONS: PageOverOns = {
   valuesIntro: 'Drie dingen die we niet doen, die andere kantoren wel doen.',
 };
 const LOCAL_PAGE_ABONNEMENT: PageAbonnement = {
-  heroTitle: 'Eén vaste jurist.<br/>Bereikbaar als een huisarts.',
-  heroLead: 'Het Klarijn-abonnement is wat de huisarts is voor je gezondheid: één aanspreekpunt, zonder dat je voor elke vraag een dossier opent. Voor €145 per maand.',
-  perksIntro: 'Wat het abonnement je oplevert.',
+  heroTitle: 'Zo reken je af.<br/>Helder, en vooraf.',
+  heroLead: 'Geen uurtje-factuurtje-verrassingen. Voor vaste producten weet je de prijs vooraf, voor de rest kies je een strippenkaart of losse uren. Altijd op basis van afspraken, nooit een verrassing op de factuur.',
+  perksIntro: 'Drie manieren om met Klarijn af te rekenen.',
 };
 const LOCAL_PAGE_FRANCHISE: PageFranchise = {
   heroTitle: 'Een eigen praktijk.<br/>Met een sterke ploeg achter je.',

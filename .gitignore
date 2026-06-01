@@ -32,3 +32,6 @@ cms/public/uploads/
 
 # Vercel adapter output
 .vercel/
+
+# Vertrouwelijke strategiesessie-notulen (nooit publiek serveren/committen)
+public/Strategische sessie*

@@ -7,6 +7,7 @@ interface Props {
   href?: string;
 }
 const { product, href = '/product' } = Astro.props;
+const dialogId = `vraag-${product.slug}`;
 ---
 
 <article class="bg-white rounded-card overflow-hidden flex flex-col shadow-sm hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 relative">
@@ -14,6 +15,18 @@ const { product, href = '/product' } = Astro.props;
     <span class="absolute top-3.5 left-3.5 bg-white text-aubergine px-3 py-1 text-[.72rem] font-bold uppercase tracking-wider rounded-full z-10">
       {product.tag}
     </span>
+    {product.vraag && (
+      <button
+        type="button"
+        class="vraag-btn absolute top-3 right-3 z-10 w-9 h-9 rounded-full grid place-items-center bg-white/15 hover:bg-magenta text-white border border-white/25 hover:border-magenta backdrop-blur-sm transition-all cursor-pointer"
+        data-vraag-open={dialogId}
+        aria-haspopup="dialog"
+        aria-label={`Bekijk een voorbeeldvraag over ${product.title}`}
+        title="Vraag het Klarijn"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </button>
+    )}
     <ProductIcon icon={product.icon} />
   </div>
   <div class="p-6 flex flex-col flex-1">
@@ -39,4 +52,116 @@ const { product, href = '/product' } = Astro.props;
       </button>
     </div>
   </div>
+
+  {product.vraag && (
+    <dialog id={dialogId} class="vraag-dialog">
+      <div class="vraag-dialog__inner">
+        <button type="button" class="vraag-dialog__close" data-vraag-close aria-label="Sluiten">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <span class="inline-flex items-center gap-2 text-[.7rem] font-bold uppercase tracking-[.14em] text-magenta mb-3 before:content-[''] before:w-5 before:h-0.5 before:bg-magenta">Vraag het Klarijn · {product.tag}</span>
+        <p class="vraag-dialog__q">{product.vraag.q}</p>
+        <p class="vraag-dialog__a">{product.vraag.a}</p>
+        <div class="flex flex-wrap gap-3 mt-6">
+          <a href="/contact" class="btn btn-primary">Stel je eigen vraag <span class="arrow">→</span></a>
+          <button type="button" class="btn btn-ghost" data-vraag-close>Sluiten</button>
+        </div>
+      </div>
+    </dialog>
+  )}
 </article>
+
+<style is:global>
+  .vraag-dialog {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: 30rem;
+    width: calc(100% - 2rem);
+    border-radius: 1.25rem;
+    box-shadow: 0 30px 60px -12px rgba(94, 31, 92, 0.35);
+  }
+  .vraag-dialog::backdrop {
+    background: rgba(42, 21, 48, 0.55);
+    backdrop-filter: blur(3px);
+  }
+  .vraag-dialog[open] {
+    animation: vraag-pop 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes vraag-pop {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .vraag-dialog__inner {
+    position: relative;
+    background: #fff;
+    border-radius: 1.25rem;
+    padding: 1.75rem;
+  }
+  .vraag-dialog__close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border-radius: 9999px;
+    border: 1.5px solid rgba(42, 21, 48, 0.12);
+    background: transparent;
+    color: var(--color-ink-soft, #6b5b6e);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .vraag-dialog__close:hover {
+    background: var(--color-magenta, #e0277a);
+    border-color: var(--color-magenta, #e0277a);
+    color: #fff;
+  }
+  .vraag-dialog__q {
+    font-family: var(--font-display, 'Anton'), sans-serif;
+    font-size: 1.45rem;
+    line-height: 1.2;
+    color: var(--color-aubergine, #5e1f5c);
+    margin: 0 0 0.85rem;
+    padding-right: 1.5rem;
+  }
+  .vraag-dialog__a {
+    color: var(--color-ink-soft, #4b3a4e);
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>
+
+<script>
+  function initVraagDialogs() {
+    document.querySelectorAll<HTMLButtonElement>('[data-vraag-open]').forEach((btn) => {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = btn.getAttribute('data-vraag-open');
+        const dlg = id ? document.getElementById(id) : null;
+        if (dlg instanceof HTMLDialogElement) dlg.showModal();
+      });
+    });
+    document.querySelectorAll<HTMLDialogElement>('dialog.vraag-dialog').forEach((dlg) => {
+      if (dlg.dataset.bound) return;
+      dlg.dataset.bound = '1';
+      // Sluitknoppen binnen de dialog
+      dlg.querySelectorAll<HTMLElement>('[data-vraag-close]').forEach((c) => {
+        c.addEventListener('click', () => dlg.close());
+      });
+      // Klik op de backdrop (buiten de witte kaart) sluit
+      dlg.addEventListener('click', (e) => {
+        if (e.target === dlg) dlg.close();
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVraagDialogs);
+  } else {
+    initVraagDialogs();
+  }
+  document.addEventListener('astro:page-load', initVraagDialogs);
+</script>

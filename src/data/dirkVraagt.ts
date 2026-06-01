@@ -68,7 +68,7 @@ export const franchiseVragen: DirkVraag[] = [
     who: 'Rik',
     role: 'Jurist · momenteel in dienst',
     q: 'Wat verdien ik ongeveer in jaar 1 met een nieuw rayon?',
-    a: 'Onze pilot in Zwolle haalde in jaar 1 ~70k aan abonnementen + ~120k aan losse opdrachten. Na fee & backoffice blijft ~120-150k netto. Geen garantie, wel realistisch — we lopen samen door de cijfers.',
+    a: 'Onze pilot in Zwolle haalde in jaar 1 ~70k aan vaste klanten en strippenkaarten plus ~120k aan losse opdrachten. Na fee en backoffice blijft ~120-150k netto. Geen garantie, wel realistisch, we lopen samen door de cijfers.',
     img: px(15),
   },
   {

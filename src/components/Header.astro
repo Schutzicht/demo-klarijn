@@ -14,7 +14,7 @@ const { active = '', variant = 'klant' } = Astro.props;
 const klantNav: NavItem[] = [
   { label: 'Werkwijze', href: '/werkwijze' },
   { label: 'Oplossingen', href: '/oplossingen' },
-  { label: 'Abonnement', href: '/abonnement' },
+  { label: 'Tarieven', href: '/abonnement' },
   { label: 'Over ons', href: '/over-ons' },
   { label: 'Contact', href: '/contact' },
 ];
@@ -55,18 +55,29 @@ const bgClass = isFranchise
       bubbleClass="w-12 md:w-14 lg:w-[58px] h-auto shrink-0 transition-[width] duration-300 group-data-[scrolled]/hdr:w-10 md:group-data-[scrolled]/hdr:w-12"
     />
 
-    <button
-      type="button"
-      class:list={[
-        'lg:hidden border rounded-full px-4 py-2 text-xs font-semibold cursor-pointer transition-all',
-        isFranchise
-          ? 'bg-white/8 hover:bg-white hover:text-aubergine border-white/25 text-white'
-          : 'bg-aubergine/8 hover:bg-aubergine hover:text-white border-aubergine/15 text-aubergine',
-      ]}
-      data-menu-toggle
-      aria-expanded="false"
-      aria-controls="primary-nav"
-    >Menu</button>
+    <div class="flex items-center gap-2 lg:hidden">
+      {!isFranchise && (
+        <a
+          href="tel:0651180138"
+          class="w-10 h-10 rounded-full grid place-items-center bg-magenta text-white shrink-0"
+          aria-label="Bel Klarijn"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </a>
+      )}
+      <button
+        type="button"
+        class:list={[
+          'border rounded-full px-4 py-2 text-xs font-semibold cursor-pointer transition-all',
+          isFranchise
+            ? 'bg-white/8 hover:bg-white hover:text-aubergine border-white/25 text-white'
+            : 'bg-aubergine/8 hover:bg-aubergine hover:text-white border-aubergine/15 text-aubergine',
+        ]}
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="primary-nav"
+      >Menu</button>
+    </div>
 
     <nav
       id="primary-nav"
@@ -103,6 +114,17 @@ const bgClass = isFranchise
           >{item.label}</a>
         );
       })}
+
+      {!isFranchise && (
+        <a
+          href="tel:0651180138"
+          class="hidden lg:inline-flex items-center gap-2 text-sm font-semibold text-magenta hover:text-magenta-deep no-underline px-3 py-2 rounded-full transition-colors"
+          aria-label="Bel Klarijn"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          06 – 51 18 01 38
+        </a>
+      )}
 
       <span class:list={['hidden lg:inline-block w-px h-5 mx-1', isFranchise ? 'bg-white/20' : 'bg-ink/15']} aria-hidden="true"></span>
 

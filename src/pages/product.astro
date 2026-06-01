@@ -28,7 +28,7 @@ const ldFaq = {
   '@type': 'FAQPage',
   mainEntity: [
     { '@type': 'Question', name: 'Hoe lang duurt het voor we een contract hebben?', acceptedAnswer: { '@type': 'Answer', text: 'Standaard binnen 5 werkdagen na aanleveren van de gegevens.' } },
-    { '@type': 'Question', name: 'Wat als de cao verandert?', acceptedAnswer: { '@type': 'Answer', text: "Voor abonnementsklanten: gratis update. Voor losse klanten: tegen meerprijs." } },
+    { '@type': 'Question', name: 'Wat als de cao verandert?', acceptedAnswer: { '@type': 'Answer', text: "We monitoren de relevante cao's. Kleine wijzigingen verwerken we het eerste jaar kosteloos, daarna tegen een vast tarief." } },
     { '@type': 'Question', name: "Werkt dit voor zzp'ers ook?", acceptedAnswer: { '@type': 'Answer', text: "Voor zzp'ers maken we juist een opdracht-overeenkomst." } },
   ],
 };
@@ -152,9 +152,9 @@ const dvPairs = [
           <div class="grid gap-2.5">
             {[
               { q: 'Hoe lang duurt het voor we een contract hebben?', a: 'Standaard binnen 5 werkdagen na aanleveren van de gegevens. Spoed kan, dan binnen 48 uur tegen een spoedtoeslag.' },
-              { q: 'Wat als de cao verandert?', a: 'Voor abonnementsklanten: gratis update. Voor losse klanten: tegen meerprijs. We monitoren actief de relevante cao\'s.' },
+              { q: 'Wat als de cao verandert?', a: 'We monitoren actief de relevante cao\'s. Kleine wijzigingen verwerken we het eerste jaar kosteloos, daarna tegen een vast tarief.' },
               { q: "Werkt dit voor zzp'ers ook?", a: 'Voor zzp\'ers maken we juist een opdracht-overeenkomst - vergelijkbaar product, vermijdt schijnzelfstandigheid. Vraag het ons als je twijfelt.' },
-              { q: 'Kan ik dit contract zelf nog aanpassen?', a: 'Ja. Je krijgt het in Word én PDF. Voor grote wijzigingen kun je altijd opnieuw bij ons aankloppen - als abonnementsklant gratis voor kleine aanpassingen.' },
+              { q: 'Kan ik dit contract zelf nog aanpassen?', a: 'Ja. Je krijgt het in Word én PDF. Voor grote wijzigingen kun je altijd opnieuw bij ons aankloppen, kleine aanpassingen doen we in het eerste jaar kosteloos.' },
             ].map((f) => (
               <details class="faq-item">
                 <summary>{f.q}</summary>
