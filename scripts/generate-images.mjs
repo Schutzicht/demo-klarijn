@@ -167,7 +167,7 @@ const IMAGES = [
     name: "doeners-puntschoenen",
     aspect: "landscape 16:9",
     prompt:
-      "Landscape 16:9. A pair of clean WHITE (off-white / light tan) pointed leather dress shoes (chic, slightly flashy 'puntschoenen'), placed neatly on a tidy light wooden office desk, positioned to the right side of the frame, leaving the left third calm and uncluttered. Bright soft daylight, modern down-to-earth office in the blurred background. Editorial still life. The shoes are NOT in a vice, NOT being ground, NOT damaged, no sparks. Clean and intact. No text, no logos.",
+      "Landscape 16:9, gritty industrial workshop. A pair of WHITE / off-white pointed leather dress shoes ('puntschoenen') clamped tightly IN the steel jaws of a heavy metal bench vise (bankschroef) on a workbench — the shoes are gripped inside the vise jaws, not resting on top. A hand uses an angle grinder on the pointed toe, bright orange sparks flying. Dramatic side light, dark moody workshop background, shoes and vise positioned right-of-centre so the left side stays darker for text. Photorealistic, editorial. No text, no logos, no watermarks.",
   },
   {
     name: "op-uwv",
