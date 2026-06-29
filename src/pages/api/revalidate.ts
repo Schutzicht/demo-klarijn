@@ -11,11 +11,11 @@ export const prerender = false;
 
 const PUBLIC_PATHS = [
   '/',
-  '/home',
+  '/',
   '/oplossingen',
   '/over-ons',
   '/werkwijze',
-  '/abonnement',
+  '/tarieven',
   '/contact',
   '/kantoor-zwolle',
   '/mandje',

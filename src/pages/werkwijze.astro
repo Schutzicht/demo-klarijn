@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionDivider from '../components/SectionDivider.astro';
+import Quote from '../components/Quote.astro';
 import { getPageWerkwijze } from '../lib/content';
 
 const page = await getPageWerkwijze();
@@ -27,7 +28,7 @@ const verwachten = [
   <PageHero
     title={page.heroTitle}
     lead={page.heroLead}
-    crumbs={[{ label: 'Home', href: '/home' }, { label: 'Werkwijze' }]}
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Werkwijze' }]}
     stamps={[{ text: 'Vakmanschap', variant: 'gold', rotate: -10 }]}
   />
 
@@ -119,7 +120,7 @@ const verwachten = [
             t: 'Strippenkaart',
             sub: 'Bundel uren met rek',
             d: 'Voor wie vaker een vraag heeft. Koop een bundel uren, bijvoorbeeld 10, en gebruik ze wanneer je ze nodig hebt. Niet-gebruikte uren houden hun waarde. Geen abonnement, wel een vaste jurist die je kent.',
-            cta: 'Bekijk de tarieven', href: '/abonnement', dark: true,
+            cta: 'Bekijk de tarieven', href: '/tarieven', dark: true,
           },
           {
             t: 'Maatwerktraject',
@@ -143,10 +144,8 @@ const verwachten = [
         ))}
       </div>
 
-      <div class="max-w-[70ch] mx-auto mt-16 text-center" data-reveal>
-        <blockquote class="font-display text-3xl md:text-4xl text-aubergine leading-tight">
-          "Goede advisering komt niet uit een uurtje-factuurtje model.<br/>Komt uit kennis van jouw situatie, branche en plannen."
-        </blockquote>
+      <div class="mt-16" data-reveal>
+        <Quote quote={'Goede advisering komt niet uit een uurtje-factuurtje model.<br/>Ze komt uit kennis van jouw situatie, branche en plannen.'} />
       </div>
     </div>
   </section>

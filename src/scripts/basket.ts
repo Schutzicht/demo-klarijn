@@ -218,7 +218,7 @@ function init() {
           <h3 class="text-2xl font-semibold text-aubergine mb-3">We gaan ermee aan de slag.</h3>
           <p class="text-ink-soft">Je aanvraag is verzonden naar <strong>bestelling@klarijn.nl</strong>.</p>
           <p class="text-ink-soft">Een rayonhouder neemt binnen 1 werkdag contact met je op.</p>
-          <a class="btn btn-ghost mt-4" href="/home">Terug naar de website</a>
+          <a class="btn btn-ghost mt-4" href="/">Terug naar de website</a>
         </div>`;
       clearBasket();
     });

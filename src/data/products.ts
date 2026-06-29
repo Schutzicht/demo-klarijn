@@ -7,6 +7,8 @@ export type Product = {
   priceLabel: string;
   description: string;
   icon: 'contract' | 'gavel' | 'briefcase' | 'document' | 'shield' | 'house' | 'star' | 'handshake' | 'family' | 'folder';
+  /** Sfeerfoto per oplossing (vervangt het oude icoon op kaart + detailpagina). */
+  photo: string;
   /** Bijpassende ondernemersvraag, getoond via het vraag-icoon op de productkaart. */
   vraag?: { q: string; a: string };
   /** Korte hero-lead op de landingspagina (valt terug op description). */
@@ -18,6 +20,7 @@ export type Product = {
 export const products: Product[] = [
   {
     slug: 'arbeidscontract',
+    photo: '/img/oplossing/arbeidscontract.jpg',
     title: 'Arbeidscontract Op Maat',
     tag: 'Arbeid',
     tagline: 'Volledig en cao-conform',
@@ -40,6 +43,7 @@ export const products: Product[] = [
   },
   {
     slug: 'incasso',
+    photo: '/img/oplossing/incasso.jpg',
     title: 'Incasso Pakket',
     tag: 'Geschillen',
     tagline: 'No-cure-no-pay incasso',
@@ -62,6 +66,7 @@ export const products: Product[] = [
   },
   {
     slug: 'overdracht',
+    photo: '/img/oplossing/overdracht.jpg',
     title: 'Bedrijfsoverdracht Familie',
     tag: 'Bedrijf',
     tagline: 'Opvolgingstraject 18 maanden',
@@ -84,6 +89,7 @@ export const products: Product[] = [
   },
   {
     slug: 'algemene-voorwaarden',
+    photo: '/img/oplossing/algemene-voorwaarden.jpg',
     title: 'Algemene Voorwaarden',
     tag: 'Contracten',
     tagline: 'Branchespecifiek + jaar update',
@@ -106,6 +112,7 @@ export const products: Product[] = [
   },
   {
     slug: 'avg-scan',
+    photo: '/img/oplossing/avg-scan.jpg',
     title: 'AVG-Scan',
     tag: 'Privacy',
     tagline: 'Praktische scan + actieplan',
@@ -128,6 +135,7 @@ export const products: Product[] = [
   },
   {
     slug: 'huurovereenkomst',
+    photo: '/img/oplossing/huurovereenkomst.jpg',
     title: 'Huurovereenkomst Bedrijfsruimte',
     tag: 'Vastgoed',
     tagline: 'ROZ-model of maatwerk',
@@ -150,6 +158,7 @@ export const products: Product[] = [
   },
   {
     slug: 'merk',
+    photo: '/img/oplossing/merk.jpg',
     title: 'Merkregistratie Benelux/EU',
     tag: 'Merken & ideeën',
     tagline: 'Vooronderzoek + registratie + bewaking',
@@ -172,6 +181,7 @@ export const products: Product[] = [
   },
   {
     slug: 'aandeelhoudersovereenkomst',
+    photo: '/img/oplossing/aandeelhoudersovereenkomst.jpg',
     title: 'Aandeelhoudersovereenkomst',
     tag: 'Bedrijf',
     tagline: "Structuur + exit-scenario's",
@@ -194,6 +204,7 @@ export const products: Product[] = [
   },
   {
     slug: 'scheiding',
+    photo: '/img/oplossing/scheiding.jpg',
     title: 'Zakelijke Scheiding',
     tag: 'Bedrijf',
     tagline: 'Compagnon of partner uittreden',
@@ -216,6 +227,7 @@ export const products: Product[] = [
   },
   {
     slug: 'uwv',
+    photo: '/img/oplossing/uwv.jpg',
     title: 'Ontslagdossier UWV',
     tag: 'Arbeid',
     tagline: 'Compleet dossier UWV',

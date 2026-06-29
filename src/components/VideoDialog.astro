@@ -1,0 +1,133 @@
+---
+// Gedeelde video-popup. Plaats één keer per pagina; elk element met
+// [data-video-open] opent de popup. Voor nu één placeholder-video die uitlegt
+// hoe Klarijn werkt ("Eline legt uit").
+interface Props {
+  src?: string;
+  poster?: string;
+  title?: string;
+  subtitle?: string;
+}
+const {
+  src = '/video/eline-uitleg.mp4',
+  poster = '/video/eline-uitleg-poster.jpg',
+  title = 'Hoe werkt Klarijn?',
+  subtitle = 'Eline legt het in het kort uit',
+} = Astro.props;
+---
+
+<dialog id="video-dialog" class="video-dialog" aria-label={title}>
+  <div class="video-dialog__inner">
+    <button type="button" class="video-dialog__close" data-video-close aria-label="Sluiten">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="video-dialog__frame">
+      <video
+        id="video-dialog-el"
+        controls
+        playsinline
+        preload="none"
+        poster={poster}
+        class="w-full h-full"
+      >
+        <source src={src} type="video/mp4" />
+      </video>
+    </div>
+    <div class="video-dialog__meta">
+      <span class="inline-flex items-center gap-2 text-[.7rem] font-bold uppercase tracking-[.14em] text-magenta before:content-[''] before:w-5 before:h-0.5 before:bg-magenta">Vraag het Klarijn</span>
+      <strong class="block font-display text-xl text-white mt-1.5 leading-tight">{title}</strong>
+      <span class="text-white/70 text-sm">{subtitle}</span>
+    </div>
+  </div>
+</dialog>
+
+<style is:global>
+  .video-dialog {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: 56rem;
+    width: calc(100% - 2rem);
+    border-radius: 1.25rem;
+  }
+  .video-dialog::backdrop {
+    background: rgba(20, 8, 22, 0.72);
+    backdrop-filter: blur(6px);
+  }
+  .video-dialog[open] {
+    animation: video-pop 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes video-pop {
+    from { opacity: 0; transform: translateY(10px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .video-dialog__inner { position: relative; }
+  .video-dialog__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #14080f;
+    border-radius: 1.1rem;
+    overflow: hidden;
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
+  }
+  .video-dialog__frame video { object-fit: cover; display: block; }
+  .video-dialog__close {
+    position: absolute;
+    top: -3rem;
+    right: 0;
+    width: 2.4rem;
+    height: 2.4rem;
+    display: grid;
+    place-items: center;
+    border-radius: 9999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 2;
+  }
+  .video-dialog__close:hover {
+    background: var(--color-magenta, #e0277a);
+    border-color: var(--color-magenta, #e0277a);
+  }
+  .video-dialog__meta { margin-top: 0.9rem; }
+  @media (max-width: 640px) {
+    .video-dialog__close { top: -2.7rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .video-dialog[open] { animation: none; }
+  }
+</style>
+
+<script>
+  function initVideoDialog() {
+    const dlg = document.getElementById('video-dialog') as HTMLDialogElement | null;
+    if (!dlg) return;
+    const video = document.getElementById('video-dialog-el') as HTMLVideoElement | null;
+
+    document.querySelectorAll<HTMLElement>('[data-video-open]').forEach((btn) => {
+      if (btn.dataset.boundVideo) return;
+      btn.dataset.boundVideo = '1';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        dlg.showModal();
+        if (video) { video.currentTime = 0; video.play().catch(() => {}); }
+      });
+    });
+
+    if (!dlg.dataset.bound) {
+      dlg.dataset.bound = '1';
+      const stop = () => { if (video) { video.pause(); } dlg.close(); };
+      dlg.querySelectorAll<HTMLElement>('[data-video-close]').forEach((c) => c.addEventListener('click', stop));
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) stop(); });
+      dlg.addEventListener('close', () => { if (video) video.pause(); });
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVideoDialog);
+  } else {
+    initVideoDialog();
+  }
+  document.addEventListener('astro:page-load', initVideoDialog);
+</script>

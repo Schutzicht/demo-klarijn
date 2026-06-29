@@ -1,0 +1,66 @@
+---
+import type { Product } from '../data/products';
+interface Props { product: Product; }
+const { product } = Astro.props;
+---
+
+<!-- Sticky koop-balk: blijft hangen zodra je voorbij de hero scrolt.
+     Desktop heeft al een sticky kolom, dus deze balk is voor < lg. -->
+<div
+  id="sticky-buy"
+  class="lg:hidden fixed inset-x-0 bottom-0 z-40 translate-y-full transition-transform duration-300 ease-out"
+  data-sticky-buy
+  aria-hidden="true"
+>
+  <div class="bg-white/95 backdrop-blur-md border-t border-ink/10 shadow-[0_-8px_30px_-12px_rgba(42,21,48,0.35)] px-4 pt-3" style="padding-bottom: max(0.75rem, env(safe-area-inset-bottom));">
+    <div class="max-w-[1240px] mx-auto flex items-center gap-3">
+      <div class="min-w-0 flex-1">
+        <strong class="block text-sm font-semibold text-aubergine leading-tight truncate">{product.title}</strong>
+        <span class="text-xs text-ink-soft">
+          <span class="font-bold text-ink">{product.price}</span> · {product.priceLabel}
+        </span>
+      </div>
+      <button
+        class="btn btn-primary add-btn shrink-0"
+        data-slug={product.slug}
+        data-title={product.title}
+        data-tagline={product.tagline}
+        data-stamp="Genoteerd!"
+      >
+        <span class="add-btn__label">In lijst</span> <span class="arrow">→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  /* Mandje-FAB omhoog duwen zodat hij niet over de sticky koop-balk valt (alleen mobiel). */
+  @media (max-width: 1023px) {
+    body.sticky-buy-on .basket-fab { bottom: 5.75rem; }
+  }
+</style>
+
+<script>
+  function initStickyBuy() {
+    const bar = document.querySelector<HTMLElement>('[data-sticky-buy]');
+    if (!bar || bar.dataset.bound) return;
+    bar.dataset.bound = '1';
+
+    const show = () => { bar.style.transform = 'translateY(0)'; bar.setAttribute('aria-hidden', 'false'); document.body.classList.add('sticky-buy-on'); };
+    const hide = () => { bar.style.transform = ''; bar.setAttribute('aria-hidden', 'true'); document.body.classList.remove('sticky-buy-on'); };
+
+    // Toon zodra je voorbij de eerste schermhoogte bent; verberg weer bovenaan.
+    const onScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.7) show();
+      else hide();
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStickyBuy);
+  } else {
+    initStickyBuy();
+  }
+  document.addEventListener('astro:page-load', initStickyBuy);
+</script>

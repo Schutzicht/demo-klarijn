@@ -2,8 +2,9 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/PageHero.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import ProductIcon from '../../components/ProductIcon.astro';
 import Stamp from '../../components/Stamp.astro';
+import StickyBuyBar from '../../components/StickyBuyBar.astro';
+import VideoDialog from '../../components/VideoDialog.astro';
 import { getProducts } from '../../lib/content';
 
 // SEO-landingspagina per oplossing. Geprerenderd: elke oplossing krijgt een
@@ -61,9 +62,9 @@ const steps = [
   <PageHero
     title={`${product.title}.`}
     lead={lead}
-    crumbs={[{ label: 'Home', href: '/home' }, { label: 'Oplossingen', href: '/oplossingen' }, { label: product.title }]}
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Oplossingen', href: '/oplossingen' }, { label: product.title }]}
     eyebrow={`Oplossing · ${product.tag}`}
-    stamps={[{ text: `${product.price}`, variant: 'gold', rotate: 6 }]}
+    bubble={false}
   />
 
   <section class="section-y">
@@ -72,9 +73,24 @@ const steps = [
         <!-- Sticky visual -->
         <div class="lg:sticky lg:top-28" data-reveal>
           <div class="relative">
-            <div class="aspect-[4/5] bg-aubergine rounded-jumbo overflow-hidden shadow-2xl">
-              <ProductIcon icon={product.icon} />
-            </div>
+            <button
+              type="button"
+              class="block w-full aspect-[4/5] rounded-jumbo overflow-hidden shadow-2xl group relative cursor-pointer"
+              data-video-open
+              aria-label="Bekijk de uitleg-video"
+            >
+              <img src={product.photo} alt={product.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]" />
+              <span class="absolute inset-0 bg-gradient-to-t from-aubergine/55 via-aubergine/5 to-transparent"></span>
+              <span class="absolute inset-0 grid place-items-center">
+                <span class="w-16 h-16 rounded-full bg-white/95 text-magenta grid place-items-center shadow-xl transition-transform duration-200 group-hover:scale-110">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="ml-1"><polygon points="5 3 19 12 5 21"/></svg>
+                </span>
+              </span>
+              <span class="absolute left-4 bottom-4 right-4 text-left text-white">
+                <span class="block text-[.7rem] font-bold uppercase tracking-[.14em] text-magenta-soft">Vraag het Klarijn</span>
+                <span class="block text-sm font-semibold">Eline legt uit hoe dit werkt</span>
+              </span>
+            </button>
             <div class="absolute -top-4 -right-3 z-10">
               <Stamp text={product.priceLabel} rotate={10} variant="magenta" />
             </div>
@@ -158,4 +174,7 @@ const steps = [
       </div>
     </div>
   </section>
+
+  <StickyBuyBar product={product} />
+  <VideoDialog subtitle={`Eline legt uit: ${product.title.toLowerCase()}`} />
 </Layout>

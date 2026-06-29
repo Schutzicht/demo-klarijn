@@ -86,12 +86,16 @@
   /* Display heading utility */
   .display-1 {
     font-family: var(--font-display);
-    @apply uppercase leading-[0.95] tracking-tight font-normal text-balance;
+    @apply uppercase font-normal text-balance;
+    line-height: 1.05;
+    letter-spacing: 0.012em;
     font-size: clamp(2.25rem, 7vw, 6rem);
   }
   .display-2 {
     font-family: var(--font-display);
-    @apply uppercase leading-[0.95] tracking-tight font-normal text-balance;
+    @apply uppercase font-normal text-balance;
+    line-height: 1.04;
+    letter-spacing: 0.01em;
     font-size: clamp(1.85rem, 5vw, 4rem);
   }
 
@@ -200,26 +204,28 @@
     text-decoration-skip-ink: auto;
   }
 
-  /* Decorative stamp badge - like a rubber stamp on a contract */
+  /* Decorative stamp badge - like a rubber stamp on a contract.
+     Solid lichte vulling zodat het label altijd leesbaar blijft, ook boven
+     foto's of donkere/roze vlakken (geen roze-op-roze meer). */
   .stamp {
     display: inline-block;
     font-family: var(--font-display);
     font-size: 0.95rem;
     color: var(--color-magenta);
-    border: 3px double currentColor;
-    padding: 0.4em 0.9em;
-    border-radius: 4px;
-    background: transparent;
+    border: 2.5px solid var(--color-magenta);
+    padding: 0.45em 0.95em;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.96);
     letter-spacing: 0.02em;
     text-transform: uppercase;
     line-height: 1;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    box-shadow: 0 6px 18px -6px rgba(42, 21, 48, 0.4);
     user-select: none;
     pointer-events: none;
     text-wrap: nowrap;
   }
-  .stamp--gold { color: var(--color-gold); }
-  .stamp--purple { color: var(--color-aubergine); }
+  .stamp--gold { color: var(--color-gold); border-color: var(--color-gold); }
+  .stamp--purple { color: var(--color-aubergine); border-color: var(--color-aubergine); }
 
   /* FAQ item */
   .faq-item {

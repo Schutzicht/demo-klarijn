@@ -2,10 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import ProductCard from '../components/ProductCard.astro';
-import ProductIcon from '../components/ProductIcon.astro';
 import DirkVraagtInline from '../components/DirkVraagtInline.astro';
 import Stamp from '../components/Stamp.astro';
-import SectionDivider from '../components/SectionDivider.astro';
+import StickyBuyBar from '../components/StickyBuyBar.astro';
+import VideoDialog from '../components/VideoDialog.astro';
 import { getProducts, getProductBySlug } from '../lib/content';
 
 const product = (await getProductBySlug('arbeidscontract'))!;
@@ -48,9 +48,9 @@ const dvPairs = [
   <PageHero
     title={`${product.title}.`}
     lead="Een volledig arbeidscontract, helder geschreven, cao-conform en geënt op jouw werkwijze. Geen template van internet - eentje die houdbaar is en die je begrijpt."
-    crumbs={[{ label: 'Home', href: '/home' }, { label: 'Oplossingen', href: '/oplossingen' }, { label: product.title }]}
-    eyebrow="Standaardproduct · Arbeid"
-    stamps={[{ text: 'Vaste prijs · € 595', variant: 'gold', rotate: 6 }]}
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Oplossingen', href: '/oplossingen' }, { label: product.title }]}
+    eyebrow="Oplossing · Arbeidsrecht"
+    bubble={false}
   />
 
   <section class="section-y">
@@ -59,23 +59,34 @@ const dvPairs = [
         <!-- Sticky visual + video -->
         <div class="lg:sticky lg:top-28" data-reveal>
           <div class="relative">
-            <div class="aspect-[4/5] bg-aubergine rounded-jumbo overflow-hidden shadow-2xl">
-              <ProductIcon icon={product.icon} />
-            </div>
+            <button
+              type="button"
+              class="block w-full aspect-[4/5] rounded-jumbo overflow-hidden shadow-2xl group relative cursor-pointer"
+              data-video-open
+              aria-label="Bekijk de uitleg-video"
+            >
+              <img src={product.photo} alt={product.title} class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]" />
+              <span class="absolute inset-0 bg-gradient-to-t from-aubergine/55 via-aubergine/5 to-transparent"></span>
+              <span class="absolute inset-0 grid place-items-center">
+                <span class="w-16 h-16 rounded-full bg-white/95 text-magenta grid place-items-center shadow-xl transition-transform duration-200 group-hover:scale-110">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="ml-1"><polygon points="5 3 19 12 5 21"/></svg>
+                </span>
+              </span>
+            </button>
             <div class="absolute -top-4 -right-3 z-10">
               <Stamp text="In 5 dagen" rotate={10} variant="magenta" />
             </div>
           </div>
 
-          <div class="mt-5 bg-white rounded-card p-5 flex items-center gap-4 cursor-pointer transition-all hover:bg-aubergine hover:text-white group shadow-sm" tabindex="0" role="button">
-            <div class="w-14 h-14 rounded-full bg-magenta grid place-items-center shrink-0 text-white">
+          <button type="button" data-video-open class="w-full text-left mt-5 bg-white rounded-card p-5 flex items-center gap-4 cursor-pointer transition-all hover:bg-aubergine hover:text-white group shadow-sm">
+            <span class="w-14 h-14 rounded-full bg-magenta grid place-items-center shrink-0 text-white">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>
-            </div>
-            <div>
+            </span>
+            <span class="block">
               <strong class="block text-base font-semibold">Bekijk: hoe maken we een contract?</strong>
               <span class="text-sm opacity-70 group-hover:opacity-90">2:14 - Eline legt uit</span>
-            </div>
-          </div>
+            </span>
+          </button>
         </div>
 
         <div data-reveal data-reveal-delay="1">
@@ -178,4 +189,7 @@ const dvPairs = [
       </div>
     </div>
   </section>
+
+  <StickyBuyBar product={product} />
+  <VideoDialog title="Hoe maken we jouw arbeidscontract?" subtitle="Eline legt het in het kort uit" />
 </Layout>

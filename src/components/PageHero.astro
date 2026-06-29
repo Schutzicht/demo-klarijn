@@ -8,8 +8,10 @@ interface Props {
   crumbs?: Crumb[];
   eyebrow?: string;
   stamps?: { text: string; rotate?: number; variant?: 'magenta' | 'gold' | 'purple' }[];
+  /** Decoratieve spraakbubbel in de hoek tonen (uit voor rustige detail-hero's). */
+  bubble?: boolean;
 }
-const { title, lead, crumbs = [], eyebrow, stamps = [] } = Astro.props;
+const { title, lead, crumbs = [], eyebrow, stamps = [], bubble = true } = Astro.props;
 ---
 
 <section class="bg-aubergine text-white relative overflow-hidden">
@@ -19,7 +21,9 @@ const { title, lead, crumbs = [], eyebrow, stamps = [] } = Astro.props;
        style="background: radial-gradient(circle, rgba(232,180,71,.15) 0%, transparent 70%);"></div>
 
   <!-- Decorative speech bubble in corner -->
-  <img src="/img/vraag-het-bubble.webp" alt="" aria-hidden="true" class="absolute right-8 top-8 w-20 md:w-24 h-auto opacity-25 hidden md:block rotate-12" />
+  {bubble && (
+    <img src="/img/vraag-het-bubble.webp" alt="" aria-hidden="true" class="absolute right-8 top-8 w-20 md:w-24 h-auto opacity-25 hidden md:block rotate-12" />
+  )}
 
   {stamps.length > 0 && stamps.map((s, i) => (
     <div class={`absolute z-20 hidden lg:block ${i === 0 ? 'top-12 right-[8%]' : i === 1 ? 'bottom-16 right-[20%]' : 'bottom-12 left-[40%]'}`}>

@@ -17,7 +17,7 @@ const team = [
   <PageHero
     title={page.heroTitle}
     lead={page.heroLead}
-    crumbs={[{ label: 'Home', href: '/home' }, { label: 'Over ons' }]}
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Over ons' }]}
   />
 
   <section class="section-y">
@@ -66,7 +66,7 @@ const team = [
   <section class="pb-4">
     <div class="max-w-[1240px] mx-auto px-4 md:px-8">
       <figure class="relative rounded-jumbo overflow-hidden aspect-[16/9] md:aspect-[16/7]" data-reveal>
-        <img src="/img/doeners-puntschoenen.webp" alt="Nette leren schoenen in een bankschroef waarvan de punten worden afgeslepen, met vonken in een werkplaats" loading="lazy" class="absolute inset-0 w-full h-full object-cover" />
+        <img src="/img/doeners-puntschoenen.webp" alt="Een paar nette witte puntschoenen op een bureau" loading="lazy" class="absolute inset-0 w-full h-full object-cover" />
         <div class="absolute inset-0" style="background: linear-gradient(90deg, rgba(20,8,15,0.78) 0%, rgba(20,8,15,0.30) 52%, transparent 100%);"></div>
         <figcaption class="relative z-10 h-full flex items-end p-6 md:p-10">
           <div class="max-w-[36ch] text-white">
@@ -78,28 +78,34 @@ const team = [
     </div>
   </section>
 
-  <!-- ========== MOMENTS — emotional band ========== -->
-  <section class="py-12 md:py-16 bg-paper">
-    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4" data-reveal>
-        <figure class="relative aspect-[4/5] md:aspect-square rounded-card overflow-hidden col-span-2 md:col-span-2 md:row-span-2 md:aspect-auto md:h-full">
-          <img src="/img/stock/scene-handshake.jpg" alt="Twee mensen schudden elkaar de hand na een advies" loading="lazy" class="absolute inset-0 w-full h-full object-cover" />
-          <figcaption class="absolute bottom-0 left-0 right-0 p-5 md:p-7 bg-gradient-to-t from-black/70 via-black/30 to-transparent text-white">
+  <!-- ========== MOMENTS — organische galerij ========== -->
+  <section class="py-14 md:py-24 bg-paper overflow-hidden">
+    <div class="max-w-[1180px] mx-auto px-4 md:px-8">
+      <div class="max-w-[44ch] mb-10 md:mb-14" data-reveal>
+        <span class="eyebrow">In de praktijk</span>
+        <h2 class="display-2 mt-3">Zo voelt werken<br/>met Klarijn.</h2>
+      </div>
+
+      <!-- Masonry: organisch verspringend, niet als strak blok -->
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-5 md:gap-7 [&>figure]:mb-5 md:[&>figure]:mb-7">
+        <figure class="break-inside-avoid relative rounded-jumbo overflow-hidden shadow-sm aspect-[4/5]" data-reveal>
+          <img src="/img/stock/scene-handshake.jpg" alt="Twee mensen schudden elkaar de hand na een advies" loading="lazy" class="w-full h-full object-cover" />
+          <figcaption class="absolute bottom-0 left-0 right-0 p-5 md:p-6 bg-gradient-to-t from-black/75 via-black/25 to-transparent text-white">
             <span class="text-[.65rem] font-bold uppercase tracking-[.18em] text-magenta-soft">Afspraak gemaakt</span>
             <p class="font-display text-2xl md:text-3xl leading-tight mt-1 mb-0">Geen uitstel. Wel het juiste antwoord.</p>
           </figcaption>
         </figure>
-        <figure class="relative aspect-square rounded-card overflow-hidden">
-          <img src="/img/stock/scene-laughing.jpg" alt="Tevreden klant lacht na een gesprek" loading="lazy" class="w-full h-full object-cover" />
-        </figure>
-        <figure class="relative aspect-square rounded-card overflow-hidden">
-          <img src="/img/stock/scene-discussion.jpg" alt="Jurist legt iets uit aan de hand van een document" loading="lazy" class="w-full h-full object-cover" />
-        </figure>
-        <figure class="relative aspect-square rounded-card overflow-hidden">
+        <figure class="break-inside-avoid relative rounded-jumbo overflow-hidden shadow-sm aspect-square sm:mt-10" data-reveal data-reveal-delay="1">
           <img src="/img/stock/scene-coffee.jpg" alt="Open gesprek bij een kop koffie" loading="lazy" class="w-full h-full object-cover" />
         </figure>
-        <figure class="relative aspect-square rounded-card overflow-hidden">
-          <img src="/img/stock/scene-conversation.jpg" alt="Overleg aan tafel" loading="lazy" class="w-full h-full object-cover" />
+        <figure class="break-inside-avoid relative rounded-jumbo overflow-hidden shadow-sm aspect-[3/4]" data-reveal data-reveal-delay="2">
+          <img src="/img/stock/scene-conversation.jpg" alt="Overleg aan tafel met een familiebedrijf" loading="lazy" class="w-full h-full object-cover" />
+        </figure>
+        <figure class="break-inside-avoid relative rounded-jumbo overflow-hidden shadow-sm aspect-[4/3]" data-reveal data-reveal-delay="1">
+          <img src="/img/stock/scene-discussion.jpg" alt="Jurist legt iets uit aan de hand van een document" loading="lazy" class="w-full h-full object-cover" />
+        </figure>
+        <figure class="break-inside-avoid relative rounded-jumbo overflow-hidden shadow-sm aspect-[4/5] sm:-mt-2" data-reveal data-reveal-delay="2">
+          <img src="/img/stock/scene-laughing.jpg" alt="Tevreden klant na een gesprek" loading="lazy" class="w-full h-full object-cover" />
         </figure>
       </div>
     </div>

@@ -1,6 +1,5 @@
 ---
 import type { Product } from '../data/products';
-import ProductIcon from './ProductIcon.astro';
 
 interface Props {
   product: Product;
@@ -10,15 +9,23 @@ const { product, href = '/product' } = Astro.props;
 const dialogId = `vraag-${product.slug}`;
 ---
 
-<article class="bg-white rounded-card overflow-hidden flex flex-col shadow-sm hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 relative">
+<article class="group bg-white rounded-card overflow-hidden flex flex-col shadow-sm hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 relative">
   <div class="aspect-[5/3] bg-aubergine relative overflow-hidden">
-    <span class="absolute top-3.5 left-3.5 bg-white text-aubergine px-3 py-1 text-[.72rem] font-bold uppercase tracking-wider rounded-full z-10">
+    <img
+      src={product.photo}
+      alt={product.title}
+      loading="lazy"
+      decoding="async"
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+    />
+    <span class="absolute inset-0 bg-gradient-to-t from-aubergine/30 via-transparent to-transparent pointer-events-none"></span>
+    <span class="absolute top-3.5 left-3.5 bg-white/95 text-aubergine px-3 py-1 text-[.72rem] font-bold uppercase tracking-wider rounded-full z-10 shadow-sm">
       {product.tag}
     </span>
     {product.vraag && (
       <button
         type="button"
-        class="vraag-btn absolute top-3 right-3 z-10 w-9 h-9 rounded-full grid place-items-center bg-white/15 hover:bg-magenta text-white border border-white/25 hover:border-magenta backdrop-blur-sm transition-all cursor-pointer"
+        class="vraag-btn absolute top-3 right-3 z-10 w-9 h-9 rounded-full grid place-items-center bg-aubergine/55 hover:bg-magenta text-white border border-white/40 hover:border-magenta backdrop-blur-sm transition-all cursor-pointer"
         data-vraag-open={dialogId}
         aria-haspopup="dialog"
         aria-label={`Bekijk een voorbeeldvraag over ${product.title}`}
@@ -27,11 +34,10 @@ const dialogId = `vraag-${product.slug}`;
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       </button>
     )}
-    <ProductIcon icon={product.icon} />
   </div>
   <div class="p-6 flex flex-col flex-1">
     <h3 class="text-xl font-semibold text-ink mb-2.5">
-      <a href={href} class="text-ink no-underline hover:text-magenta transition-colors">
+      <a href={href} class="text-ink no-underline hover:text-magenta transition-colors after:content-[''] after:absolute after:inset-0 after:z-0">
         {product.title}
       </a>
     </h3>
@@ -42,7 +48,7 @@ const dialogId = `vraag-${product.slug}`;
         {product.priceLabel}
       </span>
       <button
-        class="add-btn"
+        class="add-btn relative z-10"
         data-slug={product.slug}
         data-title={product.title}
         data-tagline={product.tagline}

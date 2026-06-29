@@ -14,7 +14,7 @@ const { active = '', variant = 'klant' } = Astro.props;
 const klantNav: NavItem[] = [
   { label: 'Werkwijze', href: '/werkwijze' },
   { label: 'Oplossingen', href: '/oplossingen' },
-  { label: 'Tarieven', href: '/abonnement' },
+  { label: 'Tarieven', href: '/tarieven' },
   { label: 'Over ons', href: '/over-ons' },
   { label: 'Contact', href: '/contact' },
 ];
@@ -25,9 +25,9 @@ const franchiseNav: NavItem[] = [
   { label: 'Contact', href: '/franchise/contact' },
 ];
 const items = variant === 'franchise' ? franchiseNav : klantNav;
-const otherSideHref = variant === 'franchise' ? '/home' : '/franchise';
+const otherSideHref = variant === 'franchise' ? '/' : '/franchise';
 const otherSideLabel = variant === 'franchise' ? '← Klant-website' : 'Voor juristen';
-const homeHref = variant === 'franchise' ? '/franchise' : '/home';
+const homeHref = variant === 'franchise' ? '/franchise' : '/';
 const isFranchise = variant === 'franchise';
 
 // Header background bij scroll: licht-glass op klant (cream body),

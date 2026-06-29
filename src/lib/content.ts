@@ -287,8 +287,8 @@ const LOCAL_PAGE_OVER_ONS: PageOverOns = {
   valuesIntro: 'Drie dingen die we niet doen, die andere kantoren wel doen.',
 };
 const LOCAL_PAGE_ABONNEMENT: PageAbonnement = {
-  heroTitle: 'Zo reken je af.<br/>Helder, en vooraf.',
-  heroLead: 'Geen uurtje-factuurtje-verrassingen. Voor vaste producten weet je de prijs vooraf, voor de rest kies je een strippenkaart of losse uren. Altijd op basis van afspraken, nooit een verrassing op de factuur.',
+  heroTitle: 'Heldere tarieven.<br/>Geen verrassingen achteraf.',
+  heroLead: 'Geen uurtje-factuurtje-verrassingen. Voor vaste producten ken je de prijs van tevoren, voor de rest kies je een strippenkaart of losse uren. Altijd op basis van afspraken, en je rekent nooit af via de site.',
   perksIntro: 'Drie manieren om met Klarijn af te rekenen.',
 };
 const LOCAL_PAGE_FRANCHISE: PageFranchise = {
