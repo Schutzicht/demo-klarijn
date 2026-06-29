@@ -8,10 +8,10 @@ interface Props {
   crumbs?: Crumb[];
   eyebrow?: string;
   stamps?: { text: string; rotate?: number; variant?: 'magenta' | 'gold' | 'purple' }[];
-  /** Decoratieve spraakbubbel in de hoek tonen (uit voor rustige detail-hero's). */
+  /** Decoratieve spraakbubbel in de hoek tonen (standaard uit: rustige hero's). */
   bubble?: boolean;
 }
-const { title, lead, crumbs = [], eyebrow, stamps = [], bubble = true } = Astro.props;
+const { title, lead, crumbs = [], eyebrow, stamps = [], bubble = false } = Astro.props;
 ---
 
 <section class="bg-aubergine text-white relative overflow-hidden">

@@ -265,58 +265,26 @@ const ldFaq = {
 
   <SectionDivider variant="curve-down" from="var(--color-paper-2)" to="var(--color-paper)" />
 
-  <!-- ========== FRANCHISE TEASER ========== -->
+  <!-- ========== SLOT-CTA ========== -->
   <section class="section-y bg-paper">
     <div class="max-w-[1240px] mx-auto px-4 md:px-8">
-      <div class="relative text-white rounded-jumbo p-8 md:p-14 grid lg:grid-cols-[1.2fr_.8fr] gap-8 items-center overflow-hidden"
-           style="background-color: #14080F;"
-           data-reveal>
-        <div class="relative z-10">
-          <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-magenta mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-magenta">Voor juristen - Franchise</span>
-          <h2 class="text-white display-2 mt-3 mb-4">Een eigen praktijk.<br/>Met een sterke ploeg achter je.</h2>
-          <p class="text-white/85 text-lg max-w-[55ch] leading-relaxed">
-            In 2026 rolt Klarijn de franchiseformule landelijk uit. Voor juristen die ondernemend zijn, met de voeten in de klei willen staan, en samen sterk willen werken - met een backoffice die marketing, automatisering en specialisme regelt.
+      <div class="relative bg-aubergine text-white rounded-jumbo p-8 md:p-16 overflow-hidden text-center" data-reveal>
+        <div class="absolute -top-32 -right-28 w-96 h-96 pointer-events-none rounded-full opacity-30"
+             style="background: radial-gradient(circle, var(--color-magenta) 0%, transparent 70%);"></div>
+        <div class="relative z-10 max-w-[640px] mx-auto">
+          <span class="inline-flex items-center gap-2 justify-center text-xs font-semibold uppercase tracking-[.14em] text-magenta-soft mb-3 before:content-[''] before:w-6 before:h-0.5 before:bg-magenta-soft">Een vraag? Stel hem gewoon</span>
+          <h2 class="text-white display-2 mt-2 mb-4">Vraag het Klarijn.</h2>
+          <p class="text-white/85 text-lg leading-relaxed mb-8">
+            Bel, mail of zet je vraag op de lijst. Een vaste jurist uit jouw rayon denkt met je mee, helder en zonder verplichtingen.
           </p>
-          <div class="flex gap-3 flex-wrap mt-6">
-            <a href="/franchise" class="btn btn-primary">Ontdek de franchise <span class="arrow">→</span></a>
-            <a href="/franchise/beslisboom" class="btn btn-ghost-light">Doe de match-test</a>
+          <div class="flex gap-3 flex-wrap justify-center">
+            <a href="/contact" class="btn btn-primary">Stel je vraag <span class="arrow">→</span></a>
+            <a href="/oplossingen" class="btn btn-ghost-light">Bekijk oplossingen</a>
           </div>
-          <p class="text-white/55 text-sm mt-5 mb-0">Ook als klant nieuwsgierig? Een kijkje aan de juristenkant laat zien wie er achter Klarijn staat.</p>
+          <p class="text-white/60 text-sm mt-7 mb-0">
+            Al klant bij Klarijn? <a href="/mijn-voortgang" class="text-magenta-soft underline underline-offset-4 hover:text-white">Bekijk de voortgang van je dossier</a>
+          </p>
         </div>
-        <!-- Compact rayon mini-card: clean typography ipv abstracte map -->
-        <div class="relative z-10 bg-white/[0.06] backdrop-blur-md border border-white/10 rounded-card p-5 md:p-6 max-w-[340px] mx-auto">
-          <div class="flex items-baseline justify-between mb-3">
-            <span class="font-display text-xl text-white leading-none">Rayons</span>
-            <span class="text-[.62rem] font-bold uppercase tracking-[.18em] text-magenta">Landelijke dekking</span>
-          </div>
-          <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
-            <span class="inline-flex items-center gap-2 text-magenta font-semibold">
-              <span class="relative flex w-1.5 h-1.5">
-                <span class="animate-ping absolute inset-0 rounded-full bg-magenta opacity-70"></span>
-                <span class="relative w-1.5 h-1.5 rounded-full bg-magenta"></span>
-              </span>
-              Zwolle <span class="text-white/50 text-xs">· pilot</span>
-            </span>
-            {['Rotterdam','Eindhoven','Amsterdam','Groningen','Maastricht','Breda','Utrecht'].map((c) => (
-              <span class="text-white/85">{c}</span>
-            ))}
-            <span class="text-white/55">+ 6 anderen</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== MIJN VOORTGANG ========== -->
-  <section class="section-y bg-paper">
-    <div class="max-w-[1240px] mx-auto px-4 md:px-8">
-      <div class="bg-paper-2 rounded-card p-7 md:p-8 flex flex-wrap justify-between items-center gap-6" data-reveal>
-        <div>
-          <span class="eyebrow">Klant bij Klarijn?</span>
-          <h3 class="text-2xl font-semibold text-aubergine mt-1 mb-1">Bekijk de voortgang van je dossier</h3>
-          <p class="text-ink-soft m-0">Direct naar het klantportaal - beheerd door Klarijn.</p>
-        </div>
-        <a href="/mijn-voortgang" class="btn btn-purple">Mijn Voortgang <span class="arrow">→</span></a>
       </div>
     </div>
   </section>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import Quote from '../components/Quote.astro';
 import { getPageOverOns } from '../lib/content';
 
 const page = await getPageOverOns();
@@ -21,44 +22,60 @@ const team = [
   />
 
   <section class="section-y">
-    <div class="max-w-[70ch] mx-auto px-4 md:px-8">
-      <h2 class="display-2 mb-5">Onze oorsprong</h2>
-      <p class="text-lg text-ink-soft leading-relaxed mb-5">
-        We werkten allemaal in de juridische advieswereld toen we steeds vaker dezelfde gesprekken hadden. Een ondernemer met een vraag. Een advocaat met een offerte voor een uitgebreid traject. Geen match. Veel ondernemers gingen daarna gewoon op Google zoeken - en hoopten op het beste.
-      </p>
-      <p class="text-lg text-ink-soft leading-relaxed mb-8">
-        Dat kan beter, dachten we. Dat is wat we hier hebben gebouwd: <mark class="bg-magenta-soft/60 px-1">een werkplaats voor juridisch advies</mark>. Geen ivoren toren, maar een plek waar je gewoon je vraag stelt en een eerlijk antwoord krijgt. Met heldere prijzen, vaste producten, en een vast aanspreekpunt.
-      </p>
+    <div class="max-w-[1080px] mx-auto px-4 md:px-8">
+      <!-- Editorial split: kop links, verhaal rechts -->
+      <div class="grid md:grid-cols-[1fr_1.7fr] gap-5 md:gap-14 mb-14 md:mb-20" data-reveal>
+        <h2 class="display-2">Onze<br/>oorsprong</h2>
+        <div class="space-y-5 text-lg text-ink-soft leading-relaxed">
+          <p class="m-0">We werkten allemaal in de juridische advieswereld toen we steeds vaker dezelfde gesprekken hadden. Een ondernemer met een vraag. Een advocaat met een offerte voor een uitgebreid traject. Geen match. Veel ondernemers gingen daarna gewoon op Google zoeken - en hoopten op het beste.</p>
+          <p class="m-0">Dat kan beter, dachten we. Dat is wat we hier hebben gebouwd: <mark class="bg-magenta-soft/60 px-1">een werkplaats voor juridisch advies</mark>. Geen ivoren toren, maar een plek waar je gewoon je vraag stelt en een eerlijk antwoord krijgt. Met heldere prijzen, vaste producten, en een vast aanspreekpunt.</p>
+        </div>
+      </div>
 
-      <h2 class="display-2 mt-12 mb-5">Oplossen, niet winnen</h2>
-      <p class="text-lg text-ink-soft leading-relaxed mb-5">
-        De meeste juristen pakken bij een conflict meteen hun gereedschap: procederen, met gestrekt been erin. Wij stellen eerst een andere vraag: wat is het je waard om die relatie te behouden? Vaak is er een oplossing die je klant, leverancier of compagnon juist niet kwijtraakt.
-      </p>
-      <p class="text-lg text-ink-soft leading-relaxed mb-8">
-        En als het tóch moet escaleren, ben je bij ons ook goed. We zijn een soort juridische huisarts: wat we zelf kunnen doen we, en voor de rest kennen we de specialist die echt bij je past, iemand die je kunt vertrouwen. Geen verborgen opslag, wel iemand die naast je blijft staan om te vertalen wat er staat. Het resultaat is meestal hetzelfde: een oplossing die weloverwogen en degelijk is, in plaats van de scherpste messen.
-      </p>
+      <div class="grid md:grid-cols-[1fr_1.7fr] gap-5 md:gap-14 mb-14 md:mb-20" data-reveal>
+        <h2 class="display-2">Oplossen,<br/>niet winnen</h2>
+        <div class="space-y-5 text-lg text-ink-soft leading-relaxed">
+          <p class="m-0">De meeste juristen pakken bij een conflict meteen hun gereedschap: procederen, met gestrekt been erin. Wij stellen eerst een andere vraag: wat is het je waard om die relatie te behouden? Vaak is er een oplossing die je klant, leverancier of compagnon juist niet kwijtraakt.</p>
+          <p class="m-0">En als het tóch moet escaleren, ben je bij ons ook goed. We zijn een soort juridische huisarts: wat we zelf kunnen doen we, en voor de rest kennen we de specialist die echt bij je past, iemand die je kunt vertrouwen. Geen verborgen opslag, wel iemand die naast je blijft staan om te vertalen wat er staat. Het resultaat is meestal hetzelfde: een oplossing die weloverwogen en degelijk is, in plaats van de scherpste messen.</p>
+        </div>
+      </div>
 
-      <h2 class="display-2 mt-12 mb-5">Voor doeners</h2>
-      <p class="text-lg text-ink-soft leading-relaxed mb-8">
-        We werken voor allerlei ondernemers, maar voelen ons het meest thuis bij makers: bouw, techniek, maakindustrie, familiebedrijven. Mensen met de voeten in de klei die een oplossing zoeken, niet per se een gevecht. Zit je in een andere hoek? Ook welkom. Het gaat ons om de instelling, niet om de branche.
-      </p>
+      <div class="grid md:grid-cols-[1fr_1.7fr] gap-5 md:gap-14" data-reveal>
+        <h2 class="display-2">Voor<br/>doeners</h2>
+        <div class="space-y-5 text-lg text-ink-soft leading-relaxed">
+          <p class="m-0">We werken voor allerlei ondernemers, maar voelen ons het meest thuis bij makers: bouw, techniek, maakindustrie, familiebedrijven. Mensen met de voeten in de klei die een oplossing zoeken, niet per se een gevecht. Zit je in een andere hoek? Ook welkom. Het gaat ons om de instelling, niet om de branche.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <h2 class="display-2 mt-12 mb-5">Drie dingen die we anders doen</h2>
-      <p class="text-lg text-ink-soft leading-relaxed">Gewoonten uit de juridische sector die we bewust achter ons hebben gelaten.</p>
+  <!-- ========== Drie dingen die we anders doen ========== -->
+  <section class="section-y bg-paper-2">
+    <div class="max-w-[1080px] mx-auto px-4 md:px-8">
+      <div class="grid md:grid-cols-[1fr_1.4fr] gap-5 md:gap-12 items-end mb-10" data-reveal>
+        <h2 class="display-2">Drie dingen die<br/>we anders doen</h2>
+        <p class="text-lg text-ink-soft leading-relaxed">Gewoonten uit de juridische sector die we bewust achter ons hebben gelaten.</p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-5">
+        {[
+          { n: '01', t: 'Plain Nederlands, geen jargon', d: 'Als we het je niet in gewoon Nederlands kunnen uitleggen, hebben we het zelf nog niet goed begrepen. Punt.' },
+          { n: '02', t: 'Heldere afspraken, geen open einde', d: 'Een advies waar we niet vooraf een richting en prijs op kunnen plakken, doen we niet zonder afspraken. Geen verrassingen op de factuur, en niet voor ieder telefoontje tijd schrijven.' },
+          { n: '03', t: 'Eén vaste jurist, geen draaideur', d: 'Bij ons hou je je vaste jurist. Iemand die je kent, je zaak kent, en met je meegroeit. Geen wisseltrucs, geen "mijn collega zit erin".' },
+        ].map((x, i) => (
+          <article class="bg-white rounded-card p-7 shadow-sm" data-reveal data-reveal-delay={i + 1}>
+            <span class="font-display text-3xl text-magenta leading-none">{x.n}</span>
+            <h3 class="text-xl font-semibold text-aubergine mt-3 mb-2">{x.t}</h3>
+            <p class="text-ink-soft text-sm leading-relaxed mb-0">{x.d}</p>
+          </article>
+        ))}
+      </div>
 
-      <h3 class="text-2xl font-semibold text-aubergine mt-8 mb-2">1. Plain Nederlands, geen jargon</h3>
-      <p class="text-ink-soft leading-relaxed">Als we het je niet in gewoon Nederlands kunnen uitleggen, hebben we het zelf nog niet goed begrepen. Punt.</p>
-
-      <h3 class="text-2xl font-semibold text-aubergine mt-6 mb-2">2. Heldere afspraken, geen open einde</h3>
-      <p class="text-ink-soft leading-relaxed">Een advies waar we niet vooraf een richting en prijs op kunnen plakken, doen we niet zonder afspraken. Geen verrassingen op de factuur, en niet voor ieder telefoontje tijd schrijven.</p>
-
-      <h3 class="text-2xl font-semibold text-aubergine mt-6 mb-2">3. Eén vaste jurist, geen draaideur</h3>
-      <p class="text-ink-soft leading-relaxed">Bij ons hou je je vaste jurist. Iemand die je kent, je zaak kent, en met je meegroeit. Geen wisseltrucs, geen "mijn collega zit erin".</p>
-
-      <blockquote class="border-l-4 border-magenta pl-6 my-10 text-xl text-aubergine">
-        <p class="font-semibold m-0">"Bij een rechter komt er een winnaar en een verliezer. Maar uiteindelijk heb je twee verliezers, want ook wie wint, is de relatie kwijt."</p>
-        <cite class="block not-italic text-sm font-semibold text-ink-soft mt-3">Klarijn-principe</cite>
-      </blockquote>
+      <div class="mt-14" data-reveal>
+        <Quote
+          quote={'Bij een rechter komt er een winnaar en een verliezer. Maar uiteindelijk heb je twee verliezers, want ook wie wint, is de relatie kwijt.'}
+          author="Klarijn-principe"
+        />
+      </div>
     </div>
   </section>
 
