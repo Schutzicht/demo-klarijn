@@ -108,6 +108,14 @@ const IMAGES = [
       "Portrait 4:5. Authentic portrait of a Dutch construction-company owner, man around 55, weathered friendly face, short greying hair, wearing a dark work softshell jacket. Standing relaxed, arms loosely crossed, calm confident expression, slight friendly look. Background: out-of-focus building site or workshop with warm daylight. Editorial documentary style, real person, natural skin texture.",
   },
 
+  {
+    name: "eibert-hero",
+    aspect: "portrait 4:5",
+    ref: [EIBERT],
+    prompt:
+      "Portrait 4:5. A fresh, bright, energetic portrait of the SAME grey-curly-haired man from the reference photo (around 55, friendly confident). Different clothing this time: a crisp light/white open-collar shirt with the sleeves casually rolled up — NO quilted bodywarmer, NOT the blue chambray shirt. Relaxed and approachable, a warm genuine half-smile, standing or leaning casually in a bright, airy modern office with soft natural daylight and a hint of greenery. Clean modern editorial business portrait, natural skin texture, shallow depth of field. Keep him clearly recognisable as the reference man.",
+  },
+
   // --- Oplossing-foto's (vierkant, centraal onderwerp, crop-veilig voor kaart 5:3 én detail 4:5) ---
   {
     name: "op-arbeidscontract",
