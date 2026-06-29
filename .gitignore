@@ -36,3 +36,5 @@ cms/public/uploads/
 # Vertrouwelijke strategiesessie-notulen (nooit publiek serveren/committen)
 public/Strategische sessie*
 .image-src
+.vercel
+.env*

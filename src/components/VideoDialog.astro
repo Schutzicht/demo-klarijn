@@ -48,6 +48,12 @@ const {
     background: transparent;
     max-width: 56rem;
     width: calc(100% - 2rem);
+    /* Altijd midden van het scherm (inset 0 + margin auto + bepaalde hoogte). */
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    max-height: 92vh;
     border-radius: 1.25rem;
   }
   .video-dialog::backdrop {
